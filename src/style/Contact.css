@@ -1,0 +1,7 @@
+.ctHero{ padding:170px 0 0; }
+.ctHero h1{ font-size:clamp(32px,5.2vw,68px); max-width:15ch; margin-top:18px; }
+.ctHero h1 em{ font-style:normal; color:var(--blue); }
+.ctGrid{ display:grid; grid-template-columns:1.15fr .85fr; gap:34px; align-items:start; margin-top:52px; }
+.ctSide{ display:flex; flex-direction:column; gap:26px; background:#fff; border-radius:26px; padding:30px; box-shadow:var(--sh); }
+@media (max-width:900px){ .ctGrid{ grid-template-columns:1fr; } }
+@media (max-width:760px){ .ctHero{ padding-top:120px; } .ctGrid{ margin-top:34px; } }

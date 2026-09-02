@@ -1,0 +1,9 @@
+.abHero{ padding:170px 0 0; }
+.abHero h1{ font-size:clamp(32px,5.2vw,68px); max-width:15ch; margin-top:18px; }
+.abHero h1 em{ font-style:normal; color:var(--blue); }
+.abHero .lede{ max-width:62ch; margin-top:22px; }
+.abImg{ margin-top:52px; aspect-ratio:21/9; border-radius:4px; overflow:hidden; box-shadow:var(--sh2); position:relative; background:var(--sand); }
+/* a 1:2 portrait letterboxed into 21:9 loses everything above the waist —
+   anchor high so the crew stays in frame */
+.abImg > div{ position:absolute; inset:0; background-size:cover; background-position:center 28%; }
+@media (max-width:760px){ .abHero{ padding-top:120px; } .abImg{ aspect-ratio:16/10; margin-top:34px; } }

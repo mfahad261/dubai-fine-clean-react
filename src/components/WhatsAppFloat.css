@@ -1,0 +1,104 @@
+/* =========================================================================
+   CONTACT DOCK — floating WhatsApp + phone buttons.
+   Built from stacked layers so they read as solid objects: a coloured face,
+   a gloss highlight across the top, and a darker edge beneath standing in for
+   the button's thickness.
+   ========================================================================= */
+.dock{
+  position:fixed; left:0; top:0; z-index:140;
+  display:flex; flex-direction:column; align-items:flex-end; gap:14px;
+  opacity:0; transition:opacity .45s var(--e);
+}
+.dock.ready{ opacity:1; }
+
+/* ---- drag handle ---- */
+.dockHandle{
+  display:flex; gap:4px; align-items:center; justify-content:center;
+  height:22px; width:52px; border-radius:var(--rp); cursor:grab; touch-action:none;
+  background:rgba(255,255,255,.72); border:1px solid rgba(14,27,46,.08);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 6px 16px -8px rgba(14,27,46,.4);
+  opacity:0; transform:translateY(6px);
+  transition:opacity .3s var(--e), transform .35s var(--eo);
+}
+.dock:hover .dockHandle, .dock.dragging .dockHandle{ opacity:1; transform:none; }
+.dock.dragging .dockHandle{ cursor:grabbing; background:#fff; }
+.dockHandle i{ width:4px; height:4px; border-radius:50%; background:var(--slate2); }
+
+/* ---- the buttons ---- */
+.dockBtn{
+  position:relative; display:block; border-radius:var(--rp);
+  transform-style:preserve-3d; will-change:transform;
+  transition:transform .18s var(--e);
+}
+.dockBtn:active .dockFace{ transform:translateY(3px); }
+.dockBtn:active ~ .dockEdge{ opacity:.6; }
+
+.dockFace{
+  position:relative; display:flex; align-items:center; overflow:hidden;
+  height:62px; width:62px; border-radius:var(--rp); color:#fff;
+  transition:width .5s var(--eo), transform .18s var(--e), box-shadow .4s var(--e);
+}
+.dockBtn.wa .dockFace{
+  background:linear-gradient(155deg, #4BEE8B 0%, var(--wa) 38%, #128C42 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.55) inset,
+    0 -10px 18px -10px rgba(0,60,20,.9) inset,
+    0 20px 34px -14px rgba(18,140,66,.75),
+    0 6px 12px -6px rgba(10,20,34,.5);
+}
+.dockBtn.call .dockFace{
+  height:54px; width:54px;
+  background:linear-gradient(155deg, #4E9BFF 0%, var(--blue) 40%, #05307A 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.5) inset,
+    0 -10px 18px -10px rgba(0,20,70,.9) inset,
+    0 18px 30px -14px rgba(11,99,216,.7),
+    0 6px 12px -6px rgba(10,20,34,.5);
+}
+/* the "thickness" sitting under the face */
+.dockEdge{
+  position:absolute; left:3px; right:3px; bottom:-4px; height:60%; border-radius:var(--rp);
+  background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.05));
+  filter:blur(3px); z-index:-1; transition:opacity .3s var(--e);
+}
+/* light catching the top curve */
+.dockGloss{
+  position:absolute; left:8%; right:8%; top:4%; height:42%; border-radius:var(--rp);
+  background:linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0));
+  pointer-events:none;
+}
+.dockIco{ display:grid; place-items:center; width:62px; flex:0 0 auto; }
+.dockBtn.call .dockIco{ width:54px; }
+
+.dockLabel{
+  max-width:0; opacity:0; white-space:nowrap; font-size:13.5px; font-weight:600;
+  letter-spacing:-.01em; padding-right:0;
+  transition:max-width .5s var(--eo), opacity .32s var(--e), padding-right .5s var(--eo);
+}
+.dock:not(.dragging) .dockBtn:hover .dockFace{ width:auto; }
+.dock:not(.dragging) .dockBtn:hover .dockLabel{ max-width:220px; opacity:1; padding-right:26px; }
+/* labels must not flap open mid-drag */
+.dock.dragging .dockLabel{ max-width:0 !important; opacity:0 !important; padding-right:0 !important; }
+.dock.dragging .dockBtn{ transform:none !important; }
+
+/* slow halo marking WhatsApp as the primary action */
+.dockBtn.wa .dockFace:after{
+  content:""; position:absolute; inset:0; border-radius:var(--rp); pointer-events:none;
+  box-shadow:0 0 0 0 rgba(37,211,102,.5); animation:dockPing 3s ease-out infinite;
+}
+@keyframes dockPing{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,.45); }
+  70%{ box-shadow:0 0 0 20px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+@media (prefers-reduced-motion:reduce){ .dockBtn.wa .dockFace:after{ animation:none; } }
+
+@media (max-width:640px){
+  .dock{ gap:10px; }
+  .dockFace{ height:54px; width:54px; }
+  .dockIco{ width:54px; }
+  .dockBtn.call .dockFace{ height:48px; width:48px; }
+  .dockBtn.call .dockIco{ width:48px; }
+  .dockHandle{ opacity:1; transform:none; }
+}

@@ -1,0 +1,25 @@
+.dcHero{ position:relative; overflow:hidden; background:var(--navy); color:#fff; padding:180px 0 84px; }
+.dcHeroBg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.3; }
+.dcHero:after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(140deg, rgba(10,20,34,.94), rgba(10,20,34,.62));
+}
+.dcHeroInner{ position:relative; z-index:2; }
+.dcHero h1{ font-size:clamp(40px,7vw,92px); color:#fff; margin-top:20px; max-width:14ch; }
+.dcHero h1 i{ color:var(--green); }
+.dcHero .lede{ color:rgba(255,255,255,.74); max-width:58ch; margin-top:22px; }
+.dcHeroBtns{ display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; }
+.onDarkBtn{ border-color:rgba(255,255,255,.3); color:#fff; }
+.onDarkBtn:hover{ border-color:#fff; color:#fff; background:rgba(255,255,255,.08); }
+.dcJump{
+  list-style:none; display:flex; flex-wrap:wrap; gap:10px; margin-top:38px; padding-top:26px;
+  border-top:1px solid rgba(255,255,255,.16);
+}
+.dcJump a{
+  display:flex; align-items:center; gap:9px; font-size:12.5px; font-weight:500;
+  color:rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.2); padding:9px 15px;
+  border-radius:var(--rp); transition:border-color .3s var(--e), background .3s var(--e);
+}
+.dcJump a:hover{ border-color:rgba(255,255,255,.55); background:rgba(255,255,255,.07); }
+.dcJump span{ font-family:var(--fSerif); font-size:15px; }
+@media (max-width:760px){ .dcHero{ padding:130px 0 60px; } }

@@ -1,0 +1,7 @@
+.reviewCard{ background:#fff; border-radius:20px; padding:30px 28px; box-shadow:var(--sh); display:flex; flex-direction:column; gap:16px; height:100%; }
+.reviewCard .stars{ color:var(--amber); font-size:13px; letter-spacing:.12em; }
+.reviewCard .quote{ font-size:14.5px; line-height:1.75; color:var(--navy2); flex:1; }
+.who{ display:flex; align-items:center; gap:12px; }
+.avatar{ width:38px; height:38px; border-radius:50%; color:#fff; display:grid; place-items:center; font-family:var(--fSans); font-weight:700; font-size:14px; flex:0 0 auto; }
+.who .n{ font-family:var(--fSans); font-weight:700; font-size:13.5px; color:var(--navy); }
+.who .m{ font-size:11.5px; color:var(--slate); margin-top:2px; }

@@ -1,0 +1,33 @@
+.teamTitle{ font-size:clamp(30px,4vw,52px); margin-top:14px; }
+
+/* column flow — every photo keeps its own proportions, so none are cropped */
+.teamFlow{ column-count:3; column-gap:18px; }
+.teamShot{
+  position:relative; break-inside:avoid; margin:0 0 18px; overflow:hidden; border-radius:4px;
+  background:var(--sand); display:block;
+}
+.teamShot img{
+  display:block; width:100%; height:auto; transition:transform 1.5s var(--eo), filter .6s var(--e);
+}
+.teamShot:hover img{ transform:scale(1.04); filter:saturate(1.05); }
+.teamShot:after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to top, rgba(12,22,36,.85), rgba(12,22,36,0) 46%);
+  opacity:0; transition:opacity .5s var(--e);
+}
+.teamShot:hover:after{ opacity:1; }
+.teamShot figcaption{
+  position:absolute; left:0; right:0; bottom:0; z-index:2; padding:18px; color:#fff;
+  font-size:12.5px; line-height:1.5; display:flex; align-items:baseline; gap:10px;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .45s var(--e), transform .5s var(--eo);
+}
+.teamShot:hover figcaption{ opacity:1; transform:none; }
+.tIdx{ font-family:var(--fSerif); font-size:17px; color:var(--green); flex:0 0 auto; }
+
+@media (max-width:900px){ .teamFlow{ column-count:2; } }
+@media (max-width:560px){
+  .teamFlow{ column-count:1; }
+  .teamShot figcaption{ opacity:1; transform:none; }
+  .teamShot:after{ opacity:1; }
+}

@@ -1,0 +1,61 @@
+/* =========================================================================
+   SPLIT FEATURE — the two division headings.
+   Two full-height panels. Pointing at one lights it and dims the other.
+   ========================================================================= */
+.splitFeat{ display:grid; grid-template-columns:1fr 1fr; min-height:82vh; background:var(--navy); }
+
+.sfPanel{
+  position:relative; overflow:hidden; display:flex; align-items:center;
+  padding:clamp(40px,6vw,86px); color:#fff;
+  transition:flex .6s var(--eo), opacity .5s var(--e);
+}
+.sfPanel + .sfPanel{ border-left:1px solid rgba(255,255,255,.12); }
+.sfPanel.off{ opacity:.42; }
+
+.sfVideo{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transform:scale(1.08); transition:opacity .8s var(--e), transform 1.8s var(--eo);
+}
+.sfPanel.on .sfVideo{ opacity:.5; transform:none; }
+.sfVeil{
+  position:absolute; inset:0;
+  background:linear-gradient(160deg, rgba(9,18,32,.86), rgba(9,18,32,.6));
+  transition:opacity .6s var(--e);
+}
+.sfPanel.on .sfVeil{ opacity:.75; }
+
+.sfInner{ position:relative; z-index:2; width:100%; }
+.sfTitle{ line-height:.82; letter-spacing:-.03em; }
+.sfTitle span{
+  display:block; font-size:clamp(46px,7.4vw,124px); color:#fff;
+  transition:transform .7s var(--eo), color .5s var(--e);
+}
+.sfTitle span:nth-child(2){ padding-left:.14em; }
+.sfPanel.on .sfTitle span:nth-child(1){ transform:translateX(10px); }
+.sfPanel.on .sfTitle span:nth-child(2){ transform:translateX(-8px); color:var(--green); }
+
+.sfMeta{
+  margin-top:26px; max-width:44ch;
+  opacity:0; transform:translateY(14px);
+  transition:opacity .5s var(--e), transform .6s var(--eo);
+}
+.sfPanel.on .sfMeta{ opacity:1; transform:none; }
+.sfMeta p{ font-size:14.5px; line-height:1.75; color:rgba(255,255,255,.78); }
+.sfCount{ display:block; margin-top:16px; font-size:12px; color:rgba(255,255,255,.6); }
+.sfCount b{ font-family:var(--fSerif); font-size:24px; color:var(--green); margin-right:4px; }
+.sfGo{
+  display:inline-flex; align-items:center; gap:9px; margin-top:20px;
+  font-size:13px; font-weight:600; color:#fff; transition:gap .35s var(--e);
+}
+.sfPanel.on .sfGo{ gap:14px; }
+
+/* =========================== responsive =========================== */
+@media (max-width:900px){
+  .splitFeat{ grid-template-columns:1fr; min-height:0; }
+  .sfPanel{ padding:52px 22px; min-height:56vh; }
+  .sfPanel + .sfPanel{ border-left:none; border-top:1px solid rgba(255,255,255,.12); }
+  /* no hover on touch — show everything, always */
+  .sfPanel.off{ opacity:1; }
+  .sfMeta{ opacity:1; transform:none; }
+  .sfVideo{ opacity:.34; transform:none; }
+}

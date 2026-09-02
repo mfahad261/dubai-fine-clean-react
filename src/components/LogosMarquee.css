@@ -1,0 +1,14 @@
+.logos{ padding:54px 0; border-block:1px solid var(--line); overflow:hidden; background:var(--white); }
+.logoTrack{ display:flex; gap:56px; width:max-content; animation:logoScroll 32s linear infinite; }
+.logoTrack .lg{
+  display:flex; align-items:center; gap:11px; white-space:nowrap; font-family:var(--fSans);
+  font-weight:700; font-size:15px; color:var(--slate2); opacity:.85;
+}
+.logoTrack svg{ color:var(--blue); flex:0 0 auto; }
+@keyframes logoScroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+@media (max-width:640px){
+  .logos{ padding:34px 0; }
+  .logoTrack{ gap:34px; }
+  .logoTrack .lg{ font-size:13px; }
+}

@@ -1,0 +1,4 @@
+.cat{ position:relative; padding:56px 0 0; }
+.catBody{ padding:8px 0 0; }
+.svcList{ max-width:1300px; margin:0 auto; padding:0 40px; }
+@media (max-width:760px){ .svcList{ padding:0 22px; } }

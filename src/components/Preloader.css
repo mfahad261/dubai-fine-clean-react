@@ -1,0 +1,26 @@
+.pre{
+  position:fixed; inset:0; z-index:240; background:var(--navy); color:#fff; display:flex;
+  flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
+}
+.preBlob{
+  position:absolute; width:70vmax; height:70vmax; border-radius:50%;
+  background:radial-gradient(circle, rgba(11,111,232,.5), transparent 62%); filter:blur(30px);
+  animation:blob 7s ease-in-out infinite alternate;
+}
+@keyframes blob{ from{ transform:translate(-18%,-12%) scale(1); } to{ transform:translate(14%,10%) scale(1.15); } }
+.preInner{ position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; gap:20px; transition:opacity .4s ease; }
+.preDrop{ width:56px; height:56px; fill:var(--green); }
+.preMark{
+  font-family:var(--fSans); font-weight:800; font-size:clamp(20px,3.4vw,36px);
+  letter-spacing:-.02em; display:flex; gap:.3em;
+}
+.preMark span:nth-child(1){ color:var(--green); }
+.preBarWrap{ width:min(220px,46vw); height:3px; background:rgba(255,255,255,.18); border-radius:999px; overflow:hidden; }
+.preBar{ height:100%; width:100%; background:linear-gradient(90deg,var(--green),var(--blue)); transform-origin:left; transition:transform .1s linear; }
+.preNum{ font-size:10px; letter-spacing:.3em; color:rgba(255,255,255,.5); }
+.pre.wipe{ animation:preOut .8s var(--e2) forwards; animation-delay:.05s; }
+.pre.wipe .preInner{ opacity:0; }
+@keyframes preOut{ to{ clip-path:inset(0 0 100% 0); } }
+.preWords{ height:17px; overflow:hidden; font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.55); }
+.preWordsInner{ transition:transform .5s var(--eo); }
+.preWords p{ height:17px; line-height:17px; }

@@ -1,0 +1,15 @@
+.filters{
+  position:sticky; top:0; z-index:60; background:rgba(244,247,251,.95);
+  backdrop-filter:blur(18px); border-bottom:1px solid var(--line);
+}
+.filterRow{ max-width:1300px; margin:0 auto; padding:14px 40px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }
+.filterRow::-webkit-scrollbar{ display:none; }
+.fbtn{
+  background:#fff; border:1.5px solid var(--line); cursor:pointer; font-family:var(--fSans);
+  color:var(--slate); font-size:13px; font-weight:600; padding:11px 18px; border-radius:var(--rp);
+  white-space:nowrap; transition:all .35s var(--e);
+}
+.fbtn:hover{ border-color:var(--acc, var(--blue)); color:var(--acc, var(--blue)); }
+.fbtn.on{ background:var(--acc, var(--blue)); border-color:var(--acc, var(--blue)); color:#fff; }
+.fbtn .ct{ opacity:.65; margin-left:5px; font-size:11px; }
+@media (max-width:760px){ .filterRow{ padding:12px 22px; } }

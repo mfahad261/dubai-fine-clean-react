@@ -1,0 +1,8 @@
+.benGrid{ display:grid; grid-template-columns:repeat(5,1fr); gap:18px; }
+.benCard{ background:#fff; border-radius:18px; padding:28px 24px; box-shadow:var(--sh); transition:transform .4s var(--e), box-shadow .4s var(--e); }
+.benCard:hover{ transform:translateY(-5px); box-shadow:var(--sh2); }
+.benIcon{ width:46px; height:46px; border-radius:13px; background:var(--blueLt); color:var(--blue); display:grid; place-items:center; margin-bottom:16px; }
+.benCard h4{ font-family:var(--fSans); font-size:15.5px; font-weight:700; margin-bottom:8px; color:var(--navy); }
+.benCard p{ font-size:12.5px; line-height:1.7; color:var(--slate); }
+@media (max-width:1100px){ .benGrid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .benGrid{ grid-template-columns:1fr; } }

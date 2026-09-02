@@ -1,0 +1,31 @@
+.vDuoTitle{ font-size:clamp(30px,4.2vw,54px); margin-top:14px; }
+.vDuoGrid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+.vdClip{ margin:0; outline:none; }
+.vdFrame{
+  position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:4px; background:var(--navy);
+  box-shadow:var(--sh); transition:box-shadow .5s var(--e), transform .5s var(--eo);
+}
+.vdClip:hover .vdFrame, .vdClip:focus-visible .vdFrame{ box-shadow:var(--sh2); transform:translateY(-5px); }
+.vdFrame video{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:saturate(.92); transition:filter .6s var(--e), transform 1.4s var(--eo);
+}
+.vdClip.playing .vdFrame video{ filter:saturate(1.06); transform:scale(1.02); }
+.vdPlay{
+  position:absolute; left:14px; bottom:14px; z-index:2; display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.94); color:var(--navy); font-size:11px; font-weight:600;
+  padding:8px 14px; border-radius:var(--rp); box-shadow:var(--sh);
+  transition:background .35s var(--e), color .35s var(--e);
+}
+.vdClip.playing .vdPlay{ background:var(--green); color:#fff; }
+.vdClip figcaption{ display:flex; gap:16px; margin-top:20px; align-items:flex-start; }
+.vdIdx{ font-family:var(--fSerif); font-size:26px; line-height:1; color:var(--blue); flex:0 0 auto; }
+.vdClip h3{ font-family:var(--fSans); font-weight:600; font-size:17px; letter-spacing:-.01em; }
+.vdClip figcaption p{ font-size:13px; line-height:1.7; color:var(--slate); margin-top:6px; max-width:38ch; }
+@media (max-width:760px){
+  .vDuoGrid{ grid-template-columns:1fr; gap:34px; }
+  .vdPlay{ font-size:10.5px; }
+  /* no hover on touch — the clip plays itself as it scrolls into view,
+     so let the "playing" look apply the moment it actually is. */
+  .vdClip.playing .vdFrame{ box-shadow:var(--sh2); transform:translateY(-5px); }
+}

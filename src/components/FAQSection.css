@@ -1,0 +1,3 @@
+.faqWrap{ display:grid; grid-template-columns:.8fr 1.2fr; gap:60px; align-items:start; }
+.faqHead{ position:sticky; top:130px; }
+@media (max-width:900px){ .faqWrap{ grid-template-columns:1fr; gap:20px; } .faqHead{ position:static; } }

@@ -1,0 +1,15 @@
+.cur{
+  position:fixed; top:0; left:0; width:7px; height:7px; margin:-3.5px 0 0 -3.5px; border-radius:50%;
+  background:var(--blue); pointer-events:none; z-index:200; will-change:transform;
+}
+.curRing{
+  position:fixed; top:0; left:0; width:32px; height:32px; margin:-16px 0 0 -16px; border-radius:50%;
+  border:1.5px solid rgba(11,111,232,.45); pointer-events:none; z-index:200; will-change:transform;
+  transition:width .45s var(--e), height .45s var(--e), margin .45s var(--e),
+    background .45s var(--e), border-color .45s var(--e);
+}
+.curRing.big{ width:60px; height:60px; margin:-30px 0 0 -30px; background:rgba(11,111,232,.1); border-color:transparent; }
+@media (pointer:coarse){ .cur, .curRing{ display:none; } }
+.cur.onDark{ background:#fff; }
+.curRing.onDark{ border-color:rgba(255,255,255,.55); }
+.curRing.onDark.big{ background:rgba(255,255,255,.12); border-color:transparent; }

@@ -1,0 +1,4 @@
+.splitText .ln{ display:block; overflow:hidden; }
+/* like the reveals, this only hides once JS has confirmed it can animate */
+html.reveal-ready .splitText .li{ display:block; transform:translateY(116%); transition:transform 1.05s var(--eo); }
+html.reveal-ready .splitText.in .li{ transform:translateY(0); }

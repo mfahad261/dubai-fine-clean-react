@@ -1,0 +1,11 @@
+.cta{ position:relative; border-radius:32px; overflow:hidden; padding:70px 20px; text-align:center; }
+.cta:before{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%, rgba(11,111,232,.35), transparent 55%), radial-gradient(circle at 80% 80%, rgba(47,191,87,.28), transparent 55%); }
+.ctaInner{ position:relative; z-index:2; max-width:620px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:16px; }
+.ctaInner h2{ font-size:clamp(26px,3.6vw,42px); }
+.ctaBtns{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:10px; }
+
+@media (max-width:760px){
+  .cta{ padding:52px 20px; border-radius:6px; }
+  .ctaBtns{ width:100%; }
+  .ctaBtns .btn{ flex:1 1 auto; justify-content:center; }
+}

@@ -1,0 +1,107 @@
+/* =========================================================================
+   NAVBAR — the fixed header on every page.
+   Frosted glass at rest so the hero video reads through it; condenses into a
+   floating pill once you scroll past the top of the page.
+   ========================================================================= */
+.navShell{ position:relative; z-index:120; }
+
+.nav{
+  position:fixed; inset:38px 14px auto; z-index:120;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+  padding:13px 26px; border-radius:0; margin:0 -14px; max-width:none;
+  /* the glass itself */
+  background:rgba(255,255,255,.72);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  backdrop-filter:blur(22px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.5);
+  box-shadow:0 1px 0 rgba(14,27,46,.06);
+  transition:top .55s var(--eo), padding .45s var(--e), box-shadow .45s var(--e),
+    border-radius .5s var(--e), max-width .55s var(--eo), margin .55s var(--eo),
+    background .45s var(--e), transform .5s var(--eo);
+}
+/* over the dark hero the glass inverts, so the logo stays legible */
+.nav.onDark{
+  background:rgba(14,24,40,.55); border-bottom-color:rgba(255,255,255,.14);
+}
+.nav.onDark .brandTx .n1{ color:#fff; }
+.nav.onDark .brandTx .n2{ color:rgba(255,255,255,.55); }
+.nav.onDark .mItem-link{ color:rgba(255,255,255,.86); }
+.nav.onDark .mItem-link:hover{ color:#fff; background:rgba(255,255,255,.12); }
+.nav.onDark .mItem-link.active{ color:#fff; }
+.nav.onDark #navPhone .v{ color:#fff; }
+.nav.onDark #navPhone:hover{ background:rgba(255,255,255,.12); }
+.nav.onDark .navDiv{ background:rgba(255,255,255,.2); }
+.nav.onDark .burger{ color:#fff; border-color:rgba(255,255,255,.28); }
+
+.nav.pinned{
+  top:12px; margin:0 auto; max-width:1320px; border-radius:var(--rp);
+  padding:10px 12px 10px 22px; border-bottom-color:transparent;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 20px 50px -24px rgba(14,27,46,.45), 0 0 0 1px rgba(14,27,46,.05);
+}
+.nav.pinned.onDark{ background:rgba(14,24,40,.68); box-shadow:0 20px 50px -24px rgba(0,0,0,.7); }
+.nav.hide{ transform:translateY(-180%); }
+
+.brand{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
+.brandMark{ flex:0 0 auto; transition:transform .5s var(--eo); }
+.brand:hover .brandMark{ transform:rotate(-8deg) scale(1.06); }
+.brandTx .n1{
+  font-family:var(--fSans); font-weight:700; font-size:17px; letter-spacing:-.03em;
+  line-height:1.1; display:block; color:var(--navy); transition:color .4s var(--e);
+}
+.brandTx .n1 b{ color:var(--greenTx); font-weight:700; }
+.nav.onDark .brandTx .n1 b{ color:var(--green); }
+.brandTx .n2{
+  font-size:8.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--slate2);
+  display:block; margin-top:3px; font-weight:500; transition:color .4s var(--e);
+}
+
+.menu{ display:flex; gap:2px; align-items:center; }
+.mItem-link{
+  background:none; border:none; cursor:pointer; font-family:var(--fSans);
+  color:var(--navy2); font-size:14.5px; font-weight:500; padding:10px 16px; border-radius:var(--rp);
+  display:flex; align-items:center; gap:6px; position:relative;
+  transition:color .3s var(--e), background .3s var(--e);
+}
+.mItem-link:hover{ color:var(--blue); background:var(--blueLt); }
+.mItem-link.active{ color:var(--navy); }
+.caret{ transition:transform .4s var(--e); }
+.mItem.open .caret{ transform:rotate(180deg); }
+/* underline that grows from the centre while its panel is open */
+.mItem-link.on:after{
+  content:""; position:absolute; left:16px; right:16px; bottom:5px; height:2px;
+  border-radius:2px; background:var(--grad);
+}
+
+#navPhone{ display:flex; align-items:center; gap:10px; padding:6px 14px 6px 6px; border-radius:var(--rp); transition:background .35s var(--e); }
+#navPhone:hover{ background:var(--blueLt); }
+#navPhone .ic{
+  width:34px; height:34px; border-radius:50%; background:var(--blueLt); color:var(--blue);
+  display:grid; place-items:center; flex:0 0 auto; transition:background .35s var(--e), color .35s var(--e);
+}
+#navPhone:hover .ic{ background:var(--blue); color:#fff; }
+#navPhone .k{ font-size:9px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--slate2); line-height:1; }
+#navPhone .v{ font-family:var(--fSans); font-weight:700; font-size:14px; color:var(--navy); margin-top:3px; line-height:1; white-space:nowrap; }
+.navDiv{ width:1px; height:30px; background:var(--line); flex:0 0 auto; }
+.navRight{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
+
+.burger{
+  display:none; width:44px; height:44px; border-radius:12px; border:1.5px solid var(--line);
+  background:none; cursor:pointer; position:relative; color:var(--navy); flex:0 0 auto;
+}
+.burger i{
+  position:absolute; left:12px; right:12px; height:2px; background:currentColor; border-radius:2px;
+  transition:transform .45s var(--e);
+}
+.burger i:nth-child(1){ top:16px; } .burger i:nth-child(2){ bottom:16px; }
+.burger.x i:nth-child(1){ transform:translateY(5px) rotate(45deg); }
+.burger.x i:nth-child(2){ transform:translateY(-5px) rotate(-45deg); }
+
+@media (max-width:1340px){ #navPhone .k, #navPhone .v{ display:none; } #navPhone{ padding:6px; } }
+@media (max-width:1080px){
+  .menu{ display:none; }
+  .burger{ display:block; }
+  .hideSmall{ display:none; }
+  .nav{ padding:12px 16px; inset:34px 10px auto; margin:0 -10px; }
+  .nav.pinned{ padding:10px 12px; }
+}

@@ -1,0 +1,21 @@
+.featureShot{ padding:110px 0; background:var(--cream2); }
+.fsGrid{ display:grid; grid-template-columns:.95fr 1.05fr; gap:70px; align-items:center; }
+.fsImg{ position:relative; aspect-ratio:1/1; }
+.fsImg > div{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  border-radius:4px; box-shadow:var(--sh2);
+}
+/* offset rule that lifts the square off the flat background */
+.fsFrame{
+  position:absolute; inset:-18px -18px 18px 18px; border:1px solid var(--sand);
+  border-radius:4px; pointer-events:none; z-index:-1;
+}
+.fsMark{ font-family:var(--fSerif); font-size:70px; line-height:.6; color:var(--blue); display:block; }
+.fsCopy h2{ font-size:clamp(30px,4.2vw,56px); margin-top:14px; }
+.fsCopy .lede{ margin-top:22px; max-width:46ch; }
+.fsBtns{ margin-top:30px; }
+@media (max-width:900px){
+  .featureShot{ padding:72px 0; }
+  .fsGrid{ grid-template-columns:1fr; gap:38px; }
+  .fsFrame{ display:none; }
+}

@@ -1,0 +1,51 @@
+/* =========================================================================
+   SUPERVISOR — /about, under the page heading.
+   Portrait left, copy right. The photo keeps its natural 3:4 proportions so
+   nobody is cropped through the head.
+   ========================================================================= */
+.supSec{ padding-top:0; }
+.supGrid{ display:grid; grid-template-columns:.78fr 1.22fr; gap:56px; align-items:center; }
+
+.supPhoto{
+  position:relative; margin:0; overflow:hidden; border-radius:4px; background:var(--sand);
+  box-shadow:var(--sh2);
+}
+.supPhoto img{ display:block; width:100%; height:auto; }
+.supPhoto:after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to top, rgba(10,20,34,.86), rgba(10,20,34,0) 42%);
+}
+.supPhoto figcaption{
+  position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 24px; color:#fff;
+}
+.supRole{
+  display:block; font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--green);
+}
+.supName{
+  display:block; font-family:var(--fSerif); font-size:26px; line-height:1.1; margin-top:7px;
+}
+
+.supTitle{ font-size:clamp(28px,3.8vw,50px); margin-top:14px; }
+.supCopy .lede{ margin-top:18px; max-width:48ch; }
+
+.supList{ list-style:none; margin-top:26px; display:flex; flex-direction:column; gap:2px; }
+.supList li{
+  display:flex; align-items:baseline; gap:16px; padding:14px 0;
+  border-top:1px solid var(--line); font-size:14px; color:var(--navy2); line-height:1.55;
+}
+.supList li:last-child{ border-bottom:1px solid var(--line); }
+.supList span{
+  font-family:var(--fSerif); font-size:15px; color:var(--blue); flex:0 0 auto; min-width:22px;
+}
+
+/* =========================== responsive =========================== */
+@media (max-width:960px){
+  .supGrid{ grid-template-columns:1fr; gap:32px; }
+  .supPhoto{ max-width:380px; }
+}
+@media (max-width:600px){
+  .supPhoto{ max-width:none; }
+  .supList li{ font-size:13.5px; gap:12px; padding:12px 0; }
+  .supName{ font-size:22px; }
+}

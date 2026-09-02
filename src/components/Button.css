@@ -1,0 +1,4 @@
+/* Colour variants live in globals.css (.btn / .btn-*) so every button on the
+   site stays consistent. These are the bits specific to the component. */
+.btn .tx, .btn .ar, .btn svg{ position:relative; z-index:2; }
+.btn{ will-change:transform; }

@@ -1,0 +1,12 @@
+.peek{
+  position:fixed; top:0; left:0; width:224px; height:156px; z-index:195; pointer-events:none;
+  overflow:hidden; border-radius:15px; opacity:0; transform:translate(-50%,-50%) scale(.86);
+  transition:opacity .38s var(--e), transform .5s var(--eo); will-change:transform; box-shadow:var(--sh2);
+}
+.peek.on{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+.peek .ph{ position:absolute; inset:0; background-size:cover; background-position:center; background-color:var(--sand); }
+.peek .lb{
+  position:absolute; left:0; bottom:0; background:var(--blue); color:#fff; font-size:9px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; padding:7px 12px;
+}
+@media (pointer:coarse){ .peek{ display:none; } }

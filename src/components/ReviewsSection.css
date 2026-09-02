@@ -1,0 +1,3 @@
+.reviews{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+@media (max-width:900px){ .reviews{ grid-template-columns:1fr 1fr; } }
+@media (max-width:600px){ .reviews{ grid-template-columns:1fr; } }

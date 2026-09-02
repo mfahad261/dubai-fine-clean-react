@@ -1,0 +1,114 @@
+/* =========================================================================
+   SERVICE CARDS — home page.
+   A plain equal grid: three across on desktop, two on tablet, one on phone.
+   Every card is the same width and every image the same ratio, so rows always
+   line up. Each card carries its own accent colour via --acc.
+   ========================================================================= */
+.sGrid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:22px;
+  align-items:stretch;
+}
+.sCard{ display:flex; min-width:0; }
+
+.sCardIn{
+  position:relative; display:flex; flex-direction:column; width:100%; overflow:hidden;
+  background:#fff; border-radius:6px; border:1px solid var(--line);
+  box-shadow:0 2px 4px -2px rgba(14,27,46,.08);
+  transition:transform .55s var(--eo), box-shadow .55s var(--e), border-color .5s var(--e);
+}
+.sCard:hover .sCardIn{
+  transform:translateY(-8px);
+  box-shadow:0 34px 60px -30px rgba(14,27,46,.42);
+  border-color:transparent;
+}
+
+/* the light that follows the pointer */
+.sSpot{
+  position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),
+             color-mix(in srgb, var(--acc) 16%, transparent), transparent 62%);
+  transition:opacity .45s var(--e);
+}
+.sCard:hover .sSpot{ opacity:1; }
+
+/* ---- media: one ratio for every card ---- */
+.sMedia{ position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--sand); flex:0 0 auto; }
+.sImg{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  transition:transform 1.6s var(--eo), filter .6s var(--e), opacity .55s var(--e);
+}
+.sCard:hover .sImg{ transform:scale(1.07); filter:saturate(1.06); opacity:.35; }
+.sVid{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transform:scale(1.04);
+  transition:opacity .55s var(--e), transform 1.4s var(--eo);
+}
+.sCard:hover .sVid{ opacity:1; transform:none; }
+.sScrim{
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(10,20,34,.55), rgba(10,20,34,0) 55%);
+}
+.sNo{
+  position:absolute; left:18px; top:12px; z-index:2; font-family:var(--fSerif);
+  font-size:32px; line-height:1; color:#fff; text-shadow:0 2px 14px rgba(0,0,0,.5);
+}
+.sIcon{
+  position:absolute; right:16px; bottom:16px; z-index:2; width:40px; height:40px;
+  border-radius:11px; display:grid; place-items:center; color:#fff; background:var(--acc);
+  box-shadow:0 10px 24px -10px rgba(0,0,0,.6);
+  transform:translateY(6px) scale(.92); opacity:0;
+  transition:transform .5s var(--eo), opacity .4s var(--e);
+}
+.sCard:hover .sIcon{ transform:none; opacity:1; }
+
+/* ---- body: flexes so every card's footer sits on the same line ---- */
+.sBody{ position:relative; z-index:4; padding:22px; display:flex; flex-direction:column; flex:1; }
+.sBody h3{ font-family:var(--fSans); font-weight:600; font-size:18px; letter-spacing:-.02em; color:var(--navy); }
+.sBody p{ font-size:13px; line-height:1.65; color:var(--slate); margin-top:8px; }
+.sTags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.sTags span{
+  font-size:10.5px; font-weight:500; color:var(--slate2); background:var(--cream);
+  padding:5px 10px; border-radius:var(--rp);
+  transition:background .4s var(--e), color .4s var(--e);
+}
+.sCard:hover .sTags span{ background:color-mix(in srgb, var(--acc) 12%, transparent); color:var(--navy2); }
+.sFoot{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-top:auto; padding-top:18px;
+}
+.sCount{ font-size:11.5px; font-weight:600; color:var(--slate2); }
+.sGo{ display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--acc); transition:gap .35s var(--e); }
+.sCard:hover .sGo{ gap:12px; }
+.sEdge{
+  position:absolute; left:0; right:0; bottom:0; height:3px; z-index:5; background:var(--acc);
+  transform:scaleX(0); transform-origin:left; transition:transform .65s var(--eo);
+}
+.sCard:hover .sEdge{ transform:scaleX(1); }
+
+/* =========================== responsive =========================== */
+@media (max-width:1080px){
+  .sGrid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; }
+}
+@media (max-width:680px){
+  .sGrid{ grid-template-columns:minmax(0, 1fr); gap:16px; }
+  /* no cursor to follow on touch, so skip the pointer-light entirely */
+  .sSpot{ display:none; }
+  .sBody{ padding:18px; }
+  .sNo{ font-size:28px; }
+
+  /* the "hover" state instead triggers as the card crosses the middle of
+     the viewport while scrolling — see the IntersectionObserver in JS. */
+  .sCardIn.inView{
+    transform:translateY(-4px);
+    box-shadow:0 24px 44px -26px rgba(14,27,46,.4);
+    border-color:transparent;
+  }
+  .sCardIn.inView .sImg{ transform:scale(1.07); filter:saturate(1.06); opacity:.35; }
+  .sCardIn.inView .sVid{ opacity:1; transform:none; }
+  .sCardIn.inView .sIcon{ transform:none; opacity:1; }
+  .sCardIn.inView .sTags span{ background:color-mix(in srgb, var(--acc) 12%, transparent); color:var(--navy2); }
+  .sCardIn.inView .sGo{ gap:12px; }
+  .sCardIn.inView .sEdge{ transform:scaleX(1); }
+}

@@ -1,0 +1,47 @@
+.coverage{ position:relative; overflow:hidden; background:var(--navy); color:#fff; padding:104px 0; }
+.covBg{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:.2; }
+.coverage:after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(105deg, rgba(10,20,34,.96), rgba(10,20,34,.72));
+}
+.covInner{ position:relative; z-index:2; display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:start; }
+.covHead{ position:sticky; top:120px; }
+.covHead h2{ font-size:clamp(30px,4vw,52px); color:#fff; margin-top:16px; }
+.covHead h2 i{ color:var(--green); }
+.covHead .lede{ color:rgba(255,255,255,.72); margin-top:18px; max-width:40ch; }
+
+.covSearch{
+  display:flex; align-items:center; gap:11px; margin-top:26px; background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2); border-radius:var(--rp); padding:13px 20px;
+  transition:border-color .3s var(--e), background .3s var(--e);
+}
+.covSearch:focus-within{ border-color:var(--green); background:rgba(255,255,255,.12); }
+.covSearch svg{ color:var(--green); flex:0 0 auto; }
+.covSearch input{
+  flex:1; background:none; border:none; color:#fff; font-size:14.5px; outline:none; min-width:0;
+}
+.covSearch input::placeholder{ color:rgba(255,255,255,.45); }
+.covCount{
+  font-size:11px; font-weight:600; color:var(--navy); background:var(--green);
+  padding:3px 9px; border-radius:var(--rp); flex:0 0 auto;
+}
+
+.covList ul{ list-style:none; display:grid; grid-template-columns:repeat(3,1fr); gap:2px 18px; }
+.covList li{
+  display:flex; align-items:center; gap:9px; font-size:13.5px; color:rgba(255,255,255,.82);
+  padding:11px 12px; border-radius:10px; border-bottom:1px solid rgba(255,255,255,.08);
+  transition:background .3s var(--e), color .3s var(--e), transform .35s var(--e);
+}
+.covList li:hover{ background:rgba(255,255,255,.08); color:#fff; transform:translateX(3px); }
+.covList li svg{ color:var(--green); flex:0 0 auto; opacity:.8; }
+.covNone{ font-size:14px; color:rgba(255,255,255,.7); padding:20px 0; }
+
+@media (max-width:1080px){
+  .covInner{ grid-template-columns:1fr; gap:34px; }
+  .covHead{ position:static; }
+  .covList ul{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:600px){
+  .coverage{ padding:64px 0; }
+  .covList ul{ grid-template-columns:1fr; }
+}

@@ -1,0 +1,84 @@
+/* =========================================================================
+   MEGA MENU — "Our Services" dropdown panel.
+   Frosted glass, unclips from the header, contents stagger in behind it.
+   ========================================================================= */
+.mega{
+  position:fixed; left:0; right:0; top:0; z-index:115;
+  padding:124px 0 44px; pointer-events:none;
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path .62s var(--eo);
+  background:rgba(252,253,255,.82);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  backdrop-filter:blur(28px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.6);
+  box-shadow:0 40px 70px -40px rgba(14,27,46,.35);
+  border-bottom-left-radius:22px; border-bottom-right-radius:22px;
+}
+.mega.on{ clip-path:inset(0 0 0 0); pointer-events:auto; }
+/* a thread of brand gradient along the bottom lip */
+.mega:after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--grad);
+  transform:scaleX(0); transform-origin:left; transition:transform .8s var(--eo) .1s;
+}
+.mega.on:after{ transform:scaleX(1); }
+
+.megaGrid{ display:grid; grid-template-columns:1.6fr .4fr; gap:44px; max-width:1300px; margin:0 auto; padding:0 40px; }
+.megaCols{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+
+.megaCat{
+  display:block; padding:18px; border-radius:6px; cursor:pointer; position:relative;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .5s var(--eo), transform .6s var(--eo), background .35s var(--e);
+}
+.mega.on .megaCat{
+  opacity:1; transform:none;
+  transition-delay:calc(var(--i) * 48ms + 120ms);
+}
+.megaCat:hover{ background:rgba(11,99,216,.07); }
+.megaCat:before{
+  content:""; position:absolute; left:0; top:14px; bottom:14px; width:2px; background:var(--blue);
+  transform:scaleY(0); transform-origin:top; transition:transform .45s var(--eo);
+}
+.megaCat:hover:before{ transform:scaleY(1); }
+.megaCat .h{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.megaCat .dot{
+  width:30px; height:30px; border-radius:8px; display:grid; place-items:center;
+  font-size:10px; font-weight:700; color:#fff; flex:0 0 auto;
+  transition:transform .45s var(--eo);
+}
+.megaCat:hover .dot{ transform:rotate(-8deg) scale(1.08); }
+.megaCat h4{ font-family:var(--fSans); font-size:15px; font-weight:600; color:var(--navy); }
+.megaCat ul{ list-style:none; }
+.megaCat li{ font-size:12.5px; color:var(--slate); padding:3px 0; }
+.megaCat .more{
+  font-size:11px; font-weight:600; color:var(--blue); margin-top:8px; display:inline-flex;
+  align-items:center; gap:5px; transition:gap .35s var(--e);
+}
+.megaCat:hover .more{ gap:10px; }
+
+.megaSide{
+  padding-left:34px; border-left:1px solid var(--line); display:flex; flex-direction:column;
+  opacity:0; transform:translateY(16px);
+  transition:opacity .5s var(--eo) .3s, transform .6s var(--eo) .3s;
+}
+.mega.on .megaSide{ opacity:1; transform:none; }
+.megaImg{ position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:4px; background:var(--sand); margin-bottom:16px; }
+.megaImg .ph{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.05); transition:opacity .6s var(--e), transform 1.2s var(--eo); }
+.megaImg .ph.on{ opacity:1; transform:none; }
+.megaIcon{
+  position:absolute; left:12px; bottom:12px; width:44px; height:44px; border-radius:10px;
+  background:rgba(255,255,255,.9); color:var(--blue); display:grid; place-items:center;
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+}
+.megaSide .t{ font-family:var(--fSans); font-weight:600; font-size:16px; margin-bottom:7px; }
+.megaSide .s{ font-size:12.5px; line-height:1.65; color:var(--slate); margin-bottom:16px; }
+.allLink{ font-size:12.5px; font-weight:600; color:var(--blue); }
+
+.megaScrim{
+  position:fixed; inset:0; z-index:110; background:rgba(14,27,46,.28); opacity:0; pointer-events:none;
+  transition:opacity .45s var(--e);
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.megaScrim.on{ opacity:1; pointer-events:auto; }
+
+@media (max-width:1080px){ .mega, .megaScrim{ display:none; } }

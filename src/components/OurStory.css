@@ -1,0 +1,8 @@
+.timeline{ position:relative; display:flex; flex-direction:column; gap:0; }
+.timeline:before{ content:""; position:absolute; left:64px; top:10px; bottom:10px; width:1px; background:var(--line); }
+.tItem{ display:grid; grid-template-columns:64px 24px 1fr; align-items:start; padding:22px 0; }
+.tYear{ font-family:var(--fSans); font-weight:800; font-size:13px; color:var(--blue); }
+.tDot{ width:10px; height:10px; border-radius:50%; background:var(--blue); margin-top:5px; box-shadow:0 0 0 5px var(--blueLt); justify-self:center; }
+.tBody h4{ font-family:var(--fSans); font-weight:700; font-size:16px; color:var(--navy); margin-bottom:6px; }
+.tBody p{ font-size:13.5px; line-height:1.75; color:var(--slate); max-width:56ch; }
+@media (max-width:600px){ .timeline:before{ left:8px; } .tItem{ grid-template-columns:16px 1fr; } .tYear{ display:none; } }

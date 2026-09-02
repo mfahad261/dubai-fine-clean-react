@@ -1,0 +1,54 @@
+.formCard{ background:#fff; border-radius:26px; padding:38px; box-shadow:var(--sh2); }
+.formCard form{ display:flex; flex-direction:column; gap:18px; }
+.fieldRow{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.field label{ display:block; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--slate2); margin-bottom:9px; }
+.field input, .field select, .field textarea{
+  width:100%; background:var(--cream); border:1.5px solid transparent; border-radius:13px; padding:13px 15px;
+  font-family:inherit; font-size:14.5px; color:var(--navy); resize:vertical; transition:border-color .3s var(--e);
+}
+.field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--blue); }
+.formCard .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.btn.fullWidth{ width:100%; }
+.formNote{ font-size:12px; line-height:1.7; color:var(--slate2); text-align:center; }
+.formNote a{ color:var(--blue); font-weight:600; }
+.formCard.sent{ text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; padding:60px 38px; }
+.formCard.sent h3{ font-family:var(--fSans); font-weight:800; font-size:23px; color:var(--navy); }
+.formCard.sent .lede{ max-width:42ch; }
+@media (max-width:600px){ .fieldRow{ grid-template-columns:1fr; } .formCard{ padding:26px; } }
+
+/* ---- states added when the form became a real endpoint ---- */
+
+/* Honeypot: off-screen rather than display:none, because some bots skip
+   anything explicitly hidden. Screen readers ignore it via aria-hidden. */
+.hpField{
+  position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;
+  opacity:0; pointer-events:none;
+}
+
+.fieldErr{
+  display:block; margin-top:7px; font-size:12px; color:#C2412D; line-height:1.5;
+}
+.fieldHint{
+  display:block; margin-top:7px; font-size:11.5px; color:var(--slate2); line-height:1.5;
+}
+.field input[aria-invalid="true"],
+.field select[aria-invalid="true"]{ border-color:#C2412D; }
+
+.formError{
+  margin-top:4px; padding:13px 16px; border-radius:6px; font-size:13px; line-height:1.6;
+  background:#FCEDEA; border:1px solid #F0C9C1; color:#8E2C1D;
+}
+.formError a{ color:#8E2C1D; font-weight:600; white-space:nowrap; }
+
+.formCard form:has(button[disabled]) .chip{ opacity:.6; }
+.field input:disabled, .field select:disabled, .field textarea:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* ---- the confirmation panel ---- */
+.formCard.sent{ text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; padding:56px 38px; }
+.sentTick{
+  width:62px; height:62px; border-radius:50%; display:grid; place-items:center;
+  background:var(--greenLt); color:var(--greenDk); margin-bottom:4px;
+}
+.formCard.sent h3{ font-family:var(--fSans); font-weight:700; font-size:22px; color:var(--navy); }
+.formCard.sent .lede{ max-width:42ch; font-size:14.5px; }
+@media (max-width:600px){ .formCard.sent{ padding:40px 24px; } }

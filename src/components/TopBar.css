@@ -1,0 +1,21 @@
+.topbar{
+  position:fixed; inset:0 0 auto 0; z-index:130; color:#fff; height:38px;
+  display:flex; align-items:center; overflow:hidden; background:var(--navy);
+  transition:transform .55s var(--eo);
+}
+.topbar:before{ content:""; position:absolute; inset:0; background:var(--grad); opacity:.92; }
+.topbar.up{ transform:translateY(-100%); }
+.tbTrack{
+  position:relative; z-index:2; display:flex; white-space:nowrap;
+  animation:tbScroll 26s linear infinite;
+}
+.tbTrack span{
+  display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:600;
+  padding:0 32px; letter-spacing:.01em;
+}
+.tbTrack span:before{ content:""; width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.65); }
+@keyframes tbScroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+@media (max-width:640px){
+  .tbTrack span{ font-size:11px; padding:0 22px; }
+}

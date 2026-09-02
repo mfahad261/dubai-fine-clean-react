@@ -1,0 +1,11 @@
+.curtain{ position:fixed; inset:0; z-index:170; pointer-events:none; display:flex; }
+.curtain i{
+  flex:1; background:var(--blue); transform:scaleY(0); transform-origin:bottom;
+  transition:transform .58s var(--e2);
+}
+.curtain i:nth-child(2){ transition-delay:.05s; }
+.curtain i:nth-child(3){ transition-delay:.1s; }
+.curtain i:nth-child(4){ transition-delay:.15s; }
+.curtain i:nth-child(5){ transition-delay:.2s; }
+.curtain.in i{ transform:scaleY(1); transform-origin:bottom; }
+.curtain.out i{ transform:scaleY(0); transform-origin:top; }
