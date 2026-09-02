@@ -31,7 +31,7 @@ const rotate = (imgs) => (i) => imgs[i % imgs.length]
 export const CATS = [
   {
     id: 'residential', no: '01', acc: '#0B6FE8', dark: false,
-    name: 'Residential Cleaning', img: CATEGORY_IMG.residential,
+    name: 'Residential Deep Cleaning', img: CATEGORY_IMG.residential,
     tags: ['Villas', 'Apartments', 'Move in / out', 'Weekly'],
     lede: "Homes cleaned to a written checklist — whether that's a weekly two-hour visit or a full villa deep clean from top to bottom.",
     items: (() => { const img = rotate([IMG.residential, IMG.bedroom, IMG.kitchenMarble, IMG.bathroomLuxury])
@@ -48,7 +48,7 @@ export const CATS = [
   },
   {
     id: 'commercial', no: '02', acc: '#1B2A41', dark: true,
-    name: 'Office & Commercial', img: CATEGORY_IMG.commercial,
+    name: 'Office & Commercial Deep Cleaning', img: CATEGORY_IMG.commercial,
     tags: ['Offices', 'Retail', 'Restaurants', 'Warehouse'],
     lede: 'Contract and one-off cleaning for offices, shops, restaurants and warehouses — scheduled outside your trading hours so nothing is interrupted.',
     items: (() => { const img = rotate([IMG.commercial, IMG.acSystems, IMG.sanitisation, IMG.kitchenMarble])
@@ -64,7 +64,7 @@ export const CATS = [
   },
   {
     id: 'construction', no: '03', acc: '#E8907C', dark: false,
-    name: 'Post-Construction', img: CATEGORY_IMG.construction,
+    name: 'Post-Construction Deep Cleaning', img: CATEGORY_IMG.construction,
     tags: ['Fine dust', 'Handover', 'Renovation', 'Debris'],
     lede: 'Fine construction dust travels everywhere and ordinary cleaning simply moves it around. This is a different process with different machinery.',
     items: (() => { const img = rotate([IMG.postConstruction, IMG.glassFacade, IMG.residential])
