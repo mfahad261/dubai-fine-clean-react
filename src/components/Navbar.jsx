@@ -108,7 +108,7 @@ export default function Navbar() {
               </span>
             </a>
             <span className="navDiv" />
-            <Button variant="wa" href={BUSINESS.whatsapp} arrow={false} icon="whatsapp" className="hideSmall" magnetic>
+            <Button variant="wa" href={BUSINESS.whatsapp} arrow={false} icon="whatsapp" className="navWa" magnetic aria-label="WhatsApp us">
               WhatsApp
             </Button>
             <button
