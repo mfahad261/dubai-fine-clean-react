@@ -19,11 +19,12 @@ export function useDraggable({ storageKey, margin = 22, snap = true } = {}) {
     const el = ref.current
     const w = el?.offsetWidth ?? 60
     const h = el?.offsetHeight ?? 120
+    const m = typeof margin === 'function' ? margin() : margin
     return {
-      minX: margin,
-      maxX: window.innerWidth - w - margin,
-      minY: margin,
-      maxY: window.innerHeight - h - margin,
+      minX: m,
+      maxX: window.innerWidth - w - m,
+      minY: m,
+      maxY: window.innerHeight - h - m,
     }
   }, [margin])
 

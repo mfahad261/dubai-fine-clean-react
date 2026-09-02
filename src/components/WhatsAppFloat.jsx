@@ -41,7 +41,12 @@ function DockButton({ variant, href, external, label, icon, onGuard, children })
 }
 
 export default function WhatsAppFloat() {
-  const { ref, pos, dragging, didDrag, handlers } = useDraggable({ storageKey: 'dfc:dock' })
+  // 22px of breathing room reads fine on desktop but leaves a visible gap
+  // from the corner on a phone-width screen — tighten it up under 640px.
+  const { ref, pos, dragging, didDrag, handlers } = useDraggable({
+    storageKey: 'dfc:dock',
+    margin: () => (window.innerWidth <= 640 ? 12 : 22),
+  })
 
   // a drag that happens to finish over a link would otherwise navigate
   const guard = useCallback((e) => { if (didDrag()) e.preventDefault() }, [didDrag])

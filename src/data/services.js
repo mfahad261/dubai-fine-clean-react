@@ -55,11 +55,11 @@ export const CATS = [
     return [
       { n: 'Office Deep Clean', d: 'Workstations, meeting rooms, pantry, washrooms, partition glass and floor treatment.', m: ['Overnight', '4–8 staff'], img: img(0) },
       { n: 'Nightly Office Contract', d: 'Recurring after-hours service with a fixed assigned team and consumables managed.', m: ['Nightly', '2–4 staff'], img: img(0) },
-      { n: 'Shop & Retail Clean', d: 'Display glass, flooring, fitting rooms and back-of-house, before or after trading hours.', m: ['3–6 hrs', '2–4 staff'], img: img(1) },
+      { n: 'Shop & Retail Deep Clean', d: 'Display glass, flooring, fitting rooms and back-of-house, before or after trading hours.', m: ['3–6 hrs', '2–4 staff'], img: img(1) },
       { n: 'Restaurant & Kitchen', d: 'Commercial kitchen degrease, extract canopy, floors and dining areas to HACCP expectations.', m: ['Overnight', '4–6 staff'], img: img(3) },
       { n: 'Warehouse & Industrial', d: 'High-level dusting, racking, floor scrubbing with ride-on machines and loading bays.', m: ['1–3 days', '6+ staff'], img: img(0) },
-      { n: 'Salon & Spa Clean', d: 'Treatment rooms, basins, mirrors and floors with sanitisation between shifts.', m: ['3–5 hrs', '2–3 staff'], img: img(2) },
-      { n: 'Post-Event Clean', d: 'Full clean-down after functions and exhibitions, including waste clearance.', m: ['4–8 hrs', '4–8 staff'], img: img(0) },
+      { n: 'Salon & Spa Deep Clean', d: 'Treatment rooms, basins, mirrors and floors with sanitisation between shifts.', m: ['3–5 hrs', '2–3 staff'], img: img(2) },
+      { n: 'Post-Event Deep Clean', d: 'Full clean-down after functions and exhibitions, including waste clearance.', m: ['4–8 hrs', '4–8 staff'], img: img(0) },
     ]})(),
   },
   {
@@ -70,7 +70,7 @@ export const CATS = [
     items: (() => { const img = rotate([IMG.postConstruction, IMG.glassFacade, IMG.residential])
     return [
       { n: 'Post-Construction Deep Clean', d: 'Three stages: debris removal, fine dust extraction with HEPA units, then full detail clean.', m: ['1–3 days', '6+ staff'], img: img(0) },
-      { n: 'Post-Renovation Clean', d: 'Targeted to renovated rooms with protection of untouched areas and finished surfaces.', m: ['6–12 hrs', '3–5 staff'], img: img(0) },
+      { n: 'Post-Renovation Deep Clean', d: 'Targeted to renovated rooms with protection of untouched areas and finished surfaces.', m: ['6–12 hrs', '3–5 staff'], img: img(0) },
       { n: 'Paint & Adhesive Removal', d: 'Careful removal of overspray, grout haze, silicone and sticker residue from glass and tile.', m: ['4–8 hrs', '2–3 staff'], img: img(1) },
       { n: 'Debris & Waste Clearance', d: 'Sorted removal and licensed disposal of construction waste from site.', m: ['Half day', '3–4 staff'], img: img(0) },
       { n: 'Handover Detail Clean', d: 'Final snag-standard clean before developer or landlord inspection.', m: ['6–10 hrs', '4 staff'], img: img(2) },
