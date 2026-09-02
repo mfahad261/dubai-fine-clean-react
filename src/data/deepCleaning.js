@@ -7,6 +7,18 @@
 // ---------------------------------------------------------------------------
 
 import { IMG } from './images.js'
+import { CATS } from './services.js'
+
+// The client's three headline categories — Residential, Office & Commercial
+// and Post-Construction — are technically part of "Our Services", but he
+// wants them called out again here as the flagship entry point into Deep
+// Cleaning, ahead of the five groups below. They link through to their full
+// listing on the Services side rather than duplicating it.
+const FEATURED_IDS = ['residential', 'commercial', 'construction']
+export const DEEP_FEATURED = FEATURED_IDS.map((id) => {
+  const c = CATS.find((cat) => cat.id === id)
+  return { id: c.id, name: c.name, acc: c.acc, lede: c.lede, img: c.img, to: `/services/${c.id}` }
+})
 
 export const DEEP_GROUPS = [
   {

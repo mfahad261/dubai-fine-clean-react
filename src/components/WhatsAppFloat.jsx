@@ -40,12 +40,16 @@ function DockButton({ variant, href, external, label, icon, onGuard, children })
   )
 }
 
+// 22px of breathing room reads fine on desktop but leaves a visible gap
+// from the corner on a phone-width screen — tighten it up under 640px.
+// Declared outside the component so useDraggable's effects see the same
+// function reference on every render, instead of re-firing every time.
+const dockMargin = () => (window.innerWidth <= 640 ? 12 : 22)
+
 export default function WhatsAppFloat() {
-  // 22px of breathing room reads fine on desktop but leaves a visible gap
-  // from the corner on a phone-width screen — tighten it up under 640px.
   const { ref, pos, dragging, didDrag, handlers } = useDraggable({
     storageKey: 'dfc:dock',
-    margin: () => (window.innerWidth <= 640 ? 12 : 22),
+    margin: dockMargin,
   })
 
   // a drag that happens to finish over a link would otherwise navigate

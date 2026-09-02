@@ -10,7 +10,8 @@
  */
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { DEEP_GROUPS, deepServiceCount } from '../data/deepCleaning.js'
+import { DEEP_FEATURED, DEEP_GROUPS, deepServiceCount } from '../data/deepCleaning.js'
+import Icon from './Icon.jsx'
 import './DeepMenu.css'
 
 // Dropdown for the Deep Cleaning division. Styled darker than the Services
@@ -28,6 +29,26 @@ export default function DeepMenu({ open, onClose }) {
     <>
       <div className={`megaScrim ${open ? 'on' : ''}`} onClick={onClose} />
       <div className={`deepMenu ${open ? 'on' : ''}`}>
+        <div className="deepFeatured">
+          {DEEP_FEATURED.map((f, i) => (
+            <Link
+              key={f.id}
+              to={f.to}
+              onClick={onClose}
+              className="deepFeatCard"
+              style={{ '--acc': f.acc, '--i': i }}
+            >
+              <span className="deepFeatImg" style={{ backgroundImage: `url(${f.img})` }} />
+              <span className="deepFeatScrim" />
+              <span className="deepFeatTag">Most booked</span>
+              <span className="deepFeatBody">
+                <h4>{f.name}</h4>
+                <span className="deepFeatGo">Explore<Icon name="arrowRight" size={13} /></span>
+              </span>
+            </Link>
+          ))}
+        </div>
+
         <div className="deepGrid">
           <div className="deepCols">
             {DEEP_GROUPS.map((g, i) => (

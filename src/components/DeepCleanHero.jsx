@@ -4,11 +4,13 @@
  * WHERE IT APPEARS: /deep-cleaning, at the top.
  * WHAT IT DOES:     The banner for the Deep Cleaning division, with jump links to each group.
  */
+import { Link } from 'react-router-dom'
 import { VIDEOS } from '../data/videos.js'
-import { DEEP_GROUPS, deepServiceCount } from '../data/deepCleaning.js'
+import { DEEP_FEATURED, DEEP_GROUPS, deepServiceCount } from '../data/deepCleaning.js'
 import Reveal from './Reveal.jsx'
 import Eyebrow from './Eyebrow.jsx'
 import Button from './Button.jsx'
+import Icon from './Icon.jsx'
 import './DeepCleanHero.css'
 
 export default function DeepCleanHero() {
@@ -42,7 +44,23 @@ export default function DeepCleanHero() {
             </Button>
           </div>
         </Reveal>
-        <Reveal delay={240}>
+        <Reveal delay={220}>
+          <div className="dcFeatured">
+            {DEEP_FEATURED.map((f) => (
+              <Link key={f.id} to={f.to} className="dcFeatCard" style={{ '--acc': f.acc }}>
+                <span className="dcFeatImg" style={{ backgroundImage: `url(${f.img})` }} />
+                <span className="dcFeatScrim" />
+                <span className="dcFeatTag">Most booked</span>
+                <span className="dcFeatBody">
+                  <h3>{f.name}</h3>
+                  <span className="dcFeatGo">Explore<Icon name="arrowRight" size={14} /></span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={280}>
           <ul className="dcJump">
             {DEEP_GROUPS.map((g) => (
               <li key={g.id}>
