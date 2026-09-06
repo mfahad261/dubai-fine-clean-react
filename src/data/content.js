@@ -103,6 +103,7 @@ export const QUOTE_SERVICES = {
   post: { hrs: [8, 16], crew: [4, 6], label: 'Post-construction' },
   sofa: { hrs: [1, 3], crew: [2, 2], label: 'Sofa & carpet' },
   ac: { hrs: [3, 6], crew: [2, 3], label: 'AC duct & coil' },
+  water: { hrs: [3, 5], crew: [2, 3], label: 'Water tank cleaning' },
 }
 
 export const QUOTE_PROPERTY_TYPES = {

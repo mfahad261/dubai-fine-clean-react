@@ -18,6 +18,10 @@ import surfaces from '../assets/services/surfaces.jpg'
 import acSystems from '../assets/services/ac-systems.jpg'
 import exterior from '../assets/services/exterior.jpg'
 import sanitisation from '../assets/services/sanitisation.jpg'
+import waterTank from '../assets/services/water-tank.jpg'
+import overheadTank from '../assets/services/overhead-tank.jpg'
+import undergroundTank from '../assets/services/underground-tank.jpg'
+import waterQualityTest from '../assets/services/water-quality-test.jpg'
 
 import residentialTeam from '../assets/team/residential-team.jpg'
 
@@ -52,6 +56,10 @@ export const IMG = {
   acSystems,
   exterior,
   sanitisation,
+  waterTank,
+  overheadTank,
+  undergroundTank,
+  waterQualityTest,
   residentialTeam,
   glassFacade,
   detailFinishing,
@@ -104,6 +112,7 @@ export const CATEGORY_IMG = {
   construction: postConstruction,
   surfaces,
   air: acSystems,
+  water: waterTank,
   exterior,
   sanitis: sanitisation,
 }

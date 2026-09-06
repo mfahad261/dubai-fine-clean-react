@@ -1,16 +1,18 @@
 /**
  * services — DATA
  * ---------------------------------------------------------------------------
- * "Our Services" — the six categories, their descriptions and every individual service.
+ * "Our Services" — the seven categories, their descriptions and every individual service.
  */
 // Pricing is deliberately absent site-wide: the client quotes in writing
 // after a survey, so publishing "from" figures only invites arguments.
 // Each service carries its scope (`m`) instead — hours and crew size.
 //
-// "Our Services" — the six categories the client lists under that menu on
-// dubaifineclean.com. Deep Cleaning is deliberately NOT here: the client
-// treats it as a separate division with its own top-level menu, so it lives
-// in deepCleaning.js.
+// "Our Services" — the seven categories the client lists under that menu on
+// dubaifineclean.com. Water tank cleaning is its own category, not folded
+// into AC duct & coil — the two are unrelated jobs that happened to share a
+// slab of copy in an earlier draft. Deep Cleaning is deliberately NOT here:
+// the client treats it as a separate division with its own top-level menu,
+// so it lives in deepCleaning.js.
 
 import { CATEGORY_IMG, IMG } from './images.js'
 
@@ -22,6 +24,7 @@ export const PICT = {
   construction: 'M8 54h48M14 54V30l18-14 18 14v24M24 54V40h16v14',
   surfaces: 'M8 20h48v28H8zM8 34h48M20 20v28M40 20v28M16 14c4-4 8-4 12 0s8 4 12 0 8-4 12 0',
   air: 'M10 14h44v22H10zM18 20v10M26 20v10M34 20v10M42 20v10M16 44c6 0 6 8 12 8s6-8 12-8 6 8 12 8',
+  water: 'M16 16h32l4 12v28a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V28zM24 8h16v8H24zM16 30h32M24 42h16',
   exterior: 'M12 8h40v48H12zM32 8v48M12 24h40M12 40h40',
   sanitis: 'M26 8h12v8H26zM22 16h20l4 12v28H18V28zM26 34h12M26 42h12',
 }
@@ -96,21 +99,33 @@ export const CATS = [
   },
   {
     id: 'air', no: '05', acc: '#0A4FB5', dark: false,
-    name: 'AC Duct, Coil & Water', img: CATEGORY_IMG.air,
-    tags: ['Ducts', 'Coils', 'Water tank', 'Air quality'],
+    name: 'AC Duct & Coil Cleaning', img: CATEGORY_IMG.air,
+    tags: ['Ducts', 'Coils', 'Filters', 'Air quality'],
     lede: "In Dubai's climate, duct and coil condition drives both your air quality and your cooling bill. Cleaned with negative-air machinery, not brushes.",
     items: (() => { const img = rotate([IMG.acSystems, IMG.residential, IMG.postConstruction, IMG.kitchenMarble])
     return [
       { n: 'AC Duct Cleaning', d: 'Negative-air extraction of supply and return ducting with before/after camera footage.', m: ['3–6 hrs', '2–3 staff'], img: img(0) },
       { n: 'Coil & Filter Clean', d: 'Evaporator and condenser coil wash, filter replacement, drain pan sanitisation.', m: ['2–4 hrs', '2 staff'], img: img(0) },
       { n: 'Full AC Service Pack', d: 'Ducts, coils, filters, grilles and drainage across the whole property.', m: ['1 day', '3–4 staff'], img: img(1) },
-      { n: 'Water Tank Cleaning', d: 'Drain, scrub, disinfect and refill with a DM-compliant certificate issued.', m: ['3–5 hrs', '2–3 staff'], img: img(2) },
       { n: 'Kitchen Exhaust Duct', d: 'Commercial canopy and duct degreasing to fire-safety standard, certificate issued.', m: ['Overnight', '3–4 staff'], img: img(3) },
       { n: 'Air Quality Check', d: 'Particulate and humidity readings before and after treatment with a written report.', m: ['1 hr', '1 staff'], img: img(0) },
     ]})(),
   },
   {
-    id: 'sanitis', no: '06', acc: '#E9A23B', dark: false,
+    id: 'water', no: '06', acc: '#0E9BB5', dark: false,
+    name: 'Water Tank Cleaning', img: CATEGORY_IMG.water,
+    tags: ['Ground tank', 'Overhead tank', 'Disinfection', 'DM compliant'],
+    lede: 'Stored water sits for weeks in Dubai heat — sediment and bacterial growth build up quietly. Drained, scrubbed, disinfected and refilled to Dubai Municipality standard.',
+    items: (() => { return [
+      { n: 'Water Tank Cleaning', d: 'Drain, scrub, disinfect and refill with a DM-compliant certificate issued.', m: ['3–5 hrs', '2–3 staff'], img: IMG.waterTank },
+      { n: 'Underground Tank Cleaning', d: 'Sediment and biofilm removal from underground storage tanks, drained and refilled.', m: ['4–6 hrs', '2–3 staff'], img: IMG.undergroundTank },
+      { n: 'Overhead Tank Cleaning', d: 'Rooftop tank access, drain, scrub, disinfect and refill with certificate issued.', m: ['3–5 hrs', '2–3 staff'], img: IMG.overheadTank },
+      { n: 'Tank Disinfection & Chlorination', d: 'Chemical disinfection dosing and contact-time flush to eliminate bacterial growth.', m: ['2–3 hrs', '2 staff'], img: IMG.waterTank },
+      { n: 'Water Quality Testing', d: 'On-site testing for chlorine residual, turbidity and bacterial contamination with a written report.', m: ['1 hr', '1 staff'], img: IMG.waterQualityTest },
+    ]})(),
+  },
+  {
+    id: 'sanitis', no: '07', acc: '#E9A23B', dark: false,
     name: 'Sanitisation & Disinfection', img: CATEGORY_IMG.sanitis,
     tags: ['High-touch', 'Anti-viral', 'Fogging', 'Custom plans'],
     lede: 'Targeted treatment plans that keep homes, offices and public spaces safer — used on their own or as a finishing stage after a deep clean.',

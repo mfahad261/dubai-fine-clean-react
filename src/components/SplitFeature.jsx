@@ -27,7 +27,7 @@ const PANELS = [
     top: 'Our',
     bottom: 'Services',
     v: VIDEOS.openPlan,
-    blurb: 'Residential, commercial, post-construction, surfaces, air and sanitisation — six categories, run by dedicated crews.',
+    blurb: 'Residential, commercial, post-construction, surfaces, AC duct & coil, water tank and sanitisation — seven categories, run by dedicated crews.',
     countLabel: 'services',
   },
   {

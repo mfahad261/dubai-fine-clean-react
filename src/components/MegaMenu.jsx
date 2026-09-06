@@ -2,8 +2,8 @@
  * MegaMenu — the "Our Services" dropdown.
  * ---------------------------------------------------------------------------
  * WHERE IT APPEARS: from the header, on hover or focus of "Our Services".
- * WHAT IT DOES:     Lists the six service categories with a preview image that
- *                   swaps as you move between them.
+ * WHAT IT DOES:     Lists the seven service categories with a preview image
+ *                   that swaps as you move between them.
  * ANIMATION:        The panel unclips downward, then each column lifts in on a
  *                   stagger driven by --i, so it assembles rather than appears.
  */

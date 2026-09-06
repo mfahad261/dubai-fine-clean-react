@@ -1,7 +1,7 @@
 /**
  * Services — PAGE
  * ---------------------------------------------------------------------------
- * The "Our Services" catalogue — six categories, filterable. /services/:categoryId opens pre-filtered, so a single category can be linked or bookmarked.
+ * The "Our Services" catalogue — seven categories, filterable. /services/:categoryId opens pre-filtered, so a single category can be linked or bookmarked.
  */
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
