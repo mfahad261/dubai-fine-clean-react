@@ -2,27 +2,26 @@
  * BentoServices — the services card grid on the home page.
  * ---------------------------------------------------------------------------
  * WHERE IT APPEARS: home page, under "Every service, one place".
- * WHAT IT DOES:     Six cards, one per Our Services category, each showing its
- *                   photography, number, name, blurb, tags and service count.
- * THE DETAIL:       Two things happen on hover. A soft light in the category's
- *                   own colour follows the cursor — the card writes the pointer
- *                   position to CSS variables and paints a radial highlight
- *                   there. And the still photograph cuts to footage of that
- *                   service actually being carried out.
+ * WHAT IT DOES:     Seven cards, one per Our Services category, each showing
+ *                   its photography, number, name, blurb, tags and service count.
+ * THE DETAIL:       On hover, a soft light in the category's own colour
+ *                   follows the cursor — the card writes the pointer position
+ *                   to CSS variables and paints a radial highlight there —
+ *                   while the photograph zooms, a diagonal sheen sweeps across
+ *                   it and an accent-coloured wash rises from the base.
  * LAYOUT:            Every card is the same size on purpose. An earlier version
  *                   made two of them span wider, which left rows ragged and
  *                   images at different heights — it read as broken rather than
  *                   as rhythm.
- * LOADING:           Card videos are preload="none" — they only fetch when
- *                   someone actually hovers, so six clips don't get pulled
- *                   down on page load.
+ * HOVER:            No video cut-in anymore — just the photograph, a
+ *                   diagonal light sweep and an accent-coloured wash so the
+ *                   card still feels alive without footage to fall back on.
  * MOBILE:           Collapses to one column; the spotlight is skipped since
  *                   there's no cursor to follow.
  */
 import { useCallback, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { CATS } from '../data/services.js'
-import { CATEGORY_VIDEO } from '../data/videos.js'
 import Reveal from './Reveal.jsx'
 import PictogramIcon from './PictogramIcon.jsx'
 import Icon from './Icon.jsx'
@@ -30,8 +29,6 @@ import './BentoServices.css'
 
 function ServiceCard({ cat, index }) {
   const ref = useRef(null)
-  const vid = useRef(null)
-  const clip = CATEGORY_VIDEO[cat.id]
 
   // write the pointer position onto the card so CSS can place the highlight
   const onMove = useCallback((e) => {
@@ -42,15 +39,7 @@ function ServiceCard({ cat, index }) {
     el.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`)
   }, [])
 
-  const play = () => vid.current?.play?.().catch(() => {})
-  const stop = () => {
-    const v = vid.current
-    if (!v) return
-    v.pause()
-    v.currentTime = 0
-  }
-
-  // no cursor to hover with on touch — activate the card (and its video)
+  // no cursor to hover with on touch — activate the card's hover state
   // as it crosses the middle of the viewport while scrolling instead.
   useEffect(() => {
     const el = ref.current
@@ -59,11 +48,7 @@ function ServiceCard({ cat, index }) {
     if (!mq.matches) return
 
     const io = new IntersectionObserver(
-      ([entry]) => {
-        el.classList.toggle('inView', entry.isIntersecting)
-        if (entry.isIntersecting) play()
-        else stop()
-      },
+      ([entry]) => el.classList.toggle('inView', entry.isIntersecting),
       { threshold: 0.55, rootMargin: '-15% 0px -15% 0px' },
     )
     io.observe(el)
@@ -81,25 +66,13 @@ function ServiceCard({ cat, index }) {
         to={`/services/${cat.id}`}
         ref={ref}
         onMouseMove={onMove}
-        onMouseEnter={play}
-        onMouseLeave={stop}
-        onFocus={play}
-        onBlur={stop}
         className="sCardIn"
       >
         <span className="sSpot" aria-hidden="true" />
 
         <div className="sMedia">
           <div className="sImg" style={{ backgroundImage: `url(${cat.img})` }} />
-          {clip && (
-            <video
-              ref={vid}
-              className="sVid"
-              src={clip.src}
-              poster={clip.poster}
-              muted loop playsInline preload="none" aria-hidden="true"
-            />
-          )}
+          <span className="sShine" aria-hidden="true" />
           <span className="sScrim" />
           <span className="sNo">{cat.no}</span>
           <span className="sIcon"><PictogramIcon categoryId={cat.id} size={20} /></span>

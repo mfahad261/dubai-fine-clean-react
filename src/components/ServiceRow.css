@@ -3,11 +3,11 @@
   padding:22px 24px; border-radius:var(--r2); position:relative; cursor:pointer;
   transition:background .4s var(--e), transform .4s var(--e), box-shadow .4s var(--e);
 }
-.svc:hover{ background:#fff; box-shadow:var(--sh); transform:translateX(5px); }
+.svc:hover, .svc.active{ background:#fff; box-shadow:var(--sh); transform:translateX(5px); }
 .svc + .svc{ border-top:1px solid var(--line); }
-.svc:hover + .svc{ border-top-color:transparent; }
+.svc:hover + .svc, .svc.active + .svc{ border-top-color:transparent; }
 .svc .idx{ font-family:var(--fSans); font-weight:800; font-size:14px; color:var(--acc); opacity:.45; transition:opacity .35s var(--e); }
-.svc:hover .idx{ opacity:1; }
+.svc:hover .idx, .svc.active .idx{ opacity:1; }
 .svc .nm{ font-family:var(--fSans); font-weight:700; font-size:16.5px; margin-bottom:5px; }
 .svc .ds{ font-size:13px; line-height:1.6; color:var(--slate); max-width:54ch; }
 .svc .mt{ display:flex; flex-direction:column; gap:5px; }
@@ -19,7 +19,7 @@
   color:var(--slate2); white-space:nowrap;
   transition:color .35s var(--e), gap .35s var(--e);
 }
-.svc:hover .quote{ color:var(--acc); gap:11px; }
+.svc:hover .quote, .svc.active .quote{ color:var(--acc); gap:11px; }
 @media (max-width:900px){
   .svc{ grid-template-columns:34px 1fr; gap:14px; padding:18px 14px; }
   .svc .mt{ grid-column:2; flex-direction:row; gap:14px; flex-wrap:wrap; }

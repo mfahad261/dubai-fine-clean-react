@@ -75,19 +75,3 @@ export const VIDEOS = {
   ppeTechnician: clip(ppeTechnician, ppeTechnicianPoster, 'A technician in full protective equipment at work'),
   roomFogging:   clip(roomFogging,   roomFoggingPoster,   'A technician in PPE fogging a whole room'),
 }
-
-/**
- * Which clip sits on which service card. Cards show a still until hovered,
- * then cut to footage — see components/BentoServices.jsx.
- *
- * Each line says what the viewer will actually see, so a wrong pairing is
- * obvious when reading this file rather than only in the browser.
- */
-export const CATEGORY_VIDEO = {
-  residential:  VIDEOS.vacuumLiving,    // vacuuming a living room
-  commercial:   VIDEOS.officeSanitise,  // an office, with desks
-  construction: VIDEOS.siteFogging,     // PPE, floor treatment
-  surfaces:     VIDEOS.carpetTreat,     // carpet treatment
-  air:          VIDEOS.ppeTechnician,   // specialist in protective equipment
-  sanitis:      VIDEOS.roomFogging,     // fogging a room
-}
