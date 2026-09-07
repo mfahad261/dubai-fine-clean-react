@@ -74,25 +74,25 @@ export default function WhatsAppFloat() {
   }, [consent])
 
   // While actively dragging, track the pointer with left/top — pixel-exact
-  // and no risk of the toolbar changing mid-gesture. Once it's parked,
-  // switch to right/bottom instead: mobile browsers collapse their address
-  // bar as you scroll, which changes window.innerHeight after the fact, and
-  // an anchor pinned with `top` drifted upward — appearing to float toward
-  // the middle of the screen — because that pixel value never got to hear
-  // about it. `bottom` is re-resolved against the real viewport edge on
-  // every paint, so the dock stays put.
-  const style = pos
-    ? dragging
+  // and no risk of the toolbar changing mid-gesture. Once it's parked, the
+  // resting position (pos.side/pos.bottom) is applied as a plain CSS
+  // right-or-left plus bottom margin — see useDraggable.js for why that's
+  // deliberately not derived from window.innerWidth arithmetic. `bottom`
+  // as a raw CSS value is re-resolved against the real viewport edge on
+  // every paint, so the dock stays put as a mobile browser's address bar
+  // collapses or expands.
+  const style = !pos
+    ? undefined
+    : dragging
       ? { left: pos.x, top: pos.y, right: 'auto', bottom: 'auto' }
       : {
           left: 'auto',
           top: 'auto',
-          right: window.innerWidth - pos.x - (ref.current?.offsetWidth ?? 60),
-          bottom: window.innerHeight - pos.y - (ref.current?.offsetHeight ?? 120)
-            + (bannerHeight ? bannerHeight + 16 : 0),
+          right: 'auto',
+          [pos.side]: dockMargin(),
+          bottom: pos.bottom + (bannerHeight ? bannerHeight + 16 : 0),
           transition: 'bottom .4s var(--eo)',
         }
-    : undefined
 
   return (
     <div
