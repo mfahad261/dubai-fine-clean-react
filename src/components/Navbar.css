@@ -43,7 +43,7 @@
 .nav.hide{ transform:translateY(-180%); }
 
 .brand{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
-.brandMark{ flex:0 0 auto; transition:transform .5s var(--eo); }
+.brandMark{ flex:0 0 auto; width:auto; height:46px; object-fit:contain; transition:transform .5s var(--eo); }
 .brand:hover .brandMark{ transform:rotate(-8deg) scale(1.06); }
 .brandTx .n1{
   font-family:var(--fSans); font-weight:700; font-size:17px; letter-spacing:-.03em;

@@ -6,6 +6,7 @@
  * NOTES:            It ramps on a timer and always reaches 100 — an earlier version could mathematically never finish and froze just short of the end.
  */
 import { useEffect, useState } from 'react'
+import logo from '../assets/logo/logo.png'
 import './Preloader.css'
 
 const WORDS = ['Preparing', 'Residential', 'Commercial', 'Specialist', 'Ready']
@@ -46,10 +47,7 @@ export default function Preloader() {
     <div className={`pre ${done ? 'wipe' : ''}`} aria-hidden="true">
       <div className="preBlob" />
       <div className="preInner">
-        <svg className="preDrop" viewBox="0 0 64 64">
-          <path d="M32 6C24 20 14 32 14 42a18 18 0 0 0 36 0c0-10-10-22-18-36z" />
-        </svg>
-        <div className="preMark"><span>Dubai</span><span>Fine</span><span>Clean</span></div>
+        <img className="preLogo" src={logo} alt="Dubai Fine Clean" width="150" height="142" />
         <div className="preWords">
           <div className="preWordsInner" style={{ transform: `translateY(${-word * 17}px)` }}>
             {WORDS.map((w) => <p key={w}>{w}</p>)}

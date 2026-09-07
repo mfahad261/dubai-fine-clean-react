@@ -9,6 +9,7 @@ import { CATS } from '../data/services.js'
 import { BUSINESS } from '../data/content.js'
 import { useCookieConsent } from '../context/CookieConsentContext.jsx'
 import Icon from './Icon.jsx'
+import logo from '../assets/logo/logo.png'
 import './Footer.css'
 
 export default function Footer() {
@@ -18,9 +19,7 @@ export default function Footer() {
     <footer className="footer dark">
       <div className="wrap footerGrid">
         <div className="fCol fBrand">
-          <span className="brandTx">
-            <span className="n1"><b style={{ color: 'var(--green)' }}>Dubai</b> Fine Clean</span>
-          </span>
+          <img className="fLogo" src={logo} alt="Dubai Fine Clean" width="176" height="167" />
           <p className="lede">Premium residential, commercial and specialist cleaning across Dubai, trading since {BUSINESS.since}.</p>
           <div className="fSocial">
             <a href={BUSINESS.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" filled size={17} /></a>

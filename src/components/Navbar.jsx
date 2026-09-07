@@ -20,6 +20,7 @@ import Icon from './Icon.jsx'
 import MegaMenu from './MegaMenu.jsx'
 import DeepMenu from './DeepMenu.jsx'
 import MobileMenu from './MobileMenu.jsx'
+import logoMark from '../assets/logo/logo-mark.png'
 import './Navbar.css'
 
 export default function Navbar() {
@@ -66,10 +67,7 @@ export default function Navbar() {
       <div className="navShell" onMouseLeave={scheduleClose}>
         <nav className={`nav ${pinned ? 'pinned' : ''} ${hidden && !openMenu ? 'hide' : ''} ${onDark ? 'onDark' : ''}`}>
           <Link to="/" className="brand" onClick={() => { setMobileOpen(false); closeNow() }}>
-            <svg className="brandMark" viewBox="0 0 64 64" width="40" height="40">
-              <circle cx="32" cy="32" r="30" fill="var(--blue)" />
-              <path d="M32 14C24 26 16 36 16 44a16 16 0 0 0 32 0c0-8-8-18-16-30z" fill="#fff" />
-            </svg>
+            <img className="brandMark" src={logoMark} alt="" width="41" height="46" />
             <span className="brandTx">
               <span className="n1"><b>Dubai</b> Fine Clean</span>
               <span className="n2">Business Bay · since 2016</span>
