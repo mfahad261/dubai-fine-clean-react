@@ -1,0 +1,109 @@
+/* =========================================================================
+   COOKIE CONSENT — banner + preferences modal.
+   Built entirely from the site's existing tokens (globals.css): --r/--rp
+   radii, --sh2 shadow, --blue accent, --fSans, --line borders. No new
+   colours or shapes introduced.
+   ========================================================================= */
+
+/* ---- banner ---- */
+.cookieBanner{
+  position:fixed; left:20px; right:20px; bottom:20px; z-index:200;
+  max-width:920px; margin:0 auto;
+  background:#fff; border-radius:var(--r); box-shadow:var(--sh2);
+  border:1px solid var(--line);
+  padding:26px 30px;
+  display:flex; align-items:center; gap:20px;
+  transform:translateY(140%); opacity:0;
+  transition:transform .7s var(--eo), opacity .5s var(--e);
+}
+.cookieBanner.show{ transform:none; opacity:1; }
+
+.cookieBanner .cIcon{
+  flex:0 0 auto; width:46px; height:46px; border-radius:14px;
+  background:var(--blueLt); color:var(--blue); display:grid; place-items:center;
+}
+.cookieBanner .cBody{ flex:1; min-width:0; }
+.cookieBanner .cBody p{ font-size:13.5px; line-height:1.65; color:var(--slate); }
+
+.cookieLink{
+  background:none; border:none; cursor:pointer; padding:0;
+  font-family:var(--fSans); font-size:13px; font-weight:600;
+  color:var(--blue); text-decoration:underline; text-underline-offset:3px;
+  white-space:nowrap;
+}
+.cookieLink:hover{ color:var(--blueDk); }
+
+.cookieBanner .cActions{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; flex:0 0 auto; }
+.cookieBanner .cActions .btn{ padding:12px 22px; font-size:13px; }
+
+@media (max-width:760px){
+  .cookieBanner{ left:12px; right:12px; bottom:12px; padding:22px; flex-direction:column; align-items:flex-start; gap:16px; }
+  .cookieBanner .cActions{ width:100%; gap:10px; }
+  .cookieBanner .cActions .btn{ flex:1; }
+  .cookieBanner .cIcon{ width:40px; height:40px; }
+}
+
+/* focus states — same accent as the rest of the site, always visible */
+.cookieBanner :focus-visible,
+.cookieModal :focus-visible{
+  outline:2px solid var(--blue); outline-offset:2px; border-radius:8px;
+}
+
+/* ---- preferences modal ---- */
+.cookieScrim{
+  position:fixed; inset:0; z-index:210; background:rgba(14,27,46,.5);
+  -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; animation:cookieFade .35s var(--e) forwards;
+}
+@keyframes cookieFade{ to{ opacity:1; } }
+
+.cookieModal{
+  background:#fff; border-radius:var(--r); box-shadow:var(--sh2);
+  max-width:520px; width:100%; max-height:86vh; overflow-y:auto;
+  padding:34px; position:relative;
+  transform:translateY(16px) scale(.98); opacity:0;
+  animation:cookiePop .4s var(--eo) forwards;
+}
+@keyframes cookiePop{ to{ transform:none; opacity:1; } }
+
+.cookieModal h2{ font-family:var(--fSans); font-size:21px; font-weight:700; letter-spacing:-.02em; color:var(--navy); margin-bottom:8px; }
+.cookieModal > p{ font-size:13.5px; color:var(--slate); line-height:1.65; margin-bottom:10px; padding-right:30px; }
+
+.cClose{
+  position:absolute; top:22px; right:22px; width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--line); background:none; display:grid; place-items:center; color:var(--slate);
+  cursor:pointer; transition:background .3s var(--e), color .3s var(--e);
+}
+.cClose:hover{ background:var(--cream); color:var(--navy); }
+
+.cPref{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:18px;
+  padding:18px 0; border-top:1px solid var(--line);
+}
+.cPref:first-of-type{ border-top:none; margin-top:8px; }
+.cPref h3{ font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.cPref p{ font-size:12.5px; color:var(--slate2); line-height:1.55; max-width:32ch; }
+
+/* toggle switch */
+.cSwitch{
+  position:relative; flex:0 0 auto; width:44px; height:26px; margin-top:2px;
+  border-radius:var(--rp); background:var(--sand); border:none; cursor:pointer;
+  transition:background .3s var(--e);
+}
+.cSwitch:before{
+  content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%;
+  background:#fff; box-shadow:0 2px 6px rgba(14,27,46,.25); transition:transform .3s var(--eo);
+}
+.cSwitch.on{ background:var(--blue); }
+.cSwitch.on:before{ transform:translateX(18px); }
+.cSwitch:disabled{ cursor:not-allowed; opacity:.65; }
+.cSwitch.on:disabled{ background:var(--greenTx); }
+
+.cookieModal .cActions{ display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+.cookieModal .cActions .btn{ flex:1; padding:14px 20px; font-size:13.5px; }
+
+@media (max-width:480px){
+  .cookieModal{ padding:26px; }
+  .cClose{ top:18px; right:18px; }
+}

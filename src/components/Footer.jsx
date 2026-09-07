@@ -7,11 +7,13 @@
 import { Link } from 'react-router-dom'
 import { CATS } from '../data/services.js'
 import { BUSINESS } from '../data/content.js'
+import { useCookieConsent } from '../context/CookieConsentContext.jsx'
 import Icon from './Icon.jsx'
 import './Footer.css'
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const { openPreferences } = useCookieConsent()
   return (
     <footer className="footer dark">
       <div className="wrap footerGrid">
@@ -37,6 +39,7 @@ export default function Footer() {
           <Link to="/about">About Us</Link>
           <Link to="/services">All Services</Link>
           <Link to="/contact">Contact</Link>
+          <button type="button" onClick={openPreferences}>Cookie settings</button>
         </div>
 
         <div className="fCol">

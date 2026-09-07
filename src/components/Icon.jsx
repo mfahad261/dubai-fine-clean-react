@@ -26,6 +26,7 @@ const PATHS = {
   pin: 'M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
   mail: 'M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM3 6l9 7 9-7',
   chevron: 'M6 9l6 6 6-6',
+  close: 'M6 6l12 12M18 6L6 18',
 }
 
 // These marks only read correctly as solid shapes. Whatever the caller passes,

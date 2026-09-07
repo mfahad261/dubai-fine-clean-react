@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useSmoothScroll } from './hooks/useSmoothScroll.js'
+import { CookieConsentProvider } from './context/CookieConsentContext.jsx'
 import Navbar from './components/Navbar.jsx'
 import TopBar from './components/TopBar.jsx'
 import Footer from './components/Footer.jsx'
@@ -28,7 +29,7 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <CookieConsentProvider>
       <Preloader />
       <ScrollProgressBar />
       <CustomCursor />
@@ -52,6 +53,6 @@ export default function App() {
       </PageTransition>
       <Footer />
       <WhatsAppFloat />
-    </>
+    </CookieConsentProvider>
   )
 }
