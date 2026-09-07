@@ -7,12 +7,16 @@
  *                   the client quotes in writing after a survey.
  * HOW IT CONNECTS:  data-peek-* opts the row into the cursor-following image
  *                   preview rendered globally by <HoverPeek />.
+ *                   "Get a quote" carries the service name to /contact via
+ *                   router state, so ContactForm.jsx can drop it straight
+ *                   into the notes field instead of losing the context.
  * MOBILE:           No cursor to hover with on touch, so the row's hover
  *                   state (lift, highlighted index, "Get a quote" colour)
  *                   instead activates as it crosses the middle of the screen
  *                   while scrolling — same trick as the home page cards.
  */
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import Icon from './Icon.jsx'
 import './ServiceRow.css'
 
@@ -47,7 +51,9 @@ export default function ServiceRow({ item, index }) {
       </div>
 
       <div className="pr">
-        <span className="quote">Get a quote<Icon name="arrowRight" size={13} /></span>
+        <Link to="/contact" state={{ service: item.n }} className="quote">
+          Get a quote<Icon name="arrowRight" size={13} />
+        </Link>
       </div>
     </div>
   )

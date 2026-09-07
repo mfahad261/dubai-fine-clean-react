@@ -6,10 +6,22 @@
  * NOTES:            Same reading rhythm as the Services page but a different mechanic, so the two pages don't feel identical.
  */
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Reveal from './Reveal.jsx'
 import PictogramIcon from './PictogramIcon.jsx'
 import Icon from './Icon.jsx'
 import './DeepCleanIndex.css'
+
+// DEEP_GROUPS use their own ids (homes, rooms, fabric, business, exterior),
+// not the "Our Services" category ids PictogramIcon's glyphs are keyed by —
+// mapped here to the closest existing icon rather than adding a near-dupe set.
+const GROUP_ICON = {
+  homes: 'residential',
+  rooms: 'sanitis',
+  fabric: 'surfaces',
+  business: 'commercial',
+  exterior: 'exterior',
+}
 
 // Row catalogue, like the Services page — but where Services keeps its
 // photography in a cursor-following thumbnail, here the image slides in
@@ -24,7 +36,7 @@ export default function DeepCleanIndex({ group }) {
         <Reveal as="header" className="dcGroupHead">
           <div className="dcGroupMark">
             <span className="dcGroupNo">{group.no}</span>
-            <span className="dcGroupIcon"><PictogramIcon categoryId="residential" size={20} /></span>
+            <span className="dcGroupIcon"><PictogramIcon categoryId={GROUP_ICON[group.id]} size={20} /></span>
           </div>
           <div>
             <h2 className="ed">{group.name}</h2>
@@ -60,7 +72,7 @@ export default function DeepCleanIndex({ group }) {
               </div>
 
               <div className="dcItemPrice">
-                <span className="quote">Get a quote</span>
+                <Link to="/contact" state={{ service: it.n }} className="quote">Get a quote</Link>
               </div>
 
               {/* slides in from the right as the row opens */}

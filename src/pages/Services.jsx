@@ -6,6 +6,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CATS, getCategory } from '../data/services.js'
+import { scrollToElement } from '../hooks/useSmoothScroll.js'
 import ServicesHero from '../components/ServicesHero.jsx'
 import ServiceFilters from '../components/ServiceFilters.jsx'
 import ServiceCatalogue from '../components/ServiceCatalogue.jsx'
@@ -35,8 +36,7 @@ export default function Services() {
     navigate(id === 'all' ? '/services' : `/services/${id}`, { replace: true })
     // let the filter paint before scrolling to the first visible category
     requestAnimationFrame(() => {
-      const el = document.querySelector('.catalogue .cat')
-      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' })
+      scrollToElement(document.querySelector('.catalogue .cat'), -70)
     })
   }
 

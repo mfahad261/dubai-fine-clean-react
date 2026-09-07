@@ -13,8 +13,13 @@
  *
  * BACKEND: server/routes/contact.js (or api/contact.js if deployed serverless).
  * Nothing works until .env exists — see SETUP-EMAIL.md.
+ * ARRIVING FROM A SERVICE: "Get a quote" on a service row navigates here with
+ * router state `{ service: '<name>' }` (see ServiceRow.jsx,
+ * DeepCleanIndex.jsx) — dropped into the notes field on mount so the
+ * enquiry keeps that context instead of arriving blank.
  */
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { CHIPS, BUSINESS } from '../data/content.js'
 import Button from './Button.jsx'
 import Icon from './Icon.jsx'
@@ -30,7 +35,12 @@ const initial = {
 }
 
 export default function ContactForm() {
-  const [form, setForm] = useState(initial)
+  const location = useLocation()
+  const preService = location.state?.service
+
+  const [form, setForm] = useState(() => (
+    preService ? { ...initial, notes: `Enquiry about: ${preService}` } : initial
+  ))
   const [picked, setPicked] = useState([])
   const [status, setStatus] = useState('idle')     // idle | sending | sent | error
   const [message, setMessage] = useState('')

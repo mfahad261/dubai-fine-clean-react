@@ -26,7 +26,12 @@
   --fSans:"Bricolage Grotesque","Segoe UI",Helvetica,Arial,sans-serif;
   --fSerif:"Instrument Serif",Georgia,"Times New Roman",serif;
 }
-html{background:var(--cream);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+/* Lenis (hooks/useSmoothScroll.js) already drives smooth scrolling on
+   pointer/wheel input. `scroll-behavior:smooth` here used to additionally
+   intercept every one-off JS scroll write (Lenis's own internal resets
+   included), turning what should be an instant jump — e.g. resetting scroll
+   position on page navigation — into a visible ~1s glide nobody asked for. */
+html{background:var(--cream);-webkit-text-size-adjust:100%}
 body{background:var(--cream);color:var(--navy);overflow-x:hidden;font-weight:400;
   font-family:var(--fSans);font-optical-sizing:auto;
   -webkit-font-smoothing:antialiased;line-height:1.65;position:relative}

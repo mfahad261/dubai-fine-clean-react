@@ -5,6 +5,7 @@
  * WHAT IT DOES:     Appears after 900px of scrolling and returns you to the top.
  */
 import { useEffect, useState } from 'react'
+import { scrollToTop } from '../hooks/useSmoothScroll.js'
 import Icon from './Icon.jsx'
 import './ScrollToTopButton.css'
 
@@ -17,7 +18,7 @@ export default function ScrollToTopButton() {
   }, [])
   if (!show) return null
   return (
-    <button className="scrollTop" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top">
+    <button className="scrollTop" onClick={() => scrollToTop(false)} aria-label="Back to top">
       <Icon name="chevron" size={18} className="up" />
     </button>
   )

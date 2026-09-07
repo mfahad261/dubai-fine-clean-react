@@ -7,6 +7,7 @@
  */
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { scrollToTop } from '../hooks/useSmoothScroll.js'
 import './PageTransition.css'
 
 // Five vertical bars sweep up to cover the screen, the route swaps behind
@@ -24,14 +25,14 @@ export default function PageTransition({ children }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) {
       setDisplayed(location)
-      window.scrollTo(0, 0)
+      scrollToTop()
       return
     }
 
     setPhase('in')
     const t1 = setTimeout(() => {
       setDisplayed(location)
-      window.scrollTo(0, 0)
+      scrollToTop()
       setPhase('out')
       const t2 = setTimeout(() => setPhase('idle'), 760)
       timers.current.push(t2)
