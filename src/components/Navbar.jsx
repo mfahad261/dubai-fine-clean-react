@@ -60,12 +60,32 @@ export default function Navbar() {
 
   useEffect(() => () => clearTimeout(closeTimer.current), [])
 
+  // Lock the page behind the full-screen mobile drawer — without this, an
+  // iOS rubber-band drag could still nudge window.scrollY while the drawer
+  // was open, which the scroll-hide logic above read as "scrolling down"
+  // and tucked the header (and its own close button) off-screen. Both html
+  // and body need the lock: html only carries overflow-x:clip globally, so
+  // body alone leaves it as the actual scrolling element and a wheel/scroll
+  // event just moves that instead.
+  useEffect(() => {
+    if (!mobileOpen) return
+    const html = document.documentElement
+    const prevHtml = html.style.overflow
+    const prevBody = document.body.style.overflow
+    html.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+    return () => {
+      html.style.overflow = prevHtml
+      document.body.style.overflow = prevBody
+    }
+  }, [mobileOpen])
+
   return (
     <>
       {/* nav and panel share a wrapper: mouseleave counts descendants, so
           moving between the two never registers as leaving */}
       <div className="navShell" onMouseLeave={scheduleClose}>
-        <nav className={`nav ${pinned ? 'pinned' : ''} ${hidden && !openMenu ? 'hide' : ''} ${onDark ? 'onDark' : ''}`}>
+        <nav className={`nav ${pinned ? 'pinned' : ''} ${hidden && !openMenu && !mobileOpen ? 'hide' : ''} ${onDark ? 'onDark' : ''}`}>
           <Link to="/" className="brand" onClick={() => { setMobileOpen(false); closeNow() }}>
             <img className="brandMark" src={logoMark} alt="" width="41" height="46" />
             <span className="brandTx">

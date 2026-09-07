@@ -11,10 +11,11 @@
  * SEE ALSO:         hooks/useDraggable.js (position + snapping)
  *                   hooks/useTilt3D.js   (the perspective tilt)
  */
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BUSINESS } from '../data/content.js'
 import { useDraggable } from '../hooks/useDraggable.js'
 import { useTilt3D } from '../hooks/useTilt3D.js'
+import { useCookieConsent } from '../context/CookieConsentContext.jsx'
 import Icon from './Icon.jsx'
 import './WhatsAppFloat.css'
 
@@ -51,9 +52,26 @@ export default function WhatsAppFloat() {
     storageKey: 'dfc:dock',
     margin: dockMargin,
   })
+  const { consent } = useCookieConsent()
+  const [bannerHeight, setBannerHeight] = useState(0)
 
   // a drag that happens to finish over a link would otherwise navigate
   const guard = useCallback((e) => { if (didDrag()) e.preventDefault() }, [didDrag])
+
+  // The stacked cookie banner on phones runs tall enough to fully cover the
+  // dock's default bottom-right spot — not just overlap it, hide it. Measure
+  // its real rendered height (it reflows differently across phone widths)
+  // rather than guessing a fixed number, and nudge the dock clear of it.
+  useEffect(() => {
+    if (consent || window.innerWidth > 640) { setBannerHeight(0); return }
+    const el = document.querySelector('.cookieBanner')
+    if (!el) return
+    const measure = () => setBannerHeight(el.getBoundingClientRect().height)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [consent])
 
   // While actively dragging, track the pointer with left/top — pixel-exact
   // and no risk of the toolbar changing mid-gesture. Once it's parked,
@@ -70,7 +88,9 @@ export default function WhatsAppFloat() {
           left: 'auto',
           top: 'auto',
           right: window.innerWidth - pos.x - (ref.current?.offsetWidth ?? 60),
-          bottom: window.innerHeight - pos.y - (ref.current?.offsetHeight ?? 120),
+          bottom: window.innerHeight - pos.y - (ref.current?.offsetHeight ?? 120)
+            + (bannerHeight ? bannerHeight + 16 : 0),
+          transition: 'bottom .4s var(--eo)',
         }
     : undefined
 

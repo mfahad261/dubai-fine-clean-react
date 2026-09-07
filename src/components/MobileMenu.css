@@ -1,6 +1,7 @@
 .mobileMenu{
   position:fixed; inset:0; z-index:118; background:var(--white); display:none;
-  flex-direction:column; justify-content:center; padding:90px 26px 26px; gap:2px; overflow:auto;
+  flex-direction:column; justify-content:center; padding:90px 26px 26px; gap:2px;
+  overflow:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
 }
 .mobileMenu.on{ display:flex; }
 .mobileMenu a, .mobileMenu button{

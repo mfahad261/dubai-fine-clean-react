@@ -38,8 +38,11 @@
 
 @media (max-width:760px){
   .cookieBanner{ left:12px; right:12px; bottom:12px; padding:22px; flex-direction:column; align-items:flex-start; gap:16px; }
-  .cookieBanner .cActions{ width:100%; gap:10px; }
-  .cookieBanner .cActions .btn{ flex:1; }
+  .cookieBanner .cActions{ width:100%; flex-direction:column; align-items:stretch; gap:10px; }
+  /* full-width stacked buttons so "Reject Non-Essential" gets room to sit on
+     one line instead of clipping under overflow:hidden at a squeezed width */
+  .cookieBanner .cActions .btn{ width:100%; white-space:normal; }
+  .cookieBanner .cActions .cookieLink{ order:-1; align-self:center; }
   .cookieBanner .cIcon{ width:40px; height:40px; }
 }
 

@@ -111,8 +111,20 @@
   .nav{ padding:12px 16px; inset:34px 10px auto; margin:0 -10px; }
   .nav.pinned{ padding:10px 12px; }
 }
-@media (max-width:360px){
-  /* on the very narrowest phones, drop the phone-number button's circle
-     and keep only WhatsApp + the menu so the header doesn't crowd */
+@media (max-width:480px){
+  /* Brand + phone icon + WhatsApp circle + burger genuinely do not fit in
+     one row at real phone widths (375–428px covers iPhone SE through Pro
+     Max) — the old 360px cutoff left them crammed just past the edge, which
+     pushed the burger button off-screen and out of reach entirely rather
+     than just looking tight. Drop the phone button; WhatsApp + burger cover
+     the same ground. */
   #navPhone{ display:none; }
+}
+@media (max-width:340px){
+  /* Still tight on the smallest phones (iPhone SE 1st-gen, some budget
+     Android) even with the phone button gone — the tagline under the brand
+     name is the next biggest thing to give up. */
+  .brandTx .n2{ display:none; }
+  .navRight{ gap:8px; }
+  .nav{ padding:12px 10px; }
 }
