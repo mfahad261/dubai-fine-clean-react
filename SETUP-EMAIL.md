@@ -1,10 +1,11 @@
 # Getting the contact form sending email
 
-Fifteen minutes, start to finish. You need a Gmail account and nothing else.
+About twenty minutes, start to finish. You need your Hostinger login and
+nothing else.
 
-**Do not send me the password.** It goes in a file on your own machine. If it
-ever appears in a chat, an email, or a screenshot, treat it as burned and
-generate a new one — it takes thirty seconds.
+**Do not send the mailbox password to anyone.** It goes in a file on your own
+machine. If it ever appears in a chat, an email, or a screenshot, treat it as
+burned and change it in hPanel — it takes thirty seconds.
 
 ---
 
@@ -12,202 +13,202 @@ generate a new one — it takes thirty seconds.
 
 Two emails go out:
 
-1. **To you** — the enquiry itself: name, number, property, what they need.
-   Hitting *reply* answers the customer directly, because Reply-To is set to
-   their address.
-2. **To them** — a confirmation saying it arrived and you'll be in touch,
-   with your phone number and a WhatsApp button.
+1. **To you** — the enquiry itself: name, number, property, community, what
+   they need. Hitting *reply* answers the customer directly, because Reply-To
+   is set to their address.
+2. **To them** — a confirmation saying it arrived and you'll be in touch, with
+   your phone number and a WhatsApp button.
 
-If the customer leaves the email field blank, only email 1 is sent. If email 2
-fails for any reason, the form still reports success — because the enquiry
-*did* reach you, and telling them it failed would only make them send it twice.
-
----
-
-## Step 1 — Turn on 2-Step Verification
-
-Google will not issue an app password without it.
-
-1. Go to **https://myaccount.google.com/security**
-2. Find **2-Step Verification** → turn it on, follow the prompts
-
-Already on? Skip to step 2.
+The email field is **required** on the form, precisely so email 2 can always be
+sent. If email 2 fails anyway — they typo'd the address, their mail server
+rejects it — the form still reports success, because the enquiry *did* reach
+you, and telling them it failed would only make them send it twice.
 
 ---
 
-## Step 2 — Create an app password
+## Step 1 — Create the mailbox
 
-This is a 16-character password that only this website can use. It is **not**
-your Google password, and it can be revoked on its own without changing
-anything else.
+1. Log in to **hPanel** → **Emails**
+2. Pick **dubaifineclean.com** → **Manage**
+3. **Create email account**
+   - Address: `info`  (so the full address is `info@dubaifineclean.com`)
+   - Password: generate a strong one and **save it in your password manager**
+4. Click **Create**
 
-1. Go to **https://myaccount.google.com/apppasswords**
-   (if that page says it's unavailable, 2-Step Verification isn't fully on yet)
-2. Under **App name**, type: `Dubai Fine Clean website`
-3. Click **Create**
-4. Google shows you 16 characters in four groups, like `abcd efgh ijkl mnop`
+Give it two or three minutes to become active before testing.
 
-**Copy it now** — Google will not show it again. Losing it isn't a disaster;
-you just delete that entry and make another.
+### Check the sending details
+
+Still on that page, open **Configuration settings** → **Manual configuration**.
+You should see:
+
+| Setting          | Value                  |
+| ---------------- | ---------------------- |
+| SMTP host        | `smtp.hostinger.com`   |
+| SMTP port        | `465`                  |
+| Encryption       | SSL                    |
+| Username         | `info@dubaifineclean.com` |
+
+If your plan uses **Titan Email** instead, the host is `smtp.titan.email` —
+same port, same everything else. Use whatever that page actually shows.
 
 ---
 
-## Step 3 — Create your `.env` file
+## Step 2 — Put the password in `server/.env`
 
-In the project folder there's a file called **`.env.example`**.
-
-1. Make a copy of it in the same folder
-2. Rename the copy to exactly **`.env`** — no `.txt`, no other name
-3. Open it in VS Code and fill it in:
+There is already a file at **`server/.env`**. Open it in a text editor and put
+the mailbox password after `EMAIL_PASS=`, **wrapped in double quotes**:
 
 ```
-SMTP_USER=youraccount@gmail.com
-SMTP_PASS=abcd efgh ijkl mnop
-MAIL_TO=where-enquiries-should-land@gmail.com
-MAIL_FROM="Dubai Fine Clean" <youraccount@gmail.com>
-SITE_ORIGIN=http://localhost:5173
-PORT=5175
+EMAIL_PASS="YourMailboxPasswordHere"
 ```
 
-- `SMTP_USER` — the Gmail account doing the sending
-- `SMTP_PASS` — the 16 characters from step 2 (spaces are fine)
-- `MAIL_TO` — where enquiries arrive. Leave it blank to use `SMTP_USER`
-- `MAIL_FROM` — what the customer sees in their inbox
+**The quotes matter.** In a `.env` file a `#` starts a comment, so an unquoted
+`EMAIL_PASS=abc#123` is silently read as just `abc` — and the login then fails
+with a `535` that looks exactly like a wrong password. Quoting also protects
+spaces and any other punctuation. It costs nothing when the password is plain,
+so always use them.
 
-`.env` is already in `.gitignore`, so it can never be committed by accident.
+That's the only line you need to change. If the file is missing, copy
+`server/.env.example` to `server/.env` and fill in the same field.
+
+**`server/.env` is git-ignored** — it will never be committed, and it is the
+only place the password exists.
 
 ---
 
-## Step 4 — Check it works
+## Step 3 — Prove it works
 
 ```
 npm install
 npm run mail:check
 ```
 
-You want:
+That logs in to the mailbox without sending anything. You want:
 
 ```
-  ✓ Email is configured correctly.
+✅ Logged in successfully — the credentials are correct.
 ```
 
-If instead you get **"Invalid login"** or **"Username and Password not
-accepted"**, it's almost always one of these:
+Then send yourself a real test:
 
-| What went wrong | Fix |
-|---|---|
-| Used your normal Google password | Go back to step 2 — it must be the 16-character app password |
-| Copied it with a character missing | Delete the app password in Google, create a fresh one |
-| 2-Step Verification isn't actually on | Finish step 1 properly |
-| Typo in the email address | Check `SMTP_USER` |
+```
+npm run mail:check -- send
+```
+
+Check `info@dubaifineclean.com` — **including the spam folder**. A brand-new
+domain's first few emails often land there until the domain builds a
+reputation. See "Staying out of spam" below.
+
+### If it fails
+
+| Message | What it means |
+| --- | --- |
+| `Invalid login` / `535` | The password is wrong, or `EMAIL_USER` isn't the **full** address. It must be `info@dubaifineclean.com`, not `info`. |
+| `ENOTFOUND` / `ETIMEDOUT` | Can't reach the mail server. Check `EMAIL_HOST`. Some office, hotel and cafe wifi blocks port 465 — try a phone hotspot. |
+| `Mailbox not found` | The account isn't active yet. Wait a few minutes. |
 
 ---
 
-## Step 5 — Run it
-
-Two things need to run: the website and the email server.
+## Step 4 — Try the real form
 
 ```
 npm run dev:all
 ```
 
-That starts both at once. Or in two terminals:
+That runs the site on **http://localhost:5173** and the API on **:5175** side
+by side. Open the site, go to **/contact**, and submit a real enquiry using
+your own email address as the customer.
 
-```
-npm run dev       # the website  → http://localhost:5173
-npm run server    # the email API → http://localhost:5175
-```
-
-Go to **http://localhost:5173/contact**, fill the form in with your own email
-address, and submit. Both emails should arrive within a few seconds.
-
-**Check the spam folder the first time.** Gmail is often suspicious of the very
-first automated message from an account. Mark it *Not spam* and later ones
-behave.
+You should get **two** emails: the enquiry, and the confirmation.
 
 ---
 
-## When you go live
+## Step 5 — Deploy to Hostinger
 
-Three things change:
+This is a **Node.js app**, not a static site. One process serves both the
+website and the form.
 
-1. **`SITE_ORIGIN`** — add the real domain, so only your own site can use the
-   endpoint:
+1. In hPanel, make sure the plan has **Node.js** available
+   (Hostinger Cloud/VPS, or the Node.js app option on Business plans)
+2. Build the site: `npm run build`
+3. Upload the project — you need `dist/`, `server/`, `package.json` and
+   `package-lock.json`. You do **not** need `src/`, `public/` or `node_modules`.
+4. On the server, run `npm install --omit=dev`
+5. Set the Node app's **startup file** to `server/server.js`
+6. Recreate `server/.env` on the server with the same values, and add:
    ```
-   SITE_ORIGIN=https://dubaifineclean.com,https://www.dubaifineclean.com
+   NODE_ENV=production
    ```
-2. **The API must be running.** The website is static files, but the email
-   endpoint is a Node server. Either:
-   - keep `npm run server` alive on a VPS with `pm2`, **or**
-   - deploy to Vercel or Netlify, which will use `api/contact.js` instead —
-     it's already written, does the same job, and needs no server to babysit.
-     Put the same values from `.env` into the host's environment-variables
-     screen.
-3. **Consider moving off Gmail.** See below.
+   Leave `PORT` out — Hostinger assigns it.
+7. Start the app
 
----
+Visit `https://dubaifineclean.com/api/health`. You want:
 
-## About Gmail, honestly
-
-You picked Gmail and it will work. Two things worth knowing:
-
-**Deliverability.** Gmail wasn't built for automated sending. Confirmation
-emails to customers land in spam noticeably more often than with a dedicated
-service. For an enquiry confirmation that's a real cost — the customer wonders
-whether it went through.
-
-**Volume.** Roughly 500 messages a day. Each enquiry sends two, so about 250
-enquiries daily. Nowhere near a problem now; worth remembering if the business
-grows.
-
-**Switching later needs no code changes.** The provider is read entirely from
-`.env`. Moving to Resend, for example, is three lines:
-
-```
-SMTP_HOST=smtp.resend.com
-SMTP_PORT=465
-SMTP_USER=resend
-SMTP_PASS=your_resend_api_key
+```json
+{ "ok": true, "mail": "ok" }
 ```
 
-Brevo and SendGrid are the same shape — the values are in `.env.example`.
+If `mail` says anything else, the password on the server is wrong.
+
+> **Why no `.htaccess`?** Because `server/server.js` serves the built site
+> itself and hands every unknown path to `index.html`. That's what makes
+> refreshing `/contact` work instead of 404ing. There's nothing for Apache to
+> do.
 
 ---
 
-## What protects the form
+## Staying out of spam
 
-- **Honeypot** — a hidden field people never see and bots usually fill. Anything
-  arriving with it set is silently discarded, and the bot is told it succeeded so
-  it doesn't retry another way.
-- **Rate limit** — five submissions per connection per ten minutes, so nobody
-  can drain your daily allowance in a minute.
-- **Server-side validation** — every rule is enforced on the server, not just in
-  the browser. Anyone can post to this endpoint with one command; the form's own
-  checks protect nobody.
-- **Escaped output** — a name like `<script>…</script>` is displayed as text in
-  your inbox rather than running as code.
-- **Header sanitising** — newlines are stripped from anything used in an email
-  header, which is how header-injection attacks smuggle in extra recipients.
-- **Size cap** — requests over 32 KB are rejected outright.
+Do these once, in hPanel → **Emails** → **DNS settings** (or **Advanced** →
+**DNS zone editor**). They tell the world that Hostinger is allowed to send
+email for your domain — without them, Gmail treats your confirmations as
+suspicious.
+
+- **SPF** — Hostinger adds this automatically when you create the mailbox.
+  Confirm a TXT record exists containing `v=spf1 include:_spf.mail.hostinger.com ~all`
+- **DKIM** — enable it on the Emails page if it isn't already. This is the one
+  that matters most.
+- **DMARC** — add a TXT record named `_dmarc` with value
+  `v=DMARC1; p=none; rua=mailto:info@dubaifineclean.com`
+
+Then send a test to a Gmail address and check it arrives in the inbox. If it
+lands in spam, open it and click **Not spam** — and check DKIM is actually on.
 
 ---
 
-## Files, and what each does
+## Changing where enquiries land
+
+In `server/.env`:
+
+```
+RECEIVER_EMAIL=whoever@wherever.com
+```
+
+Leave it blank to send them to `EMAIL_USER`. Restart the app after changing it.
+
+**Do not** change `EMAIL_USER` to a Gmail address to "send from Gmail" — the
+password there is the Hostinger mailbox password, and Gmail won't accept it.
+Sending stays on `info@dubaifineclean.com`; only the destination changes.
+
+---
+
+## Where everything lives
 
 ```
 server/
-  index.js             the Express app — start with `npm run server`
-  checkMail.js         `npm run mail:check` — tests credentials, sends nothing
-  routes/contact.js    POST /api/contact — the endpoint itself
-  lib/mailer.js        SMTP connection, provider read from .env
-  lib/templates.js     the two emails, HTML and plain text
-  lib/validate.js      input rules, HTML escaping, header sanitising
-  lib/rateLimit.js     the per-connection throttle
-
-api/
-  contact.js           the same logic for Vercel/Netlify. Use this OR the
-                       server above — never both at once.
-
-.env                   your secrets. Never committed.
-.env.example           the template to copy.
+├── server.js                       the Express app; also serves the built site
+├── .env                            the password (git-ignored)
+├── .env.example                    the template
+├── testEmail.js                    npm run mail:check
+├── config/emailConfig.js           the SMTP connection
+├── controllers/emailController.js  what happens on submit — the two emails
+├── routes/emailRoutes.js           POST /api/contact
+├── middleware/errorHandler.js      turns crashes into a polite message
+└── utils/
+    ├── validate.js                 server-side checks; never trust the browser
+    ├── templates.js                the HTML of both emails
+    └── rateLimit.js                stops one bot burning the sending quota
 ```
+
+The form itself is `src/components/ContactForm.jsx`.

@@ -4,13 +4,13 @@
  *   1. TO THE BUSINESS  — the enquiry itself, laid out to be read fast on a
  *                         phone, with the customer's number tappable and
  *                         Reply-To set so hitting reply reaches them directly.
- *   2. TO THE CUSTOMER  — confirmation that it arrived, what happens next.
+ *   2. TO THE CUSTOMER  — confirmation that it arrived, and what happens next.
  *
  * Every email client renders HTML differently and many block CSS entirely, so
  * these use tables and inline styles rather than modern layout, and each one
  * ships a plain-text version for clients that refuse HTML altogether.
  */
-import { escapeHtml } from './validate.js'
+const { escapeHtml } = require('./validate');
 
 const BRAND = {
   name: 'Dubai Fine Clean',
@@ -23,14 +23,14 @@ const BRAND = {
   phoneHref: 'tel:+971569169761',
   whatsapp: 'https://wa.me/971569169761',
   address: 'Empire Heights A — 16F-A-04, Business Bay, Dubai',
-}
+};
 
-const row = (label, value) => value
+const row = (label, value) => (value
   ? `<tr>
        <td style="padding:10px 0;border-bottom:1px solid ${BRAND.line};color:${BRAND.slate};font-size:12px;text-transform:uppercase;letter-spacing:.08em;width:150px;vertical-align:top">${escapeHtml(label)}</td>
        <td style="padding:10px 0;border-bottom:1px solid ${BRAND.line};color:${BRAND.navy};font-size:15px;vertical-align:top">${value}</td>
      </tr>`
-  : ''
+  : '');
 
 const shell = (heading, bodyHtml) => `<!doctype html>
 <html><body style="margin:0;padding:0;background:#F4F7FB;">
@@ -55,13 +55,16 @@ const shell = (heading, bodyHtml) => `<!doctype html>
       </table>
     </td></tr>
   </table>
-</body></html>`
+</body></html>`;
+
+/** "Monday, 8 September 2025 at 19:47" — Dubai time, whatever the server runs on. */
+const dubaiTime = (opts) => new Date().toLocaleString('en-GB', { timeZone: 'Asia/Dubai', ...opts });
 
 /* ---------------------------------------------------------------- business */
-export function businessEmail(d) {
+function businessEmail(d) {
   const services = d.services.length
     ? d.services.map((s) => `<span style="display:inline-block;background:#E9F1FD;color:${BRAND.blue};font-size:12px;padding:5px 10px;border-radius:99px;margin:0 5px 5px 0;">${escapeHtml(s)}</span>`).join('')
-    : '<span style="color:' + BRAND.slate + ';font-size:14px;">Not specified</span>'
+    : `<span style="color:${BRAND.slate};font-size:14px;">Not specified</span>`;
 
   const html = shell('New enquiry', `
     <p style="margin:0 0 4px;font-size:19px;color:${BRAND.navy};font-weight:bold;">${escapeHtml(d.name)}</p>
@@ -76,12 +79,12 @@ export function businessEmail(d) {
       ${row('Notes', d.notes ? escapeHtml(d.notes).replace(/\n/g, '<br>') : '')}
     </table>
     <p style="margin:24px 0 0;font-size:12px;color:${BRAND.slate};">
-      Received ${escapeHtml(new Date().toLocaleString('en-GB', { timeZone: 'Asia/Dubai', dateStyle: 'full', timeStyle: 'short' }))} (Dubai time)
-    </p>`)
+      Received ${escapeHtml(dubaiTime({ dateStyle: 'full', timeStyle: 'short' }))} (Dubai time)
+    </p>`);
 
   const text = [
     `NEW ENQUIRY — ${d.name}`,
-    ``,
+    '',
     `Mobile:    ${d.mobile}`,
     d.email ? `Email:     ${d.email}` : null,
     d.community ? `Community: ${d.community}` : null,
@@ -89,16 +92,16 @@ export function businessEmail(d) {
     d.size ? `Size:      ${d.size}` : null,
     d.services.length ? `Services:  ${d.services.join(', ')}` : null,
     d.notes ? `\nNotes:\n${d.notes}` : null,
-    ``,
-    `Received ${new Date().toLocaleString('en-GB', { timeZone: 'Asia/Dubai' })} Dubai time`,
-  ].filter(Boolean).join('\n')
+    '',
+    `Received ${dubaiTime()} Dubai time`,
+  ].filter(Boolean).join('\n');
 
-  return { subject: `New enquiry — ${d.name}${d.community ? ` (${d.community})` : ''}`, html, text }
+  return { subject: `New enquiry — ${d.name}${d.community ? ` (${d.community})` : ''}`, html, text };
 }
 
 /* ---------------------------------------------------------------- customer */
-export function customerEmail(d) {
-  const first = d.name.split(' ')[0] || 'there'
+function customerEmail(d) {
+  const first = d.name.split(' ')[0] || 'there';
 
   const html = shell('Enquiry received', `
     <p style="margin:0 0 4px;font-size:19px;color:${BRAND.navy};font-weight:bold;">Thanks, ${escapeHtml(first)}.</p>
@@ -122,26 +125,28 @@ export function customerEmail(d) {
     </p>
     <p style="margin:20px 0 0;">
       <a href="${BRAND.whatsapp}" style="display:inline-block;background:${BRAND.green};color:#ffffff;text-decoration:none;font-size:14px;font-weight:bold;padding:13px 22px;border-radius:99px;">Message us on WhatsApp</a>
-    </p>`)
+    </p>`);
 
   const text = [
     `Thanks, ${first}.`,
-    ``,
-    `We've got your enquiry. A member of the team will call or WhatsApp you shortly`,
-    `to confirm the details and arrange a time.`,
-    ``,
+    '',
+    "We've got your enquiry. A member of the team will call or WhatsApp you shortly",
+    'to confirm the details and arrange a time.',
+    '',
     `If it's urgent, call ${BRAND.phone}.`,
-    ``,
-    `What you sent us:`,
+    '',
+    'What you sent us:',
     [d.type, d.size].filter(Boolean).join(' · ') || null,
     d.community || null,
     d.services.length ? d.services.join(', ') : null,
     d.notes ? `"${d.notes}"` : null,
-    ``,
-    `Your quote is confirmed in writing before any work starts.`,
-    ``,
+    '',
+    'Your quote is confirmed in writing before any work starts.',
+    '',
     `${BRAND.name} — ${BRAND.address}`,
-  ].filter(Boolean).join('\n')
+  ].filter(Boolean).join('\n');
 
-  return { subject: `We've got your enquiry — ${BRAND.name}`, html, text }
+  return { subject: `We've got your enquiry — ${BRAND.name}`, html, text };
 }
+
+module.exports = { BRAND, businessEmail, customerEmail };

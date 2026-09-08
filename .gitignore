@@ -3,7 +3,10 @@ dist
 .DS_Store
 *.local
 
-# Secrets — never commit these
+# Secrets — never commit these. The mailbox password lives in server/.env.
 .env
 .env.*
 !.env.example
+server/.env
+server/.env.*
+!server/.env.example

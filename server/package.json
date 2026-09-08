@@ -1,0 +1,6 @@
+{
+  "//": "The root package.json says \"type\": \"module\", which would make Node treat every .js file here as an ES module and reject require(). This one file overrides that for the server folder only, so the CommonJS style below works. Dependencies still come from the root node_modules — there is nothing to install in here.",
+  "name": "dubai-fine-clean-server",
+  "private": true,
+  "type": "commonjs"
+}

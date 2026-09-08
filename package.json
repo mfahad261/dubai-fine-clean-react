@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "node server/index.js",
+    "start": "node server/server.js",
+    "server": "node server/server.js",
     "dev:all": "concurrently -n site,api -c cyan,green \"npm:dev\" \"npm:server\"",
-    "mail:check": "node server/checkMail.js"
+    "mail:check": "node server/testEmail.js"
   },
   "dependencies": {
     "lenis": "^1.1.13",

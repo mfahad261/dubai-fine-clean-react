@@ -8,13 +8,30 @@ component architecture.
 
 ```
 npm install
-npm run dev
+npm run dev        # site only, http://localhost:5173
+npm run dev:all    # site + the contact-form API together
 ```
 
-## Build
+`npm run dev` is enough for design work. Use `dev:all` whenever you're touching
+the contact form, or it will have no backend to post to.
+
+## Build and run for real
 
 ```
-npm run build
+npm run build      # produces dist/
+npm start          # serves dist/ AND the API from one Node process
+```
+
+## The contact form
+
+The form emails the enquiry to the business and a confirmation to the customer.
+It needs the `info@dubaifineclean.com` mailbox password in `server/.env` before
+it will send anything — **see [SETUP-EMAIL.md](SETUP-EMAIL.md)**.
+
+Check it's working at any time:
+
+```
+npm run mail:check
 ```
 
 ## Structure
@@ -28,6 +45,9 @@ npm run build
   calculator, the before/after slider drag, animated counters.
 - `src/components/` — presentational pieces, each with a paired `.css` file.
 - `src/pages/` — route-level screens wired up in `App.jsx` via React Router.
+- `server/` — the Express backend: one endpoint (`POST /api/contact`) that
+  sends the two emails, plus the static serving of `dist/` in production. It is
+  the entire deployment — no PHP, no `.htaccess`, no second host.
 
 ## Real business details baked in
 

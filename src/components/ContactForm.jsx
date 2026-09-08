@@ -11,8 +11,11 @@
  * SPAM: the `company` field is a honeypot — hidden from people, filled in by
  * most bots. The server discards anything that arrives with it set.
  *
- * BACKEND: server/routes/contact.js (or api/contact.js if deployed serverless).
- * Nothing works until .env exists — see SETUP-EMAIL.md.
+ * BACKEND: server/controllers/emailController.js, reached at POST /api/contact.
+ * In development Vite proxies that to the Express server on :5175; in
+ * production the same Express process serves this site, so it's same-origin
+ * either way and this URL never changes.
+ * Nothing sends until server/.env has the mailbox password — see SETUP-EMAIL.md.
  * ARRIVING FROM A SERVICE: "Get a quote" on a service row navigates here with
  * router state `{ service: '<name>' }` (see ServiceRow.jsx,
  * DeepCleanIndex.jsx) — dropped into the notes field on mount so the
@@ -54,9 +57,40 @@ export default function ContactForm() {
   const toggleChip = (c) =>
     setPicked((p) => (p.includes(c) ? p.filter((x) => x !== c) : [...p, c]))
 
+  /**
+   * A copy of the three checks the server cares about, so an obvious mistake
+   * is caught instantly instead of after a round trip. The server still runs
+   * the real validation — this only saves the customer a wasted wait.
+   */
+  const localErrors = () => {
+    const errs = {}
+    if (form.name.trim().length < 2) errs.name = 'Please tell us your name.'
+    if (form.mobile.trim().length < 6) errs.mobile = 'Please give us a number we can reach you on.'
+    if (!form.email.trim()) errs.email = 'We need your email to send you a copy of your request.'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) {
+      errs.email = "That email address doesn't look right."
+    }
+    return errs
+  }
+
+  /** Puts the cursor in the first field that needs fixing. */
+  const focusFirstError = (errs) => {
+    const first = ['name', 'mobile', 'email', 'notes'].find((k) => errs[k])
+    if (first) document.getElementById(`cf-${first}`)?.focus()
+  }
+
   const submit = async (e) => {
     e.preventDefault()
     if (status === 'sending') return
+
+    const local = localErrors()
+    if (Object.keys(local).length) {
+      setFieldErrors(local)
+      setStatus('error')
+      setMessage('Please check the highlighted fields.')
+      focusFirstError(local)
+      return
+    }
 
     setStatus('sending')
     setMessage('')
@@ -79,6 +113,7 @@ export default function ContactForm() {
           setFieldErrors(payload.errors)
           setStatus('error')
           setMessage('Please check the highlighted fields.')
+          focusFirstError(payload.errors)
           return
         }
         throw new Error(payload.error || 'That did not go through.')
@@ -100,7 +135,8 @@ export default function ContactForm() {
         <p className="lede">
           A member of the team will call or WhatsApp you shortly to confirm the details and
           arrange a time.
-          {confirmed && ' We have also emailed you a copy.'}
+          {confirmed && ` A copy is on its way to ${form.email} — check spam if it hasn't
+            arrived in a minute or two.`}
         </p>
         <Button
           variant="o"
@@ -123,14 +159,14 @@ export default function ContactForm() {
             <label htmlFor="cf-name">Your name</label>
             <input id="cf-name" type="text" required placeholder="Full name"
               value={form.name} onChange={update('name')} disabled={busy}
-              aria-invalid={!!fieldErrors.name} />
+              autoComplete="name" aria-invalid={!!fieldErrors.name} />
             {fieldErrors.name && <span className="fieldErr">{fieldErrors.name}</span>}
           </div>
           <div className="field">
             <label htmlFor="cf-mobile">Mobile / WhatsApp</label>
             <input id="cf-mobile" type="tel" required placeholder="+971 5X XXX XXXX"
               value={form.mobile} onChange={update('mobile')} disabled={busy}
-              aria-invalid={!!fieldErrors.mobile} />
+              autoComplete="tel" aria-invalid={!!fieldErrors.mobile} />
             {fieldErrors.mobile && <span className="fieldErr">{fieldErrors.mobile}</span>}
           </div>
         </div>
@@ -138,9 +174,9 @@ export default function ContactForm() {
         <div className="fieldRow">
           <div className="field">
             <label htmlFor="cf-email">Email</label>
-            <input id="cf-email" type="email" placeholder="you@email.com"
+            <input id="cf-email" type="email" required placeholder="you@email.com"
               value={form.email} onChange={update('email')} disabled={busy}
-              aria-invalid={!!fieldErrors.email} />
+              autoComplete="email" aria-invalid={!!fieldErrors.email} />
             {fieldErrors.email
               ? <span className="fieldErr">{fieldErrors.email}</span>
               : <span className="fieldHint">We'll email you a copy of your request.</span>}
