@@ -38,21 +38,46 @@ const allowed = (process.env.SITE_ORIGIN
   || 'http://localhost:5173,http://localhost:5174,https://dubaifineclean.com,https://www.dubaifineclean.com'
 ).split(',').map((s) => s.trim()).filter(Boolean);
 
+/**
+ * Is this request coming from the very page this server just served?
+ *
+ * Browsers attach an Origin header to every POST, same-origin included, so a
+ * plain allow-list rejects the site's own form whenever the deployed hostname
+ * isn't in SITE_ORIGIN — a Hostinger preview domain, www vs bare, a staging
+ * subdomain, a different port. Since one process serves both the site and the
+ * API, "same host as the request" is by definition our own page, and trusting
+ * it means the form works on whatever domain this ends up on.
+ */
+function isSameOrigin(req) {
+  const origin = req.headers.origin;
+  if (!origin || !req.headers.host) return false;
+  try {
+    return new URL(origin).host === req.headers.host;
+  } catch {
+    return false;               // a malformed Origin is not our page
+  }
+}
+
 // MOUNTED ON /api ONLY, deliberately. Applied to the whole app it also guards
 // the site's own CSS and JS, and Vite marks those tags `crossorigin` — so the
 // browser requests them in CORS mode, sends an Origin header for the port the
 // site is being served from, and this check 403s the stylesheet. The page then
 // loads with no styling and no JavaScript. Static files need no CORS; only the
 // API does.
-app.use('/api', cors({
-  origin(origin, cb) {
-    // No origin = curl, health checks, same-origin requests. Allow those.
-    if (!origin || allowed.includes(origin)) return cb(null, true);
-    cb(new Error(`Origin ${origin} is not allowed`));
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+app.use('/api', cors((req, done) => {
+  const origin = req.headers.origin;
+
+  // No origin = curl, uptime checks, server-to-server. Allow those.
+  const permitted = !origin || isSameOrigin(req) || allowed.includes(origin);
+
+  if (!permitted) return done(new Error(`Origin ${origin} is not allowed`));
+
+  done(null, {
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+  });
 }));
 
 // A contact form has no business posting a megabyte.
