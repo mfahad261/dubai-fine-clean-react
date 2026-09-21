@@ -1,6 +1,6 @@
 {
-  "//": "The root package.json says \"type\": \"module\", which would make Node treat every .js file here as an ES module and reject require(). This one file overrides that for the server folder only, so the CommonJS style below works. Dependencies still come from the root node_modules — there is nothing to install in here.",
+  "//": "Every file in this folder is written as an ES module (import/export, import.meta.url), so this must say \"module\" — Node reads the NEAREST package.json, not the root one, and a \"commonjs\" here makes it reject the very first import line with 'Cannot use import statement outside a module'. Dependencies still come from the root node_modules; there is nothing to install in here.",
   "name": "dubai-fine-clean-server",
   "private": true,
-  "type": "commonjs"
+  "type": "module"
 }
