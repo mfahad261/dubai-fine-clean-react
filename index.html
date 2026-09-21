@@ -3,16 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Everything below is the DEFAULT set, for crawlers and social scrapers
+         that never run JavaScript. components/Seo.jsx overwrites these exact
+         elements per route once React mounts — it edits them in place rather
+         than appending duplicates. -->
     <title>Dubai Fine Clean — Professional Cleaning Services in Dubai</title>
-    <meta name="description" content="Premium residential, commercial and specialist cleaning across Dubai. Villa and apartment deep cleaning, AC duct care, marble restoration, façade access. Business Bay." />
+    <meta name="description" content="Deep cleaning, AC duct care, water tanks and façade access across Dubai. Insured teams, eco-certified products and a written quote first. Since 2016." />
+    <link rel="canonical" href="https://dubaifineclean.com/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Dubai Fine Clean" />
+    <meta name="theme-color" content="#0B63D8" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Icons. The SVG is the real one — it stays sharp at every size and is
+         what Seo.jsx re-tints per section. The PNGs are the fallback for
+         browsers with no SVG favicon support. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Fine Clean" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dubai Fine Clean" />
+    <meta property="og:locale" content="en_AE" />
+    <meta property="og:title" content="Dubai Fine Clean — Professional Cleaning Services in Dubai" />
+    <meta property="og:description" content="Deep cleaning, AC duct care, water tanks and façade access across Dubai. Insured teams, eco-certified products and a written quote first. Since 2016." />
+    <meta property="og:url" content="https://dubaifineclean.com/" />
+    <meta property="og:image" content="https://dubaifineclean.com/og-cover.jpg" />
+    <meta property="og:image:alt" content="The Dubai skyline at dusk — Dubai Fine Clean" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dubai Fine Clean — Professional Cleaning Services in Dubai" />
+    <meta name="twitter:description" content="Deep cleaning, AC duct care, water tanks and façade access across Dubai. Insured teams, eco-certified products and a written quote first." />
+    <meta name="twitter:image" content="https://dubaifineclean.com/og-cover.jpg" />
+
+    <!-- Local search. The minimum a non-JS crawler needs to identify the
+         business. `data-seo-jsonld` hands ownership to lib/head.js, which
+         swaps this for the fuller graph (breadcrumbs, Service, FAQPage) as
+         soon as React mounts — without it the page would carry two
+         LocalBusiness blocks. -->
+    <script type="application/ld+json" data-seo-jsonld>
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://dubaifineclean.com/#organization",
+        "name": "Dubai Fine Clean",
+        "url": "https://dubaifineclean.com",
+        "logo": "https://dubaifineclean.com/favicon.svg",
+        "image": "https://dubaifineclean.com/og-cover.jpg",
+        "telephone": "+971 56 916 9761",
+        "foundingDate": "2016",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Empire Heights A — 16F-A-04, Business Bay",
+          "addressLocality": "Dubai",
+          "addressRegion": "Dubai",
+          "addressCountry": "AE"
+        },
+        "areaServed": { "@type": "City", "name": "Dubai" }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width:640px;margin:96px auto;padding:0 24px;font:16px/1.6 system-ui,sans-serif;color:#0E1B2E">
+        <h1 style="font-size:26px;margin-bottom:12px">Dubai Fine Clean</h1>
+        <p>This site needs JavaScript to load. To book a clean or ask for a quote right now,
+          call <a href="tel:+971569169761" style="color:#0B63D8">+971 56 916 9761</a> or
+          message us on <a href="https://wa.me/971569169761" style="color:#0B63D8">WhatsApp</a>.</p>
+        <p style="margin-top:12px">Empire Heights A — 16F-A-04, Business Bay, Dubai, UAE.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,0 +1,39 @@
+{
+  "name": "Dubai Fine Clean",
+  "short_name": "Fine Clean",
+  "description": "Professional residential, commercial and specialist cleaning across Dubai.",
+  "lang": "en-AE",
+  "dir": "ltr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0E1B2E",
+  "theme_color": "#0B63D8",
+  "categories": ["business", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    { "name": "All services", "url": "/services" },
+    { "name": "Deep cleaning", "url": "/deep-cleaning" },
+    { "name": "Get a quote", "url": "/contact" }
+  ]
+}

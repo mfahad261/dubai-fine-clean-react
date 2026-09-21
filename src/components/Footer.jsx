@@ -9,7 +9,9 @@ import { CATS } from '../data/services.js'
 import { BUSINESS } from '../data/content.js'
 import { useCookieConsent } from '../context/CookieConsentContext.jsx'
 import Icon from './Icon.jsx'
-import logo from '../assets/logo/logo.png'
+// The knockout (all-white) lockup from the brand kit. The full-colour logo
+// puts #084e8d text on a #0E1B2E footer, which is very nearly invisible.
+import logo from '../assets/logo/logo-white.svg'
 import './Footer.css'
 
 export default function Footer() {
@@ -19,7 +21,12 @@ export default function Footer() {
     <footer className="footer dark">
       <div className="wrap footerGrid">
         <div className="fCol fBrand">
-          <img className="fLogo" src={logo} alt="Dubai Fine Clean" width="176" height="167" />
+          {/* 678 x 641 is the artwork's real cropped aspect ratio — stating it
+              lets the browser reserve the box before the SVG lands, so the
+              footer text doesn't jump. */}
+          <Link to="/" className="fLogoLink" aria-label="Dubai Fine Clean — home">
+            <img className="fLogo" src={logo} alt="Dubai Fine Clean" width="678" height="641" loading="lazy" decoding="async" />
+          </Link>
           <p className="lede">Premium residential, commercial and specialist cleaning across Dubai, trading since {BUSINESS.since}.</p>
           <div className="fSocial">
             <a href={BUSINESS.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" filled size={17} /></a>

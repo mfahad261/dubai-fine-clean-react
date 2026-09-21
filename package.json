@@ -10,7 +10,9 @@
     "start": "node server/server.js",
     "server": "node server/server.js",
     "dev:all": "concurrently -n site,api -c cyan,green \"npm:dev\" \"npm:server\"",
-    "mail:check": "node server/testEmail.js"
+    "mail:check": "node server/testEmail.js",
+    "logos": "node scripts/build-logos.mjs",
+    "sitemap": "node scripts/build-sitemap.mjs"
   },
   "dependencies": {
     "lenis": "^1.1.13",

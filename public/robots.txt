@@ -1,0 +1,8 @@
+# Dubai Fine Clean — https://dubaifineclean.com
+User-agent: *
+Allow: /
+
+# The API is JSON endpoints for the enquiry form, not content.
+Disallow: /api/
+
+Sitemap: https://dubaifineclean.com/sitemap.xml

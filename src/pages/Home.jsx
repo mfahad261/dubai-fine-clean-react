@@ -29,10 +29,22 @@ import CTASection from '../components/CTASection.jsx'
 import ChapterSeparator from '../components/ChapterSeparator.jsx'
 import CoverageMap from '../components/CoverageMap.jsx'
 import ScrollToTopButton from '../components/ScrollToTopButton.jsx'
+import Seo from '../components/Seo.jsx'
+import { PAGES } from '../data/seo.js'
+import { faqPage } from '../lib/structuredData.js'
 
 export default function Home() {
   return (
     <>
+      {/* The FAQ block lives here and nowhere else — the same eight questions
+          render on four routes, and Google reads a repeated FAQPage as
+          duplication rather than as four useful pages. */}
+      <Seo
+        title={PAGES.home.title}
+        description={PAGES.home.description}
+        path={PAGES.home.path}
+        jsonLd={[faqPage()]}
+      />
       <Hero />
       <QuoteCalculator />
       <LogosMarquee />

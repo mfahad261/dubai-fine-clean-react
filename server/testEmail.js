@@ -9,12 +9,18 @@
  * a chat window, and a mailbox password that leaks gets used to send spam in
  * your domain's name within hours.
  */
-const path = require('path');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import dotenv from 'dotenv';
 
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+import { transporter, verifyTransporter } from './config/emailConfig.js';
+import { businessEmail } from './utils/templates.js';
 
-const { transporter, verifyTransporter } = require('./config/emailConfig');
-const { businessEmail } = require('./utils/templates');
+// ES modules have no __dirname; resolve .env against this file so the check
+// works from any working directory.
+const here = path.dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({ path: path.join(here, '.env') });
 
 const shouldSend = process.argv.includes('send');
 

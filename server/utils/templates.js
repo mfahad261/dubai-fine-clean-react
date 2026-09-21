@@ -10,7 +10,7 @@
  * these use tables and inline styles rather than modern layout, and each one
  * ships a plain-text version for clients that refuse HTML altogether.
  */
-const { escapeHtml } = require('./validate');
+import { escapeHtml } from './validate.js';
 
 const BRAND = {
   name: 'Dubai Fine Clean',
@@ -149,4 +149,4 @@ function customerEmail(d) {
   return { subject: `We've got your enquiry — ${BRAND.name}`, html, text };
 }
 
-module.exports = { BRAND, businessEmail, customerEmail };
+export { BRAND, businessEmail, customerEmail };

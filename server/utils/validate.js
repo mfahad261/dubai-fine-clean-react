@@ -78,4 +78,4 @@ function safeHeader(value = '') {
   return String(value).replace(/[\r\n]+/g, ' ').trim().slice(0, 160);
 }
 
-module.exports = { validateEnquiry, escapeHtml, safeHeader };
+export { validateEnquiry, escapeHtml, safeHeader };

@@ -8,10 +8,17 @@
  * Every value comes from server/.env — no address, host or password is written
  * into the code. See SETUP-EMAIL.md for where those values come from.
  */
-const path = require('path');
-const nodemailer = require('nodemailer');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+// ES modules have no __dirname. This is the one-line stand-in, and it matters
+// here: the .env path has to resolve against this file, not against whatever
+// directory the process happens to be started from.
+const here = path.dirname(fileURLToPath(import.meta.url));
+
+dotenv.config({ path: path.join(here, '..', '.env') });
 
 const {
   EMAIL_HOST = 'smtp.hostinger.com',
@@ -58,8 +65,9 @@ async function verifyTransporter() {
   return true;
 }
 
-// Exported as a plain object, NOT as `module.exports = transporter`. Hanging
-// extra properties off the nodemailer instance gives it a reference back to
-// itself, and the option-merging inside .verify() then recurses until the
-// stack blows — with the unhelpful message "Maximum call stack size exceeded".
-module.exports = { transporter, verifyTransporter };
+// Exported as two named bindings, NOT as a default export of the transporter
+// itself. Hanging extra properties off the nodemailer instance gives it a
+// reference back to itself, and the option-merging inside .verify() then
+// recurses until the stack blows — with the unhelpful message "Maximum call
+// stack size exceeded".
+export { transporter, verifyTransporter };

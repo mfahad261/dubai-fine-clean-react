@@ -3,6 +3,9 @@
  * ---------------------------------------------------------------------------
  * Enquiry form, contact details, location and the coverage list.
  */
+import { PAGES } from '../data/seo.js'
+import { breadcrumbs, contactPage } from '../lib/structuredData.js'
+import Seo from '../components/Seo.jsx'
 import Eyebrow from '../components/Eyebrow.jsx'
 import Reveal from '../components/Reveal.jsx'
 import SplitText from '../components/SplitText.jsx'
@@ -17,6 +20,14 @@ import '../style/Contact.css'
 export default function Contact() {
   return (
     <>
+      <Seo
+        {...PAGES.contact}
+        accent="#E9A23B"
+        jsonLd={[
+          breadcrumbs([['Home', '/'], ['Contact', '/contact']]),
+          contactPage(),
+        ]}
+      />
       <section className="ctHero">
         <div className="wrap">
           <Reveal><Eyebrow>Get in touch</Eyebrow></Reveal>

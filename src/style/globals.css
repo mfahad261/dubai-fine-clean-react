@@ -43,6 +43,19 @@ img{display:block;max-width:100%}
 button,select,input,textarea{font:inherit}
 ::selection{background:var(--blue);color:#fff}
 
+/* Skip link (App.jsx). Off-screen until focused, then it lands under the
+   fixed header rather than behind it. z-index sits above the header (200) but
+   below the preloader (240). */
+.skipLink{
+  position:fixed;top:0;left:50%;transform:translate(-50%,-140%);z-index:230;
+  background:var(--navy);color:#fff;font-size:14px;font-weight:600;
+  padding:12px 22px;border-radius:0 0 var(--r2) var(--r2);
+  box-shadow:var(--sh2);transition:transform .25s var(--eo);
+}
+.skipLink:focus-visible{transform:translate(-50%,0)}
+/* The routed <main> is focus target only — never draw a ring around the page */
+main:focus{outline:none}
+
 .d{font-family:var(--fSans);font-weight:700;letter-spacing:-.035em;
   line-height:1.04;color:var(--navy)}
 /* the editorial voice: big serif statements, with an italic accent word */

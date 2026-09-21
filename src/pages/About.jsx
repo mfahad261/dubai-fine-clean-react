@@ -4,6 +4,9 @@
  * Company story, mission and vision, operating rules, real team photography and the closing feature shot.
  */
 import { IMG } from '../data/images.js'
+import { PAGES } from '../data/seo.js'
+import { breadcrumbs } from '../lib/structuredData.js'
+import Seo from '../components/Seo.jsx'
 import Eyebrow from '../components/Eyebrow.jsx'
 import Reveal from '../components/Reveal.jsx'
 import SplitText from '../components/SplitText.jsx'
@@ -22,6 +25,12 @@ import '../style/About.css'
 export default function About() {
   return (
     <>
+      <Seo
+        {...PAGES.about}
+        type="profile"
+        accent="#54677F"
+        jsonLd={[breadcrumbs([['Home', '/'], ['About Us', '/about']])]}
+      />
       <section className="abHero">
         <div className="wrap">
           <Reveal><Eyebrow tone="green">About us</Eyebrow></Reveal>

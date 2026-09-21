@@ -4,6 +4,9 @@
  * The Deep Cleaning division — 24 services in five groups. Separate from Services because the client runs it as a separate part of the business, with its own menu on their site.
  */
 import { DEEP_GROUPS } from '../data/deepCleaning.js'
+import { PAGES } from '../data/seo.js'
+import { breadcrumbs } from '../lib/structuredData.js'
+import Seo from '../components/Seo.jsx'
 import DeepCleanHero from '../components/DeepCleanHero.jsx'
 import DeepCleanIndex from '../components/DeepCleanIndex.jsx'
 import CTASection from '../components/CTASection.jsx'
@@ -15,6 +18,11 @@ import '../style/DeepClean.css'
 export default function DeepClean() {
   return (
     <>
+      <Seo
+        {...PAGES.deep}
+        accent="#22B457"
+        jsonLd={[breadcrumbs([['Home', '/'], ['Deep Cleaning', '/deep-cleaning']])]}
+      />
       <DeepCleanHero />
       <div id="groups">
         {DEEP_GROUPS.map((g) => <DeepCleanIndex group={g} key={g.id} />)}

@@ -1,0 +1,29 @@
+/* 404 — deliberately short. It sits between the fixed header and the footer,
+   so the min-height keeps the footer off the fold on tall screens. */
+/* Capped, not a bare 72vh: on a tall desktop window that centred the whole
+   block in a screenful of empty cream. */
+.nfHero{ padding:170px 0 110px; min-height:clamp(420px,72vh,760px); display:flex; align-items:center; }
+
+.nfCode{
+  font-family:var(--fSerif); font-size:clamp(96px,20vw,240px); line-height:.86;
+  letter-spacing:-.03em; margin:14px 0 0;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+}
+.nfTitle{ font-family:var(--fSerif); font-size:clamp(28px,4.4vw,50px); line-height:1.06; margin-top:10px; }
+.nfLede{ margin-top:14px; max-width:52ch; }
+
+.nfActions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+
+.nfLinks{ display:flex; flex-wrap:wrap; gap:8px; margin-top:44px; padding-top:28px; border-top:1px solid var(--line); }
+.nfLinks a{
+  font-size:13.5px; color:var(--slate); background:#fff; border:1px solid var(--line);
+  border-radius:var(--rp); padding:8px 15px; box-shadow:var(--sh);
+  transition:color .25s var(--e), border-color .25s var(--e), transform .25s var(--e);
+}
+.nfLinks a:hover{ color:var(--acc,var(--blue)); border-color:var(--acc,var(--blue)); transform:translateY(-2px); }
+
+@media (max-width:760px){
+  .nfHero{ padding:120px 0 80px; min-height:0; }
+  .nfLinks{ margin-top:32px; }
+}

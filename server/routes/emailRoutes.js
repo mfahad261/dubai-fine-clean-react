@@ -5,11 +5,11 @@
  * newsletter box is added later, they get their own controller and a line
  * here — the pattern holds.
  */
-const express = require('express');
-const emailController = require('../controllers/emailController');
+import express from 'express';
+import { sendContactEmail } from '../controllers/emailController.js';
 
 const router = express.Router();
 
-router.post('/contact', emailController.sendContactEmail);
+router.post('/contact', sendContactEmail);
 
-module.exports = router;
+export default router;

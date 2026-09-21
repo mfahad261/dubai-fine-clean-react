@@ -11,15 +11,15 @@
  * because the enquiry did reach the business and telling the customer it
  * failed would only make them send it again.
  */
-const { transporter } = require('../config/emailConfig');
-const { validateEnquiry, safeHeader } = require('../utils/validate');
-const { businessEmail, customerEmail } = require('../utils/templates');
-const { checkRate, rateLimitMessage } = require('../utils/rateLimit');
+import { transporter } from '../config/emailConfig.js';
+import { validateEnquiry, safeHeader } from '../utils/validate.js';
+import { businessEmail, customerEmail } from '../utils/templates.js';
+import { checkRate, rateLimitMessage } from '../utils/rateLimit.js';
 
 const FALLBACK_ERROR =
   "We couldn't send that just now. Please call or WhatsApp us on +971 56 916 9761.";
 
-exports.sendContactEmail = async (req, res) => {
+export const sendContactEmail = async (req, res) => {
   // Honeypot: a field hidden from people but filled in by most bots. Answer
   // 200 so the bot believes it worked and doesn't retry another way.
   if (req.body && req.body.company) {

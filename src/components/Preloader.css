@@ -1,21 +1,30 @@
+/* The clip is the logo drawing itself on a flat white ground (#fdfdfd–#fff),
+   so this screen is white too. On the old navy the video read as a bright
+   rectangle stuck in the middle of the page. */
 .pre{
-  position:fixed; inset:0; z-index:240; background:var(--navy); color:#fff; display:flex;
-  flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
+  position:fixed; inset:0; z-index:240; background:#fff;
+  display:grid; place-items:center; overflow:hidden;
 }
-.preBlob{
-  position:absolute; width:70vmax; height:70vmax; border-radius:50%;
-  background:radial-gradient(circle, rgba(11,111,232,.5), transparent 62%); filter:blur(30px);
-  animation:blob 7s ease-in-out infinite alternate;
+
+/* 500px is the design size; the two viewport terms stop it overflowing a
+   phone or a short laptop window, and keep the box square at every size.
+   object-fit:cover crops the 16:9 frame to its middle 1080x1080 — the logo
+   sits well inside that, and cropping beats letterboxing here because it
+   makes the mark noticeably larger in the same 500px. The crop seams are
+   invisible against a flat white ground. */
+.preVid{
+  width:min(500px,78vw,78vh); height:min(500px,78vw,78vh);
+  object-fit:cover; display:block; background:#fff;
+  transition:opacity .4s ease;
 }
-@keyframes blob{ from{ transform:translate(-18%,-12%) scale(1); } to{ transform:translate(14%,10%) scale(1.15); } }
-.preInner{ position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; gap:20px; transition:opacity .4s ease; }
-.preLogo{ width:clamp(96px,14vw,150px); height:auto; }
-.preBarWrap{ width:min(220px,46vw); height:3px; background:rgba(255,255,255,.18); border-radius:999px; overflow:hidden; }
-.preBar{ height:100%; width:100%; background:linear-gradient(90deg,var(--green),var(--blue)); transform-origin:left; transition:transform .1s linear; }
-.preNum{ font-size:10px; letter-spacing:.3em; color:rgba(255,255,255,.5); }
+
+/* prefers-reduced-motion: a still lockup instead of the animation. */
+.preStill{
+  width:min(230px,52vw); height:auto; aspect-ratio:678 / 641;
+  transition:opacity .4s ease;
+}
+
 .pre.wipe{ animation:preOut .8s var(--e2) forwards; animation-delay:.05s; }
-.pre.wipe .preInner{ opacity:0; }
+.pre.wipe .preVid,
+.pre.wipe .preStill{ opacity:0; }
 @keyframes preOut{ to{ clip-path:inset(0 0 100% 0); } }
-.preWords{ height:17px; overflow:hidden; font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,255,255,.55); }
-.preWordsInner{ transition:transform .5s var(--eo); }
-.preWords p{ height:17px; line-height:17px; }

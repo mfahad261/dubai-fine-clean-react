@@ -52,4 +52,4 @@ function rateLimitMessage(waitMinutes) {
     + `minute${waitMinutes === 1 ? '' : 's'}, or call us on +971 56 916 9761.`;
 }
 
-module.exports = { checkRate, rateLimitMessage };
+export { checkRate, rateLimitMessage };

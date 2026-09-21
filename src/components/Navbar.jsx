@@ -20,7 +20,9 @@ import Icon from './Icon.jsx'
 import MegaMenu from './MegaMenu.jsx'
 import DeepMenu from './DeepMenu.jsx'
 import MobileMenu from './MobileMenu.jsx'
-import logoMark from '../assets/logo/logo-mark.png'
+// Vector mark: the header is 41px wide here and the PNG was visibly soft on
+// high-DPI screens. Same artwork, a quarter of the bytes.
+import logoMark from '../assets/logo/logo-mark.svg'
 import './Navbar.css'
 
 export default function Navbar() {
@@ -87,7 +89,7 @@ export default function Navbar() {
       <div className="navShell" onMouseLeave={scheduleClose}>
         <nav className={`nav ${pinned ? 'pinned' : ''} ${hidden && !openMenu && !mobileOpen ? 'hide' : ''} ${onDark ? 'onDark' : ''}`}>
           <Link to="/" className="brand" onClick={() => { setMobileOpen(false); closeNow() }}>
-            <img className="brandMark" src={logoMark} alt="" width="41" height="46" />
+            <img className="brandMark" src={logoMark} alt="" width="377" height="422" />
             <span className="brandTx">
               <span className="n1"><b>Dubai</b> Fine Clean</span>
               <span className="n2">Business Bay · since 2016</span>

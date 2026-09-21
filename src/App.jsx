@@ -16,6 +16,7 @@ import Services from './pages/Services.jsx'
 import DeepClean from './pages/DeepClean.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
   useSmoothScroll()
@@ -30,6 +31,10 @@ export default function App() {
 
   return (
     <CookieConsentProvider>
+      {/* First thing in the tab order: the header carries a mega-menu, two
+          dropdowns and a burger, and without this a keyboard or screen-reader
+          user tabs through all of it on every single page. */}
+      <a className="skipLink" href="#main">Skip to content</a>
       <Preloader />
       <ScrollProgressBar />
       <CustomCursor />
@@ -38,7 +43,7 @@ export default function App() {
       <Navbar />
       <PageTransition>
         {(location) => (
-          <main>
+          <main id="main" tabIndex={-1}>
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/services" element={<Services />} />
@@ -46,7 +51,9 @@ export default function App() {
               <Route path="/deep-cleaning" element={<DeepClean />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="*" element={<Home />} />
+              {/* Unknown URLs get a real 404 page, not another copy of the
+                  homepage — see pages/NotFound.jsx. */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         )}
