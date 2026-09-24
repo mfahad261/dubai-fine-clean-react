@@ -123,7 +123,7 @@ export default function Navbar() {
             <a id="navPhone" href={BUSINESS.phoneHref}>
               <span className="ic"><Icon name="phone" size={16} filled /></span>
               <span className="txt">
-                <span className="k">Call us 7 days</span>
+                <span className="k"></span>
                 <span className="v">{BUSINESS.phone}</span>
               </span>
             </a>

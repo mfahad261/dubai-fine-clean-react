@@ -68,7 +68,7 @@ export const FAQS = [
 export const CHIPS = [
   'Apartment deep clean', 'Villa deep clean', 'Move in / out', 'Regular maintenance',
   'Office / commercial', 'Post-construction', 'Sofa & carpet', 'Marble polishing',
-  'AC duct & coil', 'Water tank', 'Windows & façade', 'Sanitisation',
+  'AC duct & coil', 'Water tank', 'Window & glass', 'Façade wash',
 ]
 
 export const COVERAGE_AREAS = [

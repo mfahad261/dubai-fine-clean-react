@@ -33,7 +33,7 @@ export const PAGES = {
     path: '/services',
     title: 'Cleaning Services in Dubai | Dubai Fine Clean',
     description:
-      'Residential, commercial, post-construction, carpet and stone, AC ducts, water tanks and sanitisation. Scope and crew size listed for every job.',
+      'Residential, commercial, post-construction, carpet and stone, AC ducts, water tanks, windows and façades. Scope and crew size listed for every job.',
   },
   deep: {
     path: '/deep-cleaning',
@@ -99,10 +99,15 @@ export const SERVICE_SEO = {
     description:
       'Ground and overhead tanks drained, scrubbed, disinfected and refilled to Dubai Municipality standard, with a compliance certificate issued on completion.',
   },
-  sanitis: {
-    title: 'Sanitisation & Disinfection Services in Dubai',
+  windows: {
+    title: 'Window & Glass Cleaning in Dubai — Streak-Free, Inside & Out',
     description:
-      'High-touch disinfection, ULV fogging and hospital-grade anti-viral treatment for homes, offices and public spaces. Certificate issued, short re-entry time.',
+      'Interior and exterior window cleaning across Dubai with water-fed poles and ladder access. Frames, tracks, sills and hard-water stain removal included.',
+  },
+  facade: {
+    title: 'Façade Cleaning in Dubai — Villa Pressure Wash & Rope Access',
+    description:
+      'Building façade cleaning for villas and towers: pressure washing, cladding and curtain wall, certified rope access. Permits and RAMS handled for you.',
   },
 }
 

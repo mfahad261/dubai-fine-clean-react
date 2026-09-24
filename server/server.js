@@ -160,6 +160,22 @@ app.get('/api/health', async (_req, res) => {
 
 app.use('/api', emailRoutes);
 
+/* ------------------------------------------------------------- redirects */
+// Retired URLs. A category that has been dropped from data/services.js is no
+// longer in sitemap.xml, so the catch-all below would answer it with a 404 —
+// correct for a page that never existed, wrong for one that was indexed and
+// linked. A 301 passes that standing on to the page that replaced it.
+const GONE = {
+  // Sanitisation & Disinfection, dropped September 2026. No single category
+  // took its place, so it points at the catalogue rather than a wrong guess.
+  '/services/sanitis': '/services',
+};
+
+app.use((req, res, next) => {
+  const to = GONE[req.path.replace(/\/$/, '')];
+  return to ? res.redirect(301, to) : next();
+});
+
 /* -------------------------------------------------------------- the site */
 const distPath = path.join(here, '..', 'dist');
 

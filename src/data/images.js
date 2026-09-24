@@ -22,6 +22,14 @@ import waterTank from '../assets/services/water-tank.jpg'
 import overheadTank from '../assets/services/overhead-tank.jpg'
 import undergroundTank from '../assets/services/underground-tank.jpg'
 import waterQualityTest from '../assets/services/water-quality-test.jpg'
+// The card cover only. water-tank.jpg stays the image on the individual
+// tank services inside the category — this one is the shot that sells it.
+import waterTankCover from '../assets/services/water-tank-cover.jpg'
+
+// Window, glass and façade work — the client's own crews, supplied September 2026.
+import windowCleaning from '../assets/services/window-cleaning.jpg'
+import glassHighLevel from '../assets/services/glass-high-level.jpg'
+import facadeCleaning from '../assets/services/facade-cleaning.jpg'
 
 import residentialTeam from '../assets/team/residential-team.jpg'
 
@@ -60,6 +68,9 @@ export const IMG = {
   overheadTank,
   undergroundTank,
   waterQualityTest,
+  windowCleaning,
+  glassHighLevel,
+  facadeCleaning,
   residentialTeam,
   glassFacade,
   detailFinishing,
@@ -112,7 +123,10 @@ export const CATEGORY_IMG = {
   construction: postConstruction,
   surfaces,
   air: acSystems,
-  water: waterTank,
+  water: waterTankCover,
+  // TO SWAP IN THE CLIENT'S COVER SHOTS: drop the files into
+  // src/assets/services/ and repoint these two lines — nothing else changes.
+  windows: windowCleaning,
+  facade: facadeCleaning,
   exterior,
-  sanitis: sanitisation,
 }

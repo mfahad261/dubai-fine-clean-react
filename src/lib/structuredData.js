@@ -42,7 +42,7 @@ export function organisation() {
     knowsAbout: [
       'Deep cleaning', 'Villa cleaning', 'Office cleaning', 'Post-construction cleaning',
       'Carpet and upholstery cleaning', 'Marble polishing', 'AC duct cleaning',
-      'Water tank cleaning', 'Sanitisation and disinfection',
+      'Water tank cleaning', 'Window and glass cleaning', 'Façade cleaning',
     ],
   }
 }

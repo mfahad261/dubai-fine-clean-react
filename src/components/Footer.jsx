@@ -36,7 +36,10 @@ export default function Footer() {
 
         <div className="fCol">
           <h5>Services</h5>
-          {CATS.slice(0, 6).map((c) => <Link key={c.id} to={`/services/${c.id}`}>{c.name}</Link>)}
+          {/* Every category, not a slice — the footer is the one place each
+              service page is always one click away, and a slice silently
+              dropped whichever categories were added last. */}
+          {CATS.map((c) => <Link key={c.id} to={`/services/${c.id}`}>{c.name}</Link>)}
         </div>
 
         <div className="fCol">

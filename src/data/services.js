@@ -1,14 +1,17 @@
 /**
  * services — DATA
  * ---------------------------------------------------------------------------
- * "Our Services" — the seven categories, their descriptions and every individual service.
+ * "Our Services" — the eight categories, their descriptions and every individual service.
  */
 // Pricing is deliberately absent site-wide: the client quotes in writing
 // after a survey, so publishing "from" figures only invites arguments.
 // Each service carries its scope (`m`) instead — hours and crew size.
 //
-// "Our Services" — the seven categories the client lists under that menu on
-// dubaifineclean.com. Water tank cleaning is its own category, not folded
+// "Our Services" — the eight categories the client lists under that menu on
+// dubaifineclean.com. Window & glass and façade are separate categories, not
+// one "exterior" bucket: one is a recurring two-hour visit and the other is a
+// multi-day access job, and quoting them together helped nobody.
+// Water tank cleaning is its own category, not folded
 // into AC duct & coil — the two are unrelated jobs that happened to share a
 // slab of copy in an earlier draft. Deep Cleaning is deliberately NOT here:
 // the client treats it as a separate division with its own top-level menu,
@@ -17,7 +20,11 @@
 import { CATEGORY_IMG, IMG } from './images.js'
 
 // simple line-art pictogram per category, drawn as inline SVG path data —
-// rendered by <PictogramIcon /> so no extra image requests are needed
+// rendered by <PictogramIcon /> so no extra image requests are needed.
+//
+// `exterior` and `fixtures` belong to no category here: they serve the deep-
+// cleaning groups, which have their own ids and borrow the closest glyph
+// rather than carrying a near-duplicate set (see DeepCleanIndex.jsx).
 export const PICT = {
   residential: 'M6 28L32 8l26 20M12 26v28h40V26M26 54V38h12v16',
   commercial: 'M10 10h20v44H10zM34 24h20v30H34zM16 20h8M16 30h8M16 40h8M40 34h8M40 44h8',
@@ -25,8 +32,12 @@ export const PICT = {
   surfaces: 'M8 20h48v28H8zM8 34h48M20 20v28M40 20v28M16 14c4-4 8-4 12 0s8 4 12 0 8-4 12 0',
   air: 'M10 14h44v22H10zM18 20v10M26 20v10M34 20v10M42 20v10M16 44c6 0 6 8 12 8s6-8 12-8 6 8 12 8',
   water: 'M16 16h32l4 12v28a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V28zM24 8h16v8H24zM16 30h32M24 42h16',
+  // a pane with two glints in it — the "after", not the window
+  windows: 'M10 10h44v44H10zM32 10v44M10 32h44M17 26l8-8M17 45l8-8',
+  // an elevation with a jet fanning across it
+  facade: 'M24 8h30v48H24zM24 24h30M24 40h30M39 8v48M6 32h11M6 32c6 0 10-4 12-10M6 32c6 0 10 4 12 10',
   exterior: 'M12 8h40v48H12zM32 8v48M12 24h40M12 40h40',
-  sanitis: 'M26 8h12v8H26zM22 16h20l4 12v28H18V28zM26 34h12M26 42h12',
+  fixtures: 'M26 8h12v8H26zM22 16h20l4 12v28H18V28zM26 34h12M26 42h12',
 }
 
 const rotate = (imgs) => (i) => imgs[i % imgs.length]
@@ -125,16 +136,37 @@ export const CATS = [
     ]})(),
   },
   {
-    id: 'sanitis', no: '07', acc: '#E9A23B', dark: false,
-    name: 'Sanitisation & Disinfection', img: CATEGORY_IMG.sanitis,
-    tags: ['High-touch', 'Anti-viral', 'Fogging', 'Custom plans'],
-    lede: 'Targeted treatment plans that keep homes, offices and public spaces safer — used on their own or as a finishing stage after a deep clean.',
-    items: (() => { const img = rotate([IMG.sanitisation, IMG.cleaningSupplies, IMG.commercial])
+    id: 'windows', no: '07', acc: '#E9A23B', dark: false,
+    name: 'Window & Glass Cleaning', img: CATEGORY_IMG.windows,
+    tags: ['Interior glass', 'Exterior glass', 'Frames & tracks', 'High-level'],
+    lede: 'Dubai dust and hard water haze glass within weeks. Purified-water poles, ladder and rope access — finished streak-free, with frames, tracks and sills included rather than charged as extras.',
+    items: (() => { const img = rotate([IMG.windowCleaning, IMG.glassHighLevel, IMG.glassFacade, IMG.team003])
     return [
-      { n: 'High-Touch Disinfection', d: 'Handles, switches, rails, lift buttons and shared equipment treated on a scheduled round.', m: ['1–2 hrs', '2 staff'], img: img(0) },
-      { n: 'Anti-Bacterial Fogging', d: 'ULV fogging of whole floors with certified, food-safe agents. Short re-entry time.', m: ['1–3 hrs', '2 staff'], img: img(0) },
-      { n: 'Anti-Viral Treatment', d: 'Hospital-grade surface treatment with a residual protective film, certificate issued.', m: ['2–4 hrs', '2–3 staff'], img: img(1) },
-      { n: 'Tailored Sanitisation Plan', d: 'A recurring programme built around your footfall, shifts and risk areas.', m: ['Scheduled', '2+ staff'], img: img(2) },
+      { n: 'Interior Window Cleaning', d: 'Every pane inside the property, plus frames, tracks and sills, finished streak-free.', m: ['2–4 hrs', '2 staff'], img: img(0) },
+      { n: 'Exterior Window Cleaning', d: 'Ladder and water-fed pole access for villas and low-rise, no residue left on the glass.', m: ['3–5 hrs', '2–3 staff'], img: img(0) },
+      { n: 'Full-Height Glazing', d: 'Floor-to-ceiling villa glazing cleaned on both faces, including the head and reveals.', m: ['4–6 hrs', '2–3 staff'], img: img(1) },
+      { n: 'High-Level & Skylight Glass', d: 'Atrium glazing, stairwell windows and roof lights reached with poles or tower access.', m: ['3–6 hrs', '2–3 staff'], img: img(1) },
+      { n: 'Hard Water Stain Removal', d: 'Mineral etching and limescale cut back from shower screens, balustrades and exterior panes.', m: ['2–4 hrs', '2 staff'], img: img(3) },
+      { n: 'Frame, Track & Sill Detail', d: 'Sand cleared out of runners, hinges and drainage slots so the glazing still closes properly.', m: ['2–3 hrs', '1–2 staff'], img: img(0) },
+      { n: 'Glass Balustrade & Railing', d: 'Balcony and terrace balustrades, both faces, with the stainless fittings polished.', m: ['2–4 hrs', '2 staff'], img: img(2) },
+      { n: 'Mirror & Partition Glass', d: 'Interior mirrors, office partitions and retail display glass, handled without overspray.', m: ['1–3 hrs', '1–2 staff'], img: img(0) },
+    ]})(),
+  },
+  {
+    id: 'facade', no: '08', acc: '#4A6274', dark: true,
+    name: 'Façade Deep Cleaning', img: CATEGORY_IMG.facade,
+    tags: ['Pressure wash', 'Rope access', 'Cladding', 'Villas & towers'],
+    lede: 'Sand, salt air and exhaust film settle on every elevation and dull a building long before anything else shows wear. Pressure washing for villas, certified rope access for towers — permits and RAMS handled for you.',
+    items: (() => { const img = rotate([IMG.facadeCleaning, IMG.exterior, IMG.team008, IMG.glassFacade])
+    return [
+      { n: 'Villa Façade Wash', d: 'Render, stone and painted elevations pressure-washed at a pressure the finish can take.', m: ['1–2 days', '3–4 staff'], img: img(0) },
+      { n: 'Tower Façade — Rope Access', d: 'Certified rope-access technicians for high-rise glass and cladding. RAMS and permits handled.', m: ['Multi-day', '4+ staff'], img: img(2) },
+      { n: 'Cladding & Curtain Wall', d: 'Aluminium composite, stone cladding and glazed curtain wall washed and rinsed down.', m: ['1–3 days', '4+ staff'], img: img(3) },
+      { n: 'Driveway & Hardscape Wash', d: 'Driveways, car porch, boundary walls and external stairs, oil and tyre marks treated.', m: ['4–8 hrs', '2–3 staff'], img: img(1) },
+      { n: 'Balcony & Soffit Clean', d: 'Terrace exteriors, soffits, ceiling voids and railings — the surfaces nobody reaches.', m: ['3–6 hrs', '2–3 staff'], img: img(0) },
+      { n: 'Roof & Gutter Clearance', d: 'Sand and debris cleared from roofs, gutters and outlets before the rain finds them.', m: ['3–6 hrs', '2–3 staff'], img: img(1) },
+      { n: 'Post-Construction Façade', d: 'Cement splash, render haze, silicone and sticker residue taken off without scarring.', m: ['1–2 days', '4+ staff'], img: img(2) },
+      { n: 'Shopfront & Entrance Facia', d: 'Signage, entrance glass and canopy cleaned outside trading hours.', m: ['2–4 hrs', '2 staff'], img: img(3) },
     ]})(),
   },
 ]

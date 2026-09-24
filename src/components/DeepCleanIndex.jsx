@@ -15,9 +15,11 @@ import './DeepCleanIndex.css'
 // DEEP_GROUPS use their own ids (homes, rooms, fabric, business, exterior),
 // not the "Our Services" category ids PictogramIcon's glyphs are keyed by —
 // mapped here to the closest existing icon rather than adding a near-dupe set.
+// `fixtures` and `exterior` exist in PICT for these two rows alone; no
+// category uses them, so don't delete them as unused.
 const GROUP_ICON = {
   homes: 'residential',
-  rooms: 'sanitis',
+  rooms: 'fixtures',
   fabric: 'surfaces',
   business: 'commercial',
   exterior: 'exterior',

@@ -2,7 +2,7 @@
  * BentoServices — the services card grid on the home page.
  * ---------------------------------------------------------------------------
  * WHERE IT APPEARS: home page, under "Every service, one place".
- * WHAT IT DOES:     Seven cards, one per Our Services category, each showing
+ * WHAT IT DOES:     Eight cards, one per Our Services category, each showing
  *                   its photography, number, name, blurb, tags and service count.
  * THE DETAIL:       On hover, a soft light in the category's own colour
  *                   follows the cursor — the card writes the pointer position
