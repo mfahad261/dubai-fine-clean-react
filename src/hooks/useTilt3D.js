@@ -17,7 +17,19 @@ export function useTilt3D({ max = 14, lift = 6 } = {}) {
     if (window.matchMedia('(pointer: coarse)').matches) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    let raf, tx = 0, ty = 0, cx = 0, cy = 0, active = false
+    let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0, active = false
+
+    // Runs only while hovered or easing back; parks once settled at rest.
+    const tick = () => {
+      cx += (tx - cx) * 0.16
+      cy += (ty - cy) * 0.16
+      const settled = Math.abs(cx) < 0.02 && Math.abs(cy) < 0.02 && !active
+      el.style.transform = settled
+        ? ''
+        : `perspective(520px) rotateX(${cx.toFixed(2)}deg) rotateY(${cy.toFixed(2)}deg) translateZ(${(active ? lift : 0)}px)`
+      raf = settled ? 0 : requestAnimationFrame(tick)
+    }
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick) }
 
     const onMove = (e) => {
       const r = el.getBoundingClientRect()
@@ -27,19 +39,9 @@ export function useTilt3D({ max = 14, lift = 6 } = {}) {
       tx = -ny * max          // pushing the cursor up tips the top away
       ty = nx * max
       active = true
+      kick()
     }
-    const onLeave = () => { tx = 0; ty = 0; active = false }
-
-    const tick = () => {
-      cx += (tx - cx) * 0.16
-      cy += (ty - cy) * 0.16
-      const settled = Math.abs(cx) < 0.02 && Math.abs(cy) < 0.02 && !active
-      el.style.transform = settled
-        ? ''
-        : `perspective(520px) rotateX(${cx.toFixed(2)}deg) rotateY(${cy.toFixed(2)}deg) translateZ(${(active ? lift : 0)}px)`
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
+    const onLeave = () => { tx = 0; ty = 0; active = false; kick() }
 
     el.addEventListener('mousemove', onMove)
     el.addEventListener('mouseleave', onLeave)

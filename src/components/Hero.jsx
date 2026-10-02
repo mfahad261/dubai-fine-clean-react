@@ -24,7 +24,7 @@
  * the scroll transform. Without that split the two transforms fight and the
  * element jumps.
  */
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { VIDEOS } from '../data/videos.js'
 import { TEAM_PHOTOS } from '../data/images.js'
 import { BUSINESS } from '../data/content.js'
@@ -43,18 +43,20 @@ const seg = (p, from, to) => {
 const MARQUEE = 'Villas · Apartments · Offices · Facades · Post-construction · '
 
 export default function Hero() {
-  const [runwayRef, p] = useScrollProgress()
   const wideRef = useInViewVideo()
   const tallRef = useInViewVideo()
 
   const stageRef = useRef(null)
+  const topoRef = useRef(null)
   const mediaRef = useRef(null)
   const introRef = useRef(null)
   const copyRef = useRef(null)
   const cardRef = useRef(null)
   const mqRef = useRef(null)
 
-  useEffect(() => {
+  // Every scroll-linked style is written straight to the DOM — the hero never
+  // re-renders while you scroll.
+  const runwayRef = useScrollProgress((p) => {
     const shrink = seg(p, 0.06, 0.52)   // villa clip becomes a card
     const card = seg(p, 0.34, 0.68)     // façade card arrives
     const reveal = seg(p, 0.40, 0.74)   // copy takes the left column
@@ -77,12 +79,13 @@ export default function Hero() {
       cardRef.current.style.transform = `translateX(${(1 - card) * 44}px) scale(${0.93 + card * 0.07})`
     }
     if (mqRef.current) mqRef.current.style.transform = `translate3d(${-p * 120 - 5}%,0,0)`
-  }, [p])
+    if (topoRef.current) topoRef.current.style.transform = `translate3d(0,${p * -44}px,0)`
+  })
 
   return (
     <div className="heroScroll" ref={runwayRef}>
       <div className="heroStage" ref={stageRef}>
-        <div className="heroTopo" aria-hidden="true" style={{ transform: `translateY(${p * -44}px)` }}>
+        <div className="heroTopo" aria-hidden="true" ref={topoRef}>
           <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
             {Array.from({ length: 8 }, (_, i) => (
               <path key={i} d={`M-60 ${150 + i * 82} C 220 ${90 + i * 82}, 420 ${240 + i * 82}, 660 ${170 + i * 82} S 1040 ${70 + i * 82}, 1260 ${160 + i * 82}`} />
@@ -93,6 +96,8 @@ export default function Hero() {
         <div className="heroMarquee" aria-hidden="true">
           <div className="hmTrack" ref={mqRef}>{MARQUEE.repeat(6)}</div>
         </div>
+
+        <span className="heroCardShade" aria-hidden="true" />
 
         {/* ---- CARD 1: the villa clip, contracts out of full bleed ---- */}
         <figure className="heroCardA">

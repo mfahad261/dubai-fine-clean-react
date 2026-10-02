@@ -1,2 +1,6 @@
 .pbarWrap{ position:fixed; left:0; right:0; top:0; height:3px; z-index:150; pointer-events:none; }
-.pbar{ height:100%; width:0; background:var(--grad); transition:width .1s linear; }
+.pbar{
+  height:100%; width:100%; background:var(--grad);
+  transform:scaleX(0); transform-origin:0 50%; will-change:transform;
+  transition:transform .1s linear;
+}

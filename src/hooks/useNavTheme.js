@@ -30,13 +30,29 @@ export function useNavTheme() {
       setOnDark((prev) => (prev !== dark ? dark : prev))
     }
 
+    // elementFromPoint forces a layout, so never call it straight from a
+    // scroll event (they fire every frame under smooth scrolling). Coalesce
+    // into at most one sample per animation frame, and no more than ~10/s.
+    let raf = 0
+    let lastAt = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame((t) => {
+        raf = 0
+        if (t - lastAt < 100) return
+        lastAt = t
+        sample()
+      })
+    }
+
     sample()
-    const id = setInterval(sample, 160)
-    window.addEventListener('scroll', sample, { passive: true })
+    const id = setInterval(sample, 250)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       alive = false
       clearInterval(id)
-      window.removeEventListener('scroll', sample)
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
     }
   }, [])
 

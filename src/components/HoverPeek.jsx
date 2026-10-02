@@ -21,7 +21,19 @@ export default function HoverPeek() {
     const el = box.current
     if (!el) return
 
-    let tx = 0, ty = 0, px = 0, py = 0, on = false, raf
+    let tx = 0, ty = 0, px = 0, py = 0, on = false, raf = 0
+
+    // only animates while the preview is showing and still catching up
+    const tick = () => {
+      px += (tx - px) * 0.13
+      py += (ty - py) * 0.13
+      el.style.left = `${px}px`
+      el.style.top = `${py}px`
+      raf = on && (Math.abs(tx - px) > 0.1 || Math.abs(ty - py) > 0.1)
+        ? requestAnimationFrame(tick)
+        : 0
+    }
+    const kick = () => { if (on && !raf) raf = requestAnimationFrame(tick) }
 
     const onOver = (e) => {
       const row = e.target.closest?.('[data-peek-img]')
@@ -30,6 +42,7 @@ export default function HoverPeek() {
       label.current.textContent = row.dataset.peekLabel || 'Preview'
       el.classList.add('on')
       on = true
+      kick()
     }
 
     const onOut = (e) => {
@@ -41,18 +54,7 @@ export default function HoverPeek() {
       on = false
     }
 
-    const onMove = (e) => { tx = e.clientX + 150; ty = e.clientY }
-
-    const tick = () => {
-      if (on) {
-        px += (tx - px) * 0.13
-        py += (ty - py) * 0.13
-        el.style.left = `${px}px`
-        el.style.top = `${py}px`
-      }
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
+    const onMove = (e) => { tx = e.clientX + 150; ty = e.clientY; kick() }
 
     document.addEventListener('mouseover', onOver)
     document.addEventListener('mouseout', onOut)
