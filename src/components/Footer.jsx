@@ -62,7 +62,7 @@ export default function Footer() {
         <span>© {year} Dubai Fine Clean. All rights reserved.</span>
         <span>{BUSINESS.addressLine2}</span>
         <span>
-          Designed &amp; developed by{' '}
+          Designer &amp; developer{' '}
           <a className="fCredit" href="https://qodexaa.com/" target="_blank" rel="noopener">Qodexaa</a>
         </span>
       </div>
