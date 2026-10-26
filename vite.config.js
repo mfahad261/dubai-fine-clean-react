@@ -25,7 +25,7 @@ function sitemap() {
   }
 }
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), sitemap()],
 
   build: {
@@ -43,7 +43,9 @@ export default defineConfig({
         // purpose. Split further and Rollup can order the chunks so react-dom
         // initialises before react does. Everything else in node_modules
         // (lenis) goes to a second long-cached chunk.
-        manualChunks(id) {
+        // The SSR build (scripts/prerender.mjs) is one throwaway Node bundle;
+        // chunking only matters for what browsers download.
+        manualChunks: isSsrBuild ? undefined : (id) => {
           if (!id.includes('node_modules')) return undefined
           if (/[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/.test(id)) {
             return 'react'
@@ -67,4 +69,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

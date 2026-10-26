@@ -60,7 +60,11 @@ export default function Footer() {
       </div>
       <div className="wrap fBottom">
         <span>© {year} Dubai Fine Clean. All rights reserved.</span>
-        <span>Business Bay, Dubai, UAE</span>
+        <span>{BUSINESS.addressLine2}</span>
+        <span>
+          Designed &amp; developed by{' '}
+          <a className="fCredit" href="https://qodexaa.com/" target="_blank" rel="noopener">Qodexaa</a>
+        </span>
       </div>
     </footer>
   )

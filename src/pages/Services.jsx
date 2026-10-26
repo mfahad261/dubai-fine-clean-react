@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CATS, getCategory } from '../data/services.js'
 import { PAGES, SERVICE_SEO, serviceMeta } from '../data/seo.js'
-import { breadcrumbs, serviceCategory } from '../lib/structuredData.js'
+import { breadcrumbs, serviceCategory, serviceList } from '../lib/structuredData.js'
 import { scrollToElement } from '../hooks/useSmoothScroll.js'
 import Seo from '../components/Seo.jsx'
 import NotFound from './NotFound.jsx'
@@ -44,7 +44,7 @@ export default function Services() {
       return {
         ...PAGES.services,
         accent: '#0B63D8',
-        jsonLd: [breadcrumbs([['Home', '/'], ['Services', '/services']])],
+        jsonLd: [breadcrumbs([['Home', '/'], ['Services', '/services']]), serviceList(CATS)],
       }
     }
     const meta = serviceMeta(cat)

@@ -61,6 +61,12 @@ export default function Preloader() {
 
   if (hidden) return null
 
+  // Prerendered HTML: a plain white cover, no clip. The browser swaps in the
+  // real preloader the moment the app boots, so the logo animation starts
+  // once instead of starting in the static page and restarting on boot.
+  // index.html hides it for visitors without JavaScript.
+  if (typeof window === 'undefined') return <div className="pre" aria-hidden="true" />
+
   return (
     <div className={`pre ${done ? 'wipe' : ''}`} aria-hidden="true">
       {reduced ? (

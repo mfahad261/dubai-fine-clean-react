@@ -1,8 +1,8 @@
 /**
- * LocationMap — A stylised map card marking the Business Bay office.
+ * LocationMap — A stylised map card marking the Al Barsha South office.
  * ---------------------------------------------------------------------------
  * WHERE IT APPEARS: /contact.
- * WHAT IT DOES:     A stylised map card marking the Business Bay office.
+ * WHAT IT DOES:     A stylised map card marking the Al Barsha South office.
  */
 import { IMG } from '../data/images.js'
 import { BUSINESS } from '../data/content.js'

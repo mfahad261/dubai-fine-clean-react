@@ -22,7 +22,7 @@ const BRAND = {
   phone: '+971 56 916 9761',
   phoneHref: 'tel:+971569169761',
   whatsapp: 'https://wa.me/971569169761',
-  address: 'Empire Heights A — 16F-A-04, Business Bay, Dubai',
+  address: 'Diamond Business Center 1 — Office 510, Al Barsha South, Dubai',
 };
 
 const row = (label, value) => (value

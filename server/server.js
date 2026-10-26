@@ -161,19 +161,101 @@ app.get('/api/health', async (_req, res) => {
 app.use('/api', emailRoutes);
 
 /* ------------------------------------------------------------- redirects */
-// Retired URLs. A category that has been dropped from data/services.js is no
-// longer in sitemap.xml, so the catch-all below would answer it with a 404 —
-// correct for a page that never existed, wrong for one that was indexed and
-// linked. A 301 passes that standing on to the page that replaced it.
-const GONE = {
+// Retired URLs. Anything that was indexed or linked deserves a 301 to the page
+// that replaced it — the catch-all below would answer it with a 404, which is
+// right for a page that never existed and wrong for one Google still lists.
+// A 301 moves the ranking across and makes Google swap the old URL out of its
+// index for the new one; a 404 just leaks the standing away slowly.
+//
+// Keys are lowercase and have no trailing slash; lookups normalise to match.
+const MOVED = {
   // Sanitisation & Disinfection, dropped September 2026. No single category
   // took its place, so it points at the catalogue rather than a wrong guess.
   '/services/sanitis': '/services',
+
+  // ---- the old WordPress / Avada site (replaced September 2026) ----
+  '/home': '/',
+  '/index.php': '/',
+  '/about-us': '/about',
+  '/contact-us': '/contact',
+  '/our-services': '/services',
+  '/services-2': '/services',
+  '/residential-cleaning-services-in-dubai': '/services/residential',
+  '/residential-cleaning': '/services/residential',
+  '/office-commercial-cleaning-services': '/services/commercial',
+  '/commercial-cleaning': '/services/commercial',
+  '/office-cleaning': '/services/commercial',
+  '/ac-duct-coil-specialized-cleaning-services-in-dubai': '/services/air',
+  '/ac-duct-cleaning': '/services/air',
+  '/post-construction-renovation-cleaning-services': '/services/construction',
+  '/post-construction-deep-cleaning': '/services/construction',
+  '/post-construction-cleaning': '/services/construction',
+  '/carpet-upholstery-specialized-surface-cleaning-services': '/services/surfaces',
+  '/carpet-cleaning': '/services/surfaces',
+  '/sofa-cleaning': '/services/surfaces',
+  '/water-tank-cleaning': '/services/water',
+  '/window-clenaing': '/services/windows', // sic — the old slug's typo
+  '/window-cleaning': '/services/windows',
+  '/facade-cleaning': '/services/facade',
+  '/deep-cleaning-services': '/deep-cleaning',
+  '/villa-deep-cleaning': '/deep-cleaning',
+  '/apartment-deep-cleaning': '/deep-cleaning',
+  '/office-deep-cleaning': '/deep-cleaning',
+  '/balcony-deep-cleaning': '/deep-cleaning',
+  '/move-in-deep-cleaning': '/deep-cleaning',
+  '/move-out-deep-cleaning': '/deep-cleaning',
+
+  // WordPress / Yoast / Rank Math sitemaps that robots.txt or Search Console
+  // may still point at.
+  '/wp-sitemap.xml': '/sitemap.xml',
+  '/sitemap_index.xml': '/sitemap.xml',
+  '/page-sitemap.xml': '/sitemap.xml',
+  '/post-sitemap.xml': '/sitemap.xml',
 };
 
+/**
+ * WordPress machinery with no equivalent on the new site: feeds, author and
+ * taxonomy archives, uploads, the admin. These answer 410 Gone rather than
+ * 404 — Google treats 410 as "removed on purpose" and drops the URL from its
+ * index faster, which is exactly what's wanted for these.
+ */
+const WP_GONE = /^\/(wp-admin|wp-content|wp-includes|wp-json|wp-login\.php|xmlrpc\.php|feed|comments\/feed|author|category|tag|portfolio_page|portfolio-items|avada_portfolio|avada_faq|slide|elementor-hf)(\/|$)|\/feed\/?$|\/amp\/?$/i;
+
+/** The query strings WordPress used for posts, pages, attachments and search. */
+const WP_QUERY = ['p', 'page_id', 'attachment_id', 'cat', 's', 'author', 'feed', 'post_type'];
+
 app.use((req, res, next) => {
-  const to = GONE[req.path.replace(/\/$/, '')];
-  return to ? res.redirect(301, to) : next();
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  if (req.path.startsWith('/api')) return next();
+
+  // One host. www.dubaifineclean.com answered every URL as a full second copy
+  // of the site; send it — path and all — to the bare domain the canonicals
+  // already name.
+  const host = req.headers.host || '';
+  if (/^www\./i.test(host)) {
+    return res.redirect(301, `https://${host.replace(/^www\./i, '')}${req.originalUrl}`);
+  }
+
+  if (WP_GONE.test(req.path)) {
+    return res.status(410).type('text/plain').send('410 Gone — this page was part of the old site and has been removed.');
+  }
+  if (req.path === '/' && WP_QUERY.some((k) => k in req.query)) {
+    return res.status(410).type('text/plain').send('410 Gone — this page was part of the old site and has been removed.');
+  }
+
+  const key = req.path.replace(/\/+$/, '').toLowerCase() || '/';
+  if (MOVED[key]) return res.redirect(301, MOVED[key]);
+
+  // One URL per page: /about/ and /index.html are the same page as /about
+  // and /, and the canonicals only ever name the clean form.
+  if (req.path.endsWith('/index.html')) {
+    return res.redirect(301, req.path.slice(0, -'index.html'.length).replace(/\/$/, '') || '/');
+  }
+  if (req.path.length > 1 && req.path.endsWith('/')) {
+    const qs = req.originalUrl.slice(req.path.length);
+    return res.redirect(301, req.path.replace(/\/+$/, '') + qs);
+  }
+  return next();
 });
 
 /* -------------------------------------------------------------- the site */
@@ -210,6 +292,10 @@ if (fs.existsSync(distPath)) {
 
   app.use(express.static(distPath, {
     index: false,               // the catch-all below owns index.html
+    // Explicit, because the default only hides dot-FILES: without this the
+    // prerendered pages would also be served at /.pages/about.html, a second
+    // copy of every page.
+    dotfiles: 'ignore',
     setHeaders(res, filePath) {
       const name = path.basename(filePath);
       if (FINGERPRINTED.test(name)) {
@@ -235,12 +321,29 @@ if (fs.existsSync(distPath)) {
   //
   // Unknown paths get the same shell (so the app renders its own 404 page)
   // but with a 404 status, which is what crawlers read.
+  //
+  // Each known route is served its PRERENDERED file from dist/.pages (see
+  // scripts/prerender.mjs) — its own title, canonical, schema and content in
+  // the raw HTML — so crawlers that don't run JavaScript see the real page.
+  // Unknown paths get the prerendered 404 page (noindex). If a build ever
+  // ships without .pages, everything falls back to the bare shell as before.
+  const pagesPath = path.join(distPath, '.pages');
+  const pageFile = (clean) => path.join(pagesPath, clean === '/' ? 'index.html' : `${clean.slice(1)}.html`);
+
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api')) return next();
     const clean = req.path.replace(/\/$/, '') || '/';
     const found = !routes || routes.has(clean);
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    return res.status(found ? 200 : 404).sendFile(path.join(distPath, 'index.html'));
+
+    let file = path.join(distPath, 'index.html');
+    // Only consult .pages when the route table exists, so `clean` is always
+    // one of our own paths and never raw user input.
+    const candidate = !routes ? null : found ? pageFile(clean) : path.join(pagesPath, '404.html');
+    if (candidate && fs.existsSync(candidate)) file = candidate;
+
+    // sendFile refuses dot-folders unless told otherwise.
+    return res.status(found ? 200 : 404).sendFile(file, { dotfiles: 'allow' });
   });
 } else {
   console.log('ℹ️  no dist folder — API-only mode (normal during development)');

@@ -10,7 +10,10 @@ import { useReveal } from './useReveal.js'
 // scrolls into view. Non-numeric strings ("On survey") pass through as-is.
 export function useCountUp(value, duration = 1400) {
   const [ref, inView] = useReveal()
-  const [display, setDisplay] = useState('0')
+  // The prerendered HTML carries the real figure — crawlers and AI engines
+  // read "2,400+ cleans", not "0+". In the browser it still starts at zero
+  // and counts up as before.
+  const [display, setDisplay] = useState(() => (typeof window === 'undefined' ? String(value) : '0'))
 
   useEffect(() => {
     if (!inView) return

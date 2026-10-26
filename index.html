@@ -4,18 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <!-- Everything below is the DEFAULT set, for crawlers and social scrapers
-         that never run JavaScript. components/Seo.jsx overwrites these exact
-         elements per route once React mounts — it edits them in place rather
-         than appending duplicates. -->
-    <title>Dubai Fine Clean — Professional Cleaning Services in Dubai</title>
-    <meta name="description" content="Deep cleaning, AC duct care, water tanks and façade access across Dubai. Insured teams, eco-certified products and a written quote first. Since 2016." />
-    <link rel="canonical" href="https://dubaifineclean.com/" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="author" content="Dubai Fine Clean" />
-    <meta name="theme-color" content="#0B63D8" />
-    <meta name="format-detection" content="telephone=no" />
-
     <!-- Icons. The SVG is the real one — it stays sharp at every size and is
          what Seo.jsx re-tints per section. The PNGs are the fallback for
          browsers with no SVG favicon support. -->
@@ -24,6 +12,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Fine Clean" />
+    <meta name="author" content="Dubai Fine Clean" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Per-route block. scripts/prerender.mjs replaces everything between
+         these markers with each route's own title, description, canonical,
+         OG/Twitter tags and JSON-LD at build time, and components/Seo.jsx
+         keeps the same elements in step during client-side navigation —
+         editing them in place rather than appending duplicates. What sits
+         here is only the fallback for the bare template. -->
+    <!--seo:start-->
+    <title>Dubai Fine Clean — Professional Cleaning Services in Dubai</title>
+    <meta name="description" content="Deep cleaning, AC duct care, water tanks and façade access across Dubai. Insured teams, eco-certified products and a written quote first. Since 2016." />
+    <link rel="canonical" href="https://dubaifineclean.com/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0B63D8" />
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
@@ -51,13 +54,13 @@
         "@id": "https://dubaifineclean.com/#organization",
         "name": "Dubai Fine Clean",
         "url": "https://dubaifineclean.com",
-        "logo": "https://dubaifineclean.com/favicon.svg",
+        "logo": "https://dubaifineclean.com/apple-touch-icon.png",
         "image": "https://dubaifineclean.com/og-cover.jpg",
         "telephone": "+971 56 916 9761",
         "foundingDate": "2016",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Empire Heights A — 16F-A-04, Business Bay",
+          "streetAddress": "Diamond Business Center 1, Office 510, Al Barsha South Third",
           "addressLocality": "Dubai",
           "addressRegion": "Dubai",
           "addressCountry": "AE"
@@ -65,6 +68,11 @@
         "areaServed": { "@type": "City", "name": "Dubai" }
       }
     </script>
+    <!--seo:end-->
+
+    <!-- Without JavaScript the prerendered page is the whole site, so the
+         preloader's white cover must not sit on top of it. -->
+    <noscript><style>.pre{display:none!important}</style></noscript>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,11 +82,11 @@
     <div id="root"></div>
     <noscript>
       <div style="max-width:640px;margin:96px auto;padding:0 24px;font:16px/1.6 system-ui,sans-serif;color:#0E1B2E">
-        <h1 style="font-size:26px;margin-bottom:12px">Dubai Fine Clean</h1>
-        <p>This site needs JavaScript to load. To book a clean or ask for a quote right now,
+        <p style="font-size:26px;font-weight:700;margin-bottom:12px">Dubai Fine Clean</p>
+        <p>Parts of this site need JavaScript. To book a clean or ask for a quote right now,
           call <a href="tel:+971569169761" style="color:#0B63D8">+971 56 916 9761</a> or
           message us on <a href="https://wa.me/971569169761" style="color:#0B63D8">WhatsApp</a>.</p>
-        <p style="margin-top:12px">Empire Heights A — 16F-A-04, Business Bay, Dubai, UAE.</p>
+        <p style="margin-top:12px">Diamond Business Center 1 — Office 510, Al Barsha South, Dubai, UAE.</p>
       </div>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>

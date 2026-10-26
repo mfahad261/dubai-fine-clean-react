@@ -92,7 +92,7 @@ export default function Navbar() {
             <img className="brandMark" src={logoMark} alt="" width="377" height="422" />
             <span className="brandTx">
               <span className="n1"><b>Dubai</b> Fine Clean</span>
-              <span className="n2">Business Bay · since 2016</span>
+              <span className="n2">Al Barsha South · since 2016</span>
             </span>
           </Link>
 

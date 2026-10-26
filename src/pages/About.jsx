@@ -4,8 +4,9 @@
  * Company story, mission and vision, operating rules, real team photography and the closing feature shot.
  */
 import { IMG } from '../data/images.js'
+import { yearsTrading } from '../data/content.js'
 import { PAGES } from '../data/seo.js'
-import { breadcrumbs } from '../lib/structuredData.js'
+import { aboutPage, breadcrumbs } from '../lib/structuredData.js'
 import Seo from '../components/Seo.jsx'
 import Eyebrow from '../components/Eyebrow.jsx'
 import Reveal from '../components/Reveal.jsx'
@@ -29,12 +30,12 @@ export default function About() {
         {...PAGES.about}
         type="profile"
         accent="#54677F"
-        jsonLd={[breadcrumbs([['Home', '/'], ['About Us', '/about']])]}
+        jsonLd={[breadcrumbs([['Home', '/'], ['About Us', '/about']]), aboutPage()]}
       />
       <section className="abHero">
         <div className="wrap">
           <Reveal><Eyebrow tone="green">About us</Eyebrow></Reveal>
-          <SplitText as="h1" className="ed" lines={['Nine years of', <>getting it <i>right.</i></>]} />
+          <SplitText as="h1" className="ed" lines={[`${yearsTrading()} years of`, <>getting it <i>right.</i></>]} />
           <Reveal delay={160}>
             <p className="lede">
               Dubai Fine Clean began with two staff and one van in Business Bay. Today more than forty

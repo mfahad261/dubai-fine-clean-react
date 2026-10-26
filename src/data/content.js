@@ -11,9 +11,33 @@ export const BUSINESS = {
   phone: '+971 56 916 9761',
   phoneHref: 'tel:+971569169761',
   whatsapp: 'https://wa.me/971569169761',
-  addressLine1: 'Empire Heights A — 16F-A-04',
-  addressLine2: 'Business Bay, Dubai, UAE',
+  addressLine1: 'Diamond Business Center 1 — Office 510',
+  addressLine2: 'Al Barsha South, Dubai, UAE',
+  // The parts on their own, for schema and short mentions. Keep in step with
+  // the Google Business Profile — the two must match exactly.
+  building: 'Diamond Business Center 1',
+  street: 'Diamond Business Center 1, Office 510, Al Barsha South Third',
+  area: 'Al Barsha South',
   since: 2016,
+  // The hours printed on /contact ("7 days a week, 8am – 10pm"), in the
+  // 24-hour form schema.org wants. Change both together.
+  opens: '08:00',
+  closes: '22:00',
+  // Optional — fill these in and the LocalBusiness schema picks them up:
+  //   email:    'info@dubaifineclean.com'   (only once it is shown on the site)
+  //   geo:      { latitude: 25.18, longitude: 55.27 }   (the office pin)
+  //   mapUrl:   'https://maps.google.com/?cid=…'        (Google Business Profile)
+  //   profiles: ['https://www.instagram.com/…', 'https://g.page/…']  (sameAs)
+}
+
+const NUMBER_WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight',
+  'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen',
+  'Eighteen', 'Nineteen', 'Twenty']
+
+/** "Ten" in 2026 — the copy used to hard-code "Nine" and went stale on New Year's Day. */
+export const yearsTrading = () => {
+  const n = new Date().getFullYear() - BUSINESS.since
+  return NUMBER_WORDS[n] || String(n)
 }
 
 export const TOPBAR_MESSAGES = [

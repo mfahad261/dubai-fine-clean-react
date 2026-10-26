@@ -5,7 +5,7 @@
  */
 import { DEEP_GROUPS } from '../data/deepCleaning.js'
 import { PAGES } from '../data/seo.js'
-import { breadcrumbs } from '../lib/structuredData.js'
+import { breadcrumbs, deepCleaningService } from '../lib/structuredData.js'
 import Seo from '../components/Seo.jsx'
 import DeepCleanHero from '../components/DeepCleanHero.jsx'
 import DeepCleanIndex from '../components/DeepCleanIndex.jsx'
@@ -21,7 +21,10 @@ export default function DeepClean() {
       <Seo
         {...PAGES.deep}
         accent="#22B457"
-        jsonLd={[breadcrumbs([['Home', '/'], ['Deep Cleaning', '/deep-cleaning']])]}
+        jsonLd={[
+          breadcrumbs([['Home', '/'], ['Deep Cleaning', '/deep-cleaning']]),
+          deepCleaningService(DEEP_GROUPS, PAGES.deep.description),
+        ]}
       />
       <DeepCleanHero />
       <div id="groups">

@@ -55,6 +55,19 @@ serves. Add a service category with its SEO copy and it appears in the sitemap
 on the next build. Don't hand-edit it; `server.js` reads that same file back to
 know which URLs deserve a 200 and which get a real 404.
 
+**Prerendering.** `npm run build` also renders every route on the server
+(`src/entry-server.jsx` → `scripts/prerender.mjs`) and writes
+`dist/.pages/<route>.html`, each with its own title, canonical, OG tags,
+JSON-LD and full page content in the raw HTML. `server.js` serves those files,
+so crawlers that don't run JavaScript (Bing, link previews, AI answer engines)
+see the real page. The browser still boots the app with `createRoot`, so the
+UI is unchanged. Unknown URLs get `dist/.pages/404.html` with a 404 status.
+
+**Redirects.** `server.js` holds the 301 map for every retired URL (the old
+WordPress pages included), answers 410 Gone for WordPress machinery
+(`/wp-content`, `/feed`, `/author/…`, `?p=`), sends `www.` to the bare domain
+and strips trailing slashes. Add a line to `MOVED` whenever a URL is retired.
+
 To point the site at a different domain, change `SITE.url` in `seo.js` and the
 `Sitemap:` line in `public/robots.txt`.
 
@@ -101,4 +114,4 @@ re-exported, and don't hand-edit them.
 ## Real business details baked in
 
 Phone: +971 56 916 9761 · WhatsApp: wa.me/971569169761
-Empire Heights A, 16F-A-04, Business Bay, Dubai
+Diamond Business Center 1, Office 510, Al Barsha South Third, Al Barsha South, Dubai

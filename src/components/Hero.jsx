@@ -110,7 +110,7 @@ export default function Hero() {
           <span className="heroWash" />
 
           <figcaption className="heroIntro" ref={introRef}>
-            <span className="hiTag">Dubai · Business Bay · since {BUSINESS.since}</span>
+            <span className="hiTag">Dubai · {BUSINESS.area} · since {BUSINESS.since}</span>
             <h1 className="hiName">Dubai<br />Fine Clean</h1>
             <span className="hiHint"><span className="l" />Scroll to explore</span>
           </figcaption>

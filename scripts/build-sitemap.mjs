@@ -19,18 +19,56 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { SITEMAP, absolute } from '../src/data/seo.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = path.join(ROOT, 'public', 'sitemap.xml')
 
+/**
+ * The files whose content each URL is made of. lastmod is the date of the
+ * last commit that touched any of them — a real "content changed" date, not
+ * the build date stamped on every URL (which tells Google nothing).
+ */
+const SHARED = ['src/data/seo.js']
+const SOURCES = {
+  '/': ['src/pages/Home.jsx', 'src/data/content.js'],
+  '/services': ['src/pages/Services.jsx', 'src/data/services.js'],
+  '/deep-cleaning': ['src/pages/DeepClean.jsx', 'src/data/deepCleaning.js'],
+  '/about': ['src/pages/About.jsx', 'src/components/OurStory.jsx', 'src/components/SupervisorCard.jsx'],
+  '/contact': ['src/pages/Contact.jsx', 'src/components/ContactInfoCard.jsx'],
+}
+const sourcesFor = (p) => [...SHARED, ...(SOURCES[p] || (p.startsWith('/services/') ? SOURCES['/services'] : []))]
+
+/** YYYY-MM-DD of the last commit touching `files`, or null without git. */
+function gitDate(files) {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...files], {
+      cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'],
+    }).toString().trim()
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : null
+  } catch {
+    return null
+  }
+}
+
+/** lastmod values already in the committed file, for hosts that build without git. */
+function previousDates() {
+  if (!fs.existsSync(OUT)) return {}
+  const xml = fs.readFileSync(OUT, 'utf8')
+  const map = {}
+  for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)) map[m[1]] = m[2]
+  return map
+}
+
 export function buildSitemap() {
-  const lastmod = new Date().toISOString().slice(0, 10)
+  const today = new Date().toISOString().slice(0, 10)
+  const previous = previousDates()
   const urls = SITEMAP.map(({ path: p, changefreq, priority }) => [
     '  <url>',
     `    <loc>${absolute(p)}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
+    `    <lastmod>${gitDate(sourcesFor(p)) || previous[absolute(p)] || today}</lastmod>`,
     `    <changefreq>${changefreq}</changefreq>`,
     `    <priority>${priority}</priority>`,
     '  </url>',
@@ -45,14 +83,14 @@ ${urls}
 `
 }
 
-/** Writes the file only when the URL list changed, so a rebuild that adds
- *  nothing doesn't show up as a diff purely because the date moved on. */
+/** Writes the file only when something in it changed. lastmod now follows
+ *  commits rather than the clock, so a rebuild with no content change is a
+ *  no-op instead of a diff. */
 export function writeSitemap({ quiet = false } = {}) {
   const next = buildSitemap()
   const previous = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : ''
-  const strip = (s) => s.replace(/<lastmod>[^<]*<\/lastmod>/g, '')
 
-  if (previous && strip(previous) === strip(next)) {
+  if (previous === next) {
     if (!quiet) console.log(`sitemap.xml unchanged (${SITEMAP.length} URLs)`)
     return false
   }

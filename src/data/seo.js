@@ -43,7 +43,7 @@ export const PAGES = {
   },
   about: {
     path: '/about',
-    title: 'About Dubai Fine Clean — Cleaning Company in Business Bay',
+    title: 'About Dubai Fine Clean — Cleaning Company in Al Barsha',
     description:
       'Forty-plus trained cleaners working across Dubai since 2016. Municipality-compliant, fully insured, and run to the same operating rules as on day one.',
   },
@@ -51,7 +51,7 @@ export const PAGES = {
     path: '/contact',
     title: 'Contact Dubai Fine Clean — Request a Cleaning Quote',
     description:
-      'Tell us the property and we will quote it in writing today. Call, WhatsApp or send the enquiry form — Empire Heights A, Business Bay, Dubai. Open seven days.',
+      'Tell us the property and we will quote it in writing today. Call, WhatsApp or send the enquiry form — Diamond Business Center 1, Al Barsha South. Open 7 days.',
   },
   notFound: {
     path: '/404',

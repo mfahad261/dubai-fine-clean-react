@@ -4,7 +4,7 @@
  * WHERE IT APPEARS: /about.
  * WHAT IT DOES:     The timeline from founding to today.
  */
-import { BUSINESS } from '../data/content.js'
+import { BUSINESS, yearsTrading } from '../data/content.js'
 import Reveal from './Reveal.jsx'
 import Eyebrow from './Eyebrow.jsx'
 import './OurStory.css'
@@ -21,7 +21,7 @@ export default function OurStory() {
     <section className="sec">
       <div className="wrap">
         <div className="secHead">
-          <Reveal><Eyebrow>Our story</Eyebrow><h2 className="ed" style={{ marginTop: 16 }}>Nine years, one standard</h2></Reveal>
+          <Reveal><Eyebrow>Our story</Eyebrow><h2 className="ed" style={{ marginTop: 16 }}>{yearsTrading()} years, one standard</h2></Reveal>
           <Reveal delay={80}><p className="lede">From a two-person team to a full specialist operation, the checklist has never changed.</p></Reveal>
         </div>
         <div className="timeline">

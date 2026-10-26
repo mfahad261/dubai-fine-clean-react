@@ -32,7 +32,7 @@ export default function CoverageMap() {
           </Reveal>
           <Reveal delay={130}>
             <p className="lede">
-              Crews dispatch from {BUSINESS.addressLine1.replace(' — 16F-A-04', '')}, covering
+              Crews dispatch from {BUSINESS.building}, {BUSINESS.area}, covering
               {' '}{COVERAGE_AREAS.length} communities across the Emirate. We schedule around your week,
               including Fridays and public holidays.
             </p>
